@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Spark数据操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/14/Spark数据操作/" class="article-date">
+  <time datetime="2019-01-13T16:00:00.000Z" itemprop="datePublished">2019-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/14/Spark数据操作/">Spark数据操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RDD,弹性分布式数据集(Resilient Distrubuted Dataset),是一个容错的，并行的数据结构，可以让用户显示地将数据存储到磁盘和内存中，并控制数据的分区。同事，RDD还提供了一组丰富的操作来操作这些数据，如 map, flatMap, filter 等转换操作，以及count，saveAsTextFile， reduceByKey 等行动操作。</p>
+<h2 id="Spark-RDD-创建"><a href="#Spark-RDD-创建" class="headerlink" title="Spark RDD 创建"></a>Spark RDD 创建</h2><ol>
+<li><p>用数据集合创建</p>
+<p> val data = Array(1,2,3,4,5,6,7,8,9)<br> val distData = sc.parallelize(data,3)</p>
+</li>
+</ol>
+<p>RDD 的一个重要参数是将数据集划分成分片的数量。对每一个分片，Spark会在集群上运行一个对应的任务。典型情况下，集群中的每一个CPU将对应2~4个分片。一般情况下，Spark会通过当前集群的情况自行设定分片数量。也可以传入参数设定。</p>
+<ol start="2">
+<li>外部数据源创建</li>
+</ol>
+<p>可以通过Hadoop支持的外部数据源(本地文件系统，HDFS，Cassandra, HBase, 亚马逊S3)等建立分布式数据集。Spark 支持文本文件、序列文件及其他任何Hadoop输入格式文件。</p>
+<p>通过文本文件创建RDD的方法</p>
+<pre><code>val distFile1 = sc.textFile(&quot;data.txt&quot;)
+val distFile2 = sc.textFile(&quot;hdfs://192.168.1.100:9000/input.txt)
+val distFile3 = sc.textFile(&quot;file:/input/data.txt) //本地目录文件</code></pre><p>textFile 可以读取多个文件，或者一个文件夹，压缩文件，通配符路径</p>
+<pre><code>textFile(&quot;/input/001.txt, /input/002.txt&quot;)
+textFile(&quot;/input&quot;) //读取目录
+textFile(&quot;/input/*.txt&quot;)
+textFile(&quot;/input/*.gz&quot;)  </code></pre><h3 id="Spark-RDD-转换操作"><a href="#Spark-RDD-转换操作" class="headerlink" title="Spark RDD 转换操作"></a>Spark RDD 转换操作</h3><ol>
+<li><p>map</p>
+<p> map是对RDD中的每一个元素都执行一个制定的函数来产生一个新的RDD；RDD之间元素的关系是一对一关系。</p>
+<p> val rdd1 = sc.parallelize(1 to 9, 3)<br> val rdd2 = rdd1.map(x =&gt; x*2)<br> rdd2.collect</p>
+</li>
+<li><p>filter</p>
+<p> filter 是对RDD元素进行过滤；返回一个新的数据集，经过func函数后返回值为true的元素组成</p>
+<p> val rdd3 = rdd2.filter(x =&gt; x &gt; 10)<br> rdd3.collect</p>
+</li>
+<li><p>flatMap</p>
+</li>
+</ol>
+<p>flatMap类似map，但每个输入元素，会被映射为 0 到多个输入元素(因此，func函数返回值是一个seq，而不是单一元素)， RDD 之间的元素是一对多关系</p>
+<pre><code>val rdd4 = rdd3.flatMap(x =&gt; x to 20)</code></pre><ol start="4">
+<li>mapPartitions</li>
+</ol>
+<p>mapPartitions 是 map 的一个变种。map的输入函数是应用于RDD中的每个元素；二mapPartitions的输入函数是每个分区的数据，也就是把每个分区中的内容作为整体来处理的。</p>
+<ol start="5">
+<li>mapPartitionsWithIndex</li>
+<li>sample</li>
+<li>union<br> union 是将数据合并，返回一个新的数据集</li>
+<li>intersection</li>
+</ol>
+<p>intersection(otherDataset)是数据交集，返回一个新的数据集，包含两个数据集的交集数据</p>
+<ol start="9">
+<li>distinct</li>
+</ol>
+<p>数据去重</p>
+<ol start="10">
+<li>groupByKey</li>
+</ol>
+<p>groupByKey([numTask])是数据分组操作，在一个由(K,V)对组的数据集上调用，返回一个(K,Seq[V])对的数据集。默认情况下，使用8个并行任务进行分组，可以传入num</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/14/Spark数据操作/" data-id="ck1g6qeim0000ur9khcgfnpp9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RDD/">RDD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20天学习大数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/20天学习大数据/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/20天学习大数据/">20天学习大数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>hadoop</li>
+<li>hbase</li>
+<li>python</li>
+<li>spark</li>
+<li>机器学习</li>
+<li>流处理</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/20天学习大数据/" data-id="ck1g6qpq50000ut9keoprfnlh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hadoop在windows下的单机配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Hadoop在windows下的单机配置/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Hadoop在windows下的单机配置/">Hadoop在windows下的单机配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>hadoop home /D:/Env/hadoop-2.9.2</p>
+<p>  vim D:/Env/hadoop-2.9.2/etc/hadoop/hadoop-env.cmd<br>  set JAVA_HOME=C:\PROGRA~1\Java\jdk1.8.0_171</p>
+</li>
+</ul>
+<h2 id="配置伪分布式模式"><a href="#配置伪分布式模式" class="headerlink" title="配置伪分布式模式"></a>配置伪分布式模式</h2><ul>
+<li>修改hadoop-2.9.2\etc\hadoop\core-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义了namenode的位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 此目录为hdfs的根目录，存储的文件即存储在该目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/D:/HDFS<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改hadoop-2.9.2\etc\hadoop\hdfs-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义数据复制的数量，1 表示复制 1份 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改hadoop-2.9.2\etc\hadoop\mapred-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义了JobTracker的位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.job.tracker<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:9001<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>由于hadoop 在windows下运行需要winutil, 所以需要另外下载。下载[winutil](https://github.com/steveloughran/winutils), 将原hadoop 的bin 目录重命名为bin.bak， 将hadoop2.8.3/bin 目录复制到hadoop根目录。</code></pre><h3 id="启动hadoop"><a href="#启动hadoop" class="headerlink" title="启动hadoop"></a>启动hadoop</h3><p>首次启动hadoop, 需要格式化hadoop将要用到的HDFS文件系统</p>
+<ul>
+<li><p>格式化 NameNode<br>  hadoop namenode -format</p>
+</li>
+<li><p>启动 Hadoop</p>
+<p>  start-dfs</p>
+</li>
+<li><p>终止 Hadoop</p>
+<p>  stop-dfs</p>
+</li>
+</ul>
+<p>这会打开两个窗口，一个datanode, 一个namenode.</p>
+<ul>
+<li><p>查看java 进程</p>
+<p>  jps</p>
+</li>
+<li><p>查看文件系统</p>
+<p>  hadoop fs -ls /</p>
+</li>
+<li><p>创建目录</p>
+<p>  hadoop fs -mkdir /user</p>
+</li>
+<li><p>从本地拷贝文件</p>
+<p>  hadoop fs -copyFromLocal test.txt /</p>
+</li>
+<li><p>文件拷贝</p>
+<p>  hadoop fs -cp /test.txt /data</p>
+</li>
+<li><p>查看hdfs 文件内容</p>
+<p>  hadoop fs -cat /test.txt</p>
+</li>
+<li><p>下载文件到本地</p>
+<p>  hadoop fs -copyToLocal /text.txt</p>
+</li>
+<li><p>查看帮助</p>
+<p>  hadoop fs -help</p>
+</li>
+</ul>
+<h4 id="网页查看-hadoop"><a href="#网页查看-hadoop" class="headerlink" title="网页查看 hadoop"></a>网页查看 hadoop</h4><pre><code>[localhost:50070](http://localhost:50070)</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Hadoop在windows下的单机配置/" data-id="ck1g6qpq90001ut9kf5z6tjnm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hadoop/">hadoop</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hbase基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Hbase基本操作/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Hbase基本操作/">Hbase基本操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>启动 hbase</p>
+<p>  start-all.sh     启动 hadoop<br>  start-hbase.sh   启动 hbase</p>
+</li>
+<li><p>进入 Hbase shell 控制台</p>
+<p>  hbase shell</p>
+</li>
+<li><p>创建表</p>
+<p>  create ‘test’, cf1’</p>
+</li>
+</ul>
+<p>test: 表名; cf1: 列族1;</p>
+<ul>
+<li><p>查看数据库中的表</p>
+<p>  list</p>
+</li>
+<li><p>查看表属性</p>
+<p>  describe ‘test</p>
+</li>
+<li><p>添加新列族</p>
+<p>  alter ‘test’, ‘cf2’</p>
+</li>
+</ul>
+<p>在生产环境中最好 disable 表。</p>
+<ul>
+<li><p>插入数据</p>
+<p>  put ‘test’, ‘row1’, ‘cf:name’, ‘jack’</p>
+</li>
+<li><p>查看表数据</p>
+<p>  scan ‘test’</p>
+</li>
+<li><p>使表支持多个版本</p>
+<p>  alter ‘test’,{NAME=&gt;’CF’,VERSIONS=&gt;5}</p>
+</li>
+<li><p>按条件查询</p>
+<p>  scan ‘test’, {STARTROW=&gt;’row3’}<br>  scan ‘test’, {ENDROW=&gt;’row4’}</p>
+</li>
+<li><p>获取单元格数据</p>
+<p>  get ‘test’,’row7’,’cf:name’</p>
+</li>
+</ul>
+<p>获取多个版本</p>
+<pre><code>get &apos;test&apos;,&apos;row7&apos;,{COLUMN=&gt;&apos;cd:name&apos;, VERSIONS=&gt;5}
+
+scan &apos;test&apos;,{VERSIONS=&gt;5}</code></pre><ul>
+<li><p>删除数据</p>
+<p>  delete ‘test’, ‘row112’,’cf:name’</p>
+</li>
+</ul>
+<p>根据版本删除数据</p>
+<pre><code>delete &apos;t1&apos;,&apos;r1&apos;,&apos;c1&apos;,ts</code></pre><p>该命令删除改版本及以前的数据。ts 版本号。</p>
+<p>删除整行</p>
+<pre><code>delete all &apos;test&apos;,&apos;row3&apos;</code></pre><ul>
+<li><p>disable 停用表</p>
+<p>  disable ‘test’</p>
+</li>
+<li><p>drop 删除表</p>
+<p>  drop ‘test’</p>
+</li>
+<li><p>status 查看集群状态</p>
+<p>  status<br>  status ‘simple’<br>  status ‘summary’<br>  status ‘detailed’</p>
+</li>
+<li><p>version 产看HBase版本</p>
+<p>  version</p>
+</li>
+<li><p>whoami 查看当前用户</p>
+</li>
+<li><p>table_help 输出表操作标注信息</p>
+</li>
+</ul>
+<h2 id="表操作"><a href="#表操作" class="headerlink" title="表操作"></a>表操作</h2><ul>
+<li><p>list</p>
+</li>
+<li><p>alter</p>
+</li>
+<li><p>enable 启动表</p>
+<p>  enable ‘test’</p>
+</li>
+<li><p>exists 判断表存在</p>
+<p>  exists ‘test’</p>
+</li>
+</ul>
+<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><ul>
+<li><p>scan 遍历表</p>
+<p>  scan ‘test’</p>
+</li>
+<li><p>count 计算表行数</p>
+<p>  count ‘table1’</p>
+</li>
+<li><p>truncate 清空表数据，保留表属性</p>
+<p>  truncate ‘table1’</p>
+</li>
+</ul>
+<h2 id="工具方法"><a href="#工具方法" class="headerlink" title="工具方法"></a>工具方法</h2><ul>
+<li><p>close_region 下线指定 Region</p>
+<p>  locate_region ‘table’, ‘row1’<br>  close_region ‘table1, 150325003423.8324sdfjkr29df.’</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Hbase基本操作/" data-id="ck1g6qpqa0002ut9k75w3wsev" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hbase/">Hbase</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux的基本操作命令记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Linux的基本操作命令记录/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Linux的基本操作命令记录/">Linux的基本操作命令记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>打包文件</p>
+<p>  tar -cf archiver.tar foo bar</p>
+</li>
+<li><p>解压文件 .tar.gz</p>
+<p>  tar xf java8.tar.gz -C /home/node1/env</p>
+</li>
+</ul>
+<p>将文件解压到/home/node1/env 目录</p>
+<ul>
+<li><p>显示用户shell<br>  echo $SHELL</p>
+</li>
+<li><p>修改用户shell<br>  vim /etc/passwd</p>
+</li>
+</ul>
+<p>找到用户名，修改最后 sh 为 <em>bash</em>.</p>
+<ul>
+<li><p>更改文件拥有者</p>
+<p>  chown user /file<br>  chown -R user /file </p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Linux的基本操作命令记录/" data-id="ck1g6qpqb0004ut9k4nhtpgsm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Mi-pro大数据环境配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Mi-pro大数据环境配置/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Mi-pro大数据环境配置/">Mi-pro大数据环境配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是我在自己笔记本中学习大数据的配置，使用 Virtualbox6.0 虚拟机软件. 对每台虚拟机设置了网卡1 NAT网卡和网卡2 桥接网卡，桥接网卡设置界面名称 Realtec USB FE Family Controller, 并在每台虚拟机中安装了 openssh-server. NAT网卡是的虚拟机可以通过宿主机联网，桥接网卡使虚拟机拥有和主机不同的独立局域网ip，并和宿主机在同一个网段。</p>
+<p>目前安装了5台 ubuntu 18.04 linux主机，每台设置内存1GB，硬盘20GB，显存128MB，开启3D加速:</p>
+<ul>
+<li><a href="mailto:node1@192.168.101.237" target="_blank" rel="noopener">node1@192.168.101.237</a></li>
+<li><a href="mailto:node2@192.168.101.239" target="_blank" rel="noopener">node2@192.168.101.239</a></li>
+<li><a href="mailto:node3@192.168.101.240" target="_blank" rel="noopener">node3@192.168.101.240</a></li>
+<li><a href="mailto:node4@192.168.101.241" target="_blank" rel="noopener">node4@192.168.101.241</a></li>
+<li><a href="mailto:node5@192.168.101.243" target="_blank" rel="noopener">node5@192.168.101.243</a></li>
+</ul>
+<p>添加用户</p>
+<pre><code>sudo su root
+useradd hadoop
+passwd &quot;159491&quot;</code></pre><p>将hadoop 添加到sudoers, NOPASSWD 表示切换sudo时无须密码</p>
+<pre><code>chmod u+x /etc/sudoers
+vim /etc/sudoers
+hadoop ALL=NOPASSWD:ALL</code></pre><p>测试hadoop 用户是否有sudo 权限</p>
+<pre><code>sudo whoami</code></pre><p>创建用户目录</p>
+<pre><code>sudo mkdir /home/hadoop
+sudo chown hadoop /home/hadoop</code></pre><p>生成rsa密匙</p>
+<pre><code>ssh-keygen -t rsa</code></pre><p>因为总共有4台虚拟机，每台虚拟机都要用ssh-keygen -t rsa 生成密匙，然后将生成的所有共识 id_rsa追加到同一个authorized_keys 文件中，并复制到每台虚拟机的 hadoop/.ssh/ 目录中。并且修改权限为 chmod 700 ~/.ssh/authorized_keys.</p>
+<p>配置完成后，就可以在任意一台虚拟机通过 ssh hostname , 例如 ssh node4 访问对应node4主机，而不需要密码。</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li><p>关闭屏幕锁</p>
+<p>  Settings-&gt;Privacy-&gt;Screen Lock-&gt;Off</p>
+</li>
+<li><p>软件包目录 /home/node1/Documents</p>
+</li>
+<li><p>环境安装目录 /env</p>
+</li>
+</ul>
+<h3 id="软件安装目录-Virtualbox"><a href="#软件安装目录-Virtualbox" class="headerlink" title="软件安装目录 Virtualbox"></a>软件安装目录 Virtualbox</h3><ul>
+<li>java8 /env/jdk1.8</li>
+<li>hadoop-2.9.2 /env/hadoop-2.9.2</li>
+</ul>
+<h3 id="设置环境变量-Virtualbox"><a href="#设置环境变量-Virtualbox" class="headerlink" title="设置环境变量 Virtualbox"></a>设置环境变量 Virtualbox</h3><h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><pre><code>vim ~/.bashrc</code></pre><ul>
+<li><p>添加 Java 环境变量</p>
+<p>  export JAVA_HOME=/env/jdk1.8<br>  export JRE_HOME=${JAVA_HOME}/jre<br>  export CLASSPATH=:${JAVA_HOME}/lib:${JRE_HOME}/lib<br>  export PATH=${JAVA_HOME}/bin:$PATH</p>
+</li>
+<li><p>hadoop 环境变量 .bashrc</p>
+<p>  export HADOOP_HOME=/env/hadoop-2.9.2<br>  export HADOOP_PREFIX=$HADOOP_HOME<br>  export HADOOP_MAPRED_HOME=$HADOOP_HOME<br>  export HADOOP_COMMON_HOME=$HADOOP_HOME<br>  export HADOOP_HDFS_HOME=$HADOOP_HOME<br>  export YARN_HOME=$HADOOP_HOME<br>  export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native<br>  export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin<br>  export HADOOP_INSTALL=$HADOOP_HOME</p>
+</li>
+<li><p>修改hadoop 配置文件， $HADOOP_HOME/etc/hadoop/hadoop-env.sh</p>
+</li>
+</ul>
+<p>添加</p>
+<pre><code>export HADOOP_NAMENODE_OPTS=&quot; -Xms1024m -Xmx1024m -XX:+UseParallelGC&quot;
+export HADOOP_DATANODE_OPTS=&quot; -Xms1024m -Xmx1024m&quot;
+export HADOOP_LOG_DIR=/data/logs/hadoop</code></pre><p>由于本机只有8G内存，并且开了5个虚拟机，所以上述相应的调小了些。该为如下</p>
+<pre><code>export HADOOP_NAMENODE_OPTS=&quot; -Xms256m -Xmx512m -XX:+UseParallelGC&quot;
+export HADOOP_DATANODE_OPTS=&quot; -Xms256m -Xmx512m&quot;
+export HADOOP_LOG_DIR=/data/logs/hadoop</code></pre><p>修改 JAVA_HOME</p>
+<pre><code>export JAVA_HOME=/env/jdk1.8</code></pre><ul>
+<li><p>使环境变量生效</p>
+<p>  source ~/.bashrc</p>
+</li>
+</ul>
+<p>注意每台主机都有该相同的.bashrc 配置文件</p>
+<h3 id="复制虚拟机"><a href="#复制虚拟机" class="headerlink" title="复制虚拟机"></a>复制虚拟机</h3><p>上述配置完成后，关闭虚拟机，然后复制3份，重命名为node2,node3,node4</p>
+<p>修改每台虚拟机/etc/hosts</p>
+<pre><code>192.168.101.237 node1
+192.168.101.239  node2
+192.168.101.240 node3
+192.168.101.241 node4
+192.168.101.243 node5</code></pre><p>重启网卡，使立刻生效</p>
+<p>sudo /etc/init.d/networking restart</p>
+<p>修改每台虚拟机/etc/hostname,node1只写node1,其他也一样</p>
+<pre><code>node1
+node2
+node3
+node4
+node5</code></pre><p>然后每台主机执行</p>
+<pre><code>hostname 主机名</code></pre><p>例如虚拟机node1</p>
+<pre><code>hostname node1</code></pre><h3 id="hadoop-系统配置"><a href="#hadoop-系统配置" class="headerlink" title="hadoop 系统配置"></a>hadoop 系统配置</h3><ul>
+<li><p>创建目录,在每台虚拟机上创建，并将拥有者付给hadoop用户</p>
+<p>  sudo mkdir -p /data/logs/hadoop<br>  sudo mkdir -p /data/hadoop/hdfs/nn<br>  sudo mkdir /data/hadoop/hdfs/dn<br>  chown hadoop /data<br>  chown hadoop /data/*</p>
+</li>
+<li><p>core-site.xml</p>
+  <configuration>
+      <property>
+              <name>fs.defaultFS</name>
+              <!-- 此处每台虚拟机的地址做相应调整，如node1,node2-->
+              <value>hdfs://node1:8020</value>
+      </property>
+  </configuration>
+</li>
+<li><p>hdfs-site.xml</p>
+   <property>
+              <name>dfs.replication</name>
+              <value>1</value>
+      </property>
+      <property>
+              <name>dfs.namenode.name.dir</name>
+              <value>file:///data/hadoop/hdfs/nn</value>
+      </property>
+      <property>
+              <name>dfs.datanode.data.dir</name>
+              <value>file:///data/hadoop/hdfs/dn</value>
+      </property>
+</li>
+<li><p>格式化 namenode</p>
+</li>
+</ul>
+<p>对每个虚拟机进行此操作</p>
+<pre><code>hdfs namenode -format</code></pre><h3 id="虚拟机配置结果"><a href="#虚拟机配置结果" class="headerlink" title="虚拟机配置结果"></a>虚拟机配置结果</h3><ul>
+<li>node1 OK</li>
+<li>node2 OK</li>
+<li>node3 OK</li>
+<li>node4 OK</li>
+</ul>
+<h3 id="友情提示"><a href="#友情提示" class="headerlink" title="友情提示"></a>友情提示</h3><p>安装 Hadoop 和 HBase 这种分布式系统最好用一些批量执行命令的小工具，比如pssh或dsh。</p>
+<h3 id="Virtualbox端口转发"><a href="#Virtualbox端口转发" class="headerlink" title="Virtualbox端口转发"></a>Virtualbox端口转发</h3><p>在Virtualbox 设置网卡为NAT 模式，点击高级，配置NAT 转发规则，配置主机IP 和端口，虚拟机IP 和端口，然后就可以通过 主机IP 和端口访问在主机中访问虚拟机中提供的服务了。</p>
+<h3 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h3><p>修改所有节点core-site.xml fs.defaultFS = hdfs://node1:8020, 并在所有节点上进行如下操作，进行数据删除</p>
+<pre><code>rm -rf /data/hadoop/hdfs/nn/current
+rm -rf /data/hadoop/hdfs/dn/current</code></pre><h3 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h3><ul>
+<li><p>在node1 上启动namenode<br>  hadoop-daemon.sh –script hdfs start namenode</p>
+</li>
+<li><p>停止namenode</p>
+<p>  hadoop-daemon.sh –script hdfs stop namenode</p>
+</li>
+<li><p>在node2-node4 上启动 datanode</p>
+<p>  hadoop-daemons.sh –script hdfs start datanode</p>
+</li>
+</ul>
+<p>关闭 datanode</p>
+<pre><code>hadoop-daemons.sh --script hdfs stop datanode</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Mi-pro大数据环境配置/" data-id="ck1g6qpqc0006ut9kh05v4wis" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BigData/">BigData</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hadoop/">hadoop</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-PC大数据环境配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/PC大数据环境配置/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/PC大数据环境配置/">PC大数据环境配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Hadoop 有三种运行模式：本地独立模式，伪分布模式，完全分布式模式。如果不进行任何配置，默认为本地独立模式。</p>
+<p>VMware15.0.2安装的ubuntu虚拟机下配置.</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="软件安装目录"><a href="#软件安装目录" class="headerlink" title="软件安装目录"></a>软件安装目录</h3><ul>
+<li><p>java8 /home/bigdata/env/jdk1.8</p>
+</li>
+<li><p>eclipse /home/bigdata/env/eclipse</p>
+</li>
+<li><p>安装 ssh-server<br>  sudo apt install openssh-server</p>
+</li>
+<li><p>生成密匙<br>  ssh-keygen -t rsa<br>  cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>  chmod 600 ~/.ssh/authorized_keys</p>
+</li>
+</ul>
+<h3 id="Java-环境变量"><a href="#Java-环境变量" class="headerlink" title="Java 环境变量"></a>Java 环境变量</h3><pre><code>vim ~/.bashrc
+
+export JAVA_HOME=/home/bigdata/env/jdk1.8
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH</code></pre><ul>
+<li><p>使环境变量生效</p>
+<p>  source ~/.bashrc</p>
+</li>
+</ul>
+<h3 id="Hadoop-配置"><a href="#Hadoop-配置" class="headerlink" title="Hadoop 配置"></a>Hadoop 配置</h3><ul>
+<li><p>hadoop 环境变量</p>
+<p>  vim /etc/profile</p>
+<p>  export HADOOP_HOME=/home/bigdata/env/hadoop-2.9.2<br>  export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</p>
+</li>
+<li><p>hadoop-env.sh</p>
+<p>  export JAVA_HOME=/home/bigdata/env/jdk1.8</p>
+</li>
+<li><p>mapred-site.xml</p>
+<p>  cp mapred-site.xml.template mapred-site.xml</p>
+</li>
+</ul>
+<p>添加以下属性到configuration标签里</p>
+<pre><code>&lt;property&gt;
+           &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+           &lt;value&gt;yarn&lt;/value&gt;
+           &lt;final&gt;true&lt;/final&gt;
+   &lt;/property&gt;
+   &lt;property&gt;
+           &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+           &lt;value&gt;127.0.0.1:10020&lt;/value&gt;
+   &lt;/property&gt;
+   &lt;property&gt;
+           &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+           &lt;value&gt;127.0.0.1:19888&lt;/value&gt;
+   &lt;/property&gt;</code></pre><ul>
+<li><p>core-site.xml</p>
+<pre><code>&lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://127.0.0.1:8020&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;/home/bigdata/HDFSData&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;ha.zookeeper.quorum&lt;/name&gt;
+        &lt;value&gt;127.0.0.1:2181&lt;/value&gt;
+&lt;/property&gt;</code></pre></li>
+<li><p>hdfs-site.xml</p>
+<pre><code>&lt;property&gt;
+        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+        &lt;value&gt;/home/bigdata/HDFSData/dfs/name&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+        &lt;value&gt;/home/bigdata/HDFSData/dfs/data&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;dfs.namenode.handler.count&lt;/name&gt;
+        &lt;value&gt;100&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;dfs.webhdfs.enabled&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;</code></pre></li>
+</ul>
+<h4 id="初始化-hadoop"><a href="#初始化-hadoop" class="headerlink" title="初始化 hadoop"></a>初始化 hadoop</h4><ul>
+<li><p>初始化 hadoop<br>  hadoop namenode -format</p>
+</li>
+<li><p>启动 hadoop<br>  start-all.sh</p>
+</li>
+<li><p>查看java进程<br>  jps</p>
+</li>
+<li><p>关闭 hadoop</p>
+<p>  stop-all.sh</p>
+</li>
+</ul>
+<h3 id="hbase-配置"><a href="#hbase-配置" class="headerlink" title="hbase 配置"></a>hbase 配置</h3><ul>
+<li><p>安装 hbase-1.2.9</p>
+<p>  tar xf habse-1.2.9.tar.gz -C /env</p>
+</li>
+<li><p>配置环境变量</p>
+<p>  sudo vim /etc/profile<br>  export HBASE_HOME=/env/hbase-1.2.9<br>  export PATH=$PATH:$HBASE_HOME/bin</p>
+</li>
+</ul>
+<p>*hbase-env.sh</p>
+<pre><code>exporg JAVA_HOME=/env/jdk1.8</code></pre><ul>
+<li><p>hbase-site.xml</p>
+<pre><code>&lt;property&gt;
+        &lt;name&gt;hbase.rootdir&lt;/name&gt;
+        &lt;value&gt;hdfs://127.0.0.1:8020/hbase&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;hbase.master&lt;/name&gt;
+        &lt;value&gt;127.0.0.1:60000&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;hbase.zookeeper.quorum&lt;/name&gt;
+        &lt;value&gt;127.0.0.1&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+        &lt;name&gt;zookeeper.znode.parent&lt;/name&gt;
+        &lt;value&gt;/hbase&lt;/value&gt;
+&lt;/property&gt;</code></pre></li>
+<li><p>启动hbase</p>
+<pre><code>start-hbase.sh</code></pre></li>
+<li><p>关闭hbase</p>
+<pre><code>stop-hbase.sh</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/PC大数据环境配置/" data-id="ck1g6qpqd0008ut9kawzpo1l0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hadoop/">hadoop</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Spark安装与配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Spark安装与配置/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Spark安装与配置/">Spark安装与配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>安装Spark-2.4.0</p>
+<p>  tar xf spark-2.4.0.tar.gz -C /env</p>
+</li>
+</ul>
+<p>将 spark-2.4.0/yarn 目录下的 spark-2.4.0-yarn-shuffle.jar 拷贝到/env/hadoop-2.9.2/share/hadoop/yarn/lib 目录下</p>
+<p>递归更该spark目录的拥有者</p>
+<pre><code>chown -R warmfrog /env/spark-2.4.0 </code></pre><ul>
+<li><p>配置spark 环境变量</p>
+<p>  cd /env/spark-2.4.0/conf<br>  cp spark-env.sh.template spark-env.sh<br>  vim spark-env.sh</p>
+</li>
+</ul>
+<p>添加如下环境变量</p>
+<pre><code>export JAVA_HOME=/env/jdk1.8
+export HADOOP_HOME=/env/hadoop-2.9.2
+export HADOOP_CONF_DIR=/env/hadoop-2.9.2/etc/hadoop
+export YARN_CONF_DIR=/env/hadoop-2.9.2/etc/hadoop
+export SPARK_HOME=/env/spark-2.4.0
+export SPARK_LIBRARY_PATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$HADOOP_HOME/lib/native
+export SPARK_MASTER_IP=127.0.0.1
+export SPARK_MASTER_HOST=hdfs
+export SPARK_LOCAL_DIRS=/env/spark-2.4.0
+export SPARK_YARN_USER_ENV==&quot;CLASSPATH=/env/hadoop-2.9.2/etc/hadoop&quot;</code></pre><ul>
+<li><p>修改hadoop 配置</p>
+<p>  vim /env/hadoop-2.9.2/etc/hadoop/yarn-site.xml</p>
+</li>
+</ul>
+<p>添加如下配置</p>
+<pre><code>&lt;configuration&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+            &lt;value&gt;mapreduce_shuffle,spark_shuffle&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
+            &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.nodemanager.aux-services.spark_shuffle.class&lt;/name&gt;
+            &lt;value&gt;org.apache.spark.network.yarn.YarnShuffleService&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.nodemanager.log-dir&lt;/name&gt;
+            &lt;value&gt;file:/env/hadoop-2.9.2/logs&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+            &lt;value&gt;127.0.0.1&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+            &lt;value&gt;127.0.0.1:8032&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+            &lt;value&gt;127.0.0.1:8088&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.nodemanager.pmem-check-enabled&lt;/name&gt;
+            &lt;value&gt;false&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+            &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;
+            &lt;value&gt;false&lt;/value&gt;
+    &lt;/property&gt;
+
+&lt;/configuration&gt;</code></pre><ul>
+<li><p>启动 spark</p>
+<p>  /env/spark-2.4.0/sbin/start-all.sh</p>
+</li>
+<li><p>网页查看hadoop</p>
+<p>  <a href="http://127.0.0.1:8088" target="_blank" rel="noopener">http://127.0.0.1:8088</a></p>
+</li>
+<li><p>网页查看spark</p>
+<p>  <a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Spark安装与配置/" data-id="ck1g6qpqe000aut9koww3g18r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/">Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Virtualbox中安装5台虚拟机，要求5台ubuntu 虚拟机能够相互ping通，并且可以访问外网。</p>
+<p>5台虚拟机如果要相互ping通，则需要在同一个网段，并且与网关在同一个网段，网关设为相同的地址。我的虚拟机地址设置为</p>
+<pre><code>主机node1 192.168.101.237
+主机node2 192.168.101.239
+主机node3 192.168.101.240
+主机node4 192.168.101.241
+主机node5 192.168.101.243</code></pre><p>所有主机网管设置为 192.168.101.102， 即 VirtualBox Host-Only Ethernet Adapter 的IP 地址</p>
+<p>安装虚拟机，配置网络连接方式为hostonly，5台虚拟机均选择网络适配器 VirtualBox Host-Only Ethernet Adapter. 在 win10 宿主机上对以太网进行共享，右击 <em>以太网</em> -&gt; <em>属性</em> -&gt; <em>共享</em> -&gt; 勾选两个复选框，选择分享到 VirtualBox Host-Only Ethernet Adapter 网卡。</p>
+<p>虚拟机安装完后，对每台虚拟机: 修改 /etc/network/interfaces.</p>
+<p>首先，查看网卡名称</p>
+<pre><code>ifconfig</code></pre><p>我的为 enp0s3</p>
+<p>修改 /etc/network/interfaces</p>
+<pre><code>sudo vim /etc/network/interfaces</code></pre><p>添加以下设置静态ip，网关设置为 VirtualBox Host-Only Ethernet Adapter 网卡的IP地址</p>
+<pre><code>auto enp0s3
+iface enp0s3 inet static
+address 192.168.101.237
+netmask 255.255.255.0
+gateway 192.168.101.102</code></pre><p>重启网卡</p>
+<pre><code>/etc/init.d/networking restart</code></pre><p>设置DNS</p>
+<pre><code>sudo vim /etc/systemd/resolved.conf</code></pre><p>修改DNS</p>
+<pre><code>DNS=114.114.114.114</code></pre><p>重启虚拟机</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/" data-id="ck1g6qpqf000cut9kgimttnd0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Virtualbox/">Virtualbox</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-css" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/css/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/css/">CSS层叠样式表学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><ul>
+<li><p>id 选择器  </p>
+<p>  #para1{</p>
+<pre><code>color:red;</code></pre><p>  }</p>
+</li>
+<li><p>class 选择器</p>
+<p>  .center{</p>
+<pre><code>text-align: center;</code></pre><p>  }</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/css/" data-id="ck1g6qpqg000eut9khtd9upyu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Emmet/">Emmet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hbase/">Hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IEDA/">IEDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Virtualbox/">Virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vscode/">Vscode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WSL/">WSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dataset/">dataset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docs/">docs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/firefox/">firefox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipv6/">ipv6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mail/">mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ml/">ml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pdf/">pdf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resources/">resources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/snap/">snap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/terminal/">terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/util/">util</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vimrc/">vimrc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/website/">website</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window10/">window10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xfce4/">xfce4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xrdp/">xrdp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/库/">库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搜狗输入法/">搜狗输入法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网站模板/">网站模板</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备/">设备</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/BigData/" style="font-size: 10px;">BigData</a> <a href="/tags/Emmet/" style="font-size: 10px;">Emmet</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 12.5px;">IDEA</a> <a href="/tags/IEDA/" style="font-size: 10px;">IEDA</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/Virtualbox/" style="font-size: 12.5px;">Virtualbox</a> <a href="/tags/Vscode/" style="font-size: 10px;">Vscode</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/dataset/" style="font-size: 10px;">dataset</a> <a href="/tags/docs/" style="font-size: 10px;">docs</a> <a href="/tags/emulator/" style="font-size: 10px;">emulator</a> <a href="/tags/firefox/" style="font-size: 10px;">firefox</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/ipv6/" style="font-size: 10px;">ipv6</a> <a href="/tags/javaweb/" style="font-size: 10px;">javaweb</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mail/" style="font-size: 10px;">mail</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/ml/" style="font-size: 10px;">ml</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/pdf/" style="font-size: 10px;">pdf</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/resources/" style="font-size: 10px;">resources</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/snap/" style="font-size: 10px;">snap</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/terminal/" style="font-size: 10px;">terminal</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/util/" style="font-size: 10px;">util</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/vimrc/" style="font-size: 10px;">vimrc</a> <a href="/tags/website/" style="font-size: 12.5px;">website</a> <a href="/tags/window10/" style="font-size: 10px;">window10</a> <a href="/tags/windows/" style="font-size: 17.5px;">windows</a> <a href="/tags/windows10/" style="font-size: 12.5px;">windows10</a> <a href="/tags/xfce4/" style="font-size: 10px;">xfce4</a> <a href="/tags/xrdp/" style="font-size: 10px;">xrdp</a> <a href="/tags/库/" style="font-size: 10px;">库</a> <a href="/tags/搜狗输入法/" style="font-size: 10px;">搜狗输入法</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/网站模板/" style="font-size: 10px;">网站模板</a> <a href="/tags/设备/" style="font-size: 10px;">设备</a> <a href="/tags/资源/" style="font-size: 10px;">资源</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/07/hello-world3/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/07/hello-world2/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/08/Spring-Security学习笔记/">Spring-Security学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/08/优秀的资源站点/">优秀的资源站点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

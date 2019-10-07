@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>javaweb_tomcat | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="tomcat 篇 FAQ https://wiki.apache.org/tomcat/FAQ WIKI https://wiki.apache.org/tomcat/ tomcat9.0 home page http://tomcat.apache.org/tomcat-9.0-doc/index.html  tomcat 安装路径C:\Program Files\Apache Software">
+<meta name="keywords" content="javaweb,tomcat,jsp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaweb_tomcat">
+<meta property="og:url" content="http://yoursite.com/2019/01/13/javaweb_tomcat/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="tomcat 篇 FAQ https://wiki.apache.org/tomcat/FAQ WIKI https://wiki.apache.org/tomcat/ tomcat9.0 home page http://tomcat.apache.org/tomcat-9.0-doc/index.html  tomcat 安装路径C:\Program Files\Apache Software">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-07T09:00:41.684Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaweb_tomcat">
+<meta name="twitter:description" content="tomcat 篇 FAQ https://wiki.apache.org/tomcat/FAQ WIKI https://wiki.apache.org/tomcat/ tomcat9.0 home page http://tomcat.apache.org/tomcat-9.0-doc/index.html  tomcat 安装路径C:\Program Files\Apache Software">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-javaweb_tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/javaweb_tomcat/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      javaweb_tomcat
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="tomcat-篇"><a href="#tomcat-篇" class="headerlink" title="tomcat 篇"></a>tomcat 篇</h2><ul>
+<li>FAQ <a href="https://wiki.apache.org/tomcat/FAQ" target="_blank" rel="noopener">https://wiki.apache.org/tomcat/FAQ</a></li>
+<li>WIKI <a href="https://wiki.apache.org/tomcat/" target="_blank" rel="noopener">https://wiki.apache.org/tomcat/</a></li>
+<li>tomcat9.0 home page <a href="http://tomcat.apache.org/tomcat-9.0-doc/index.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-9.0-doc/index.html</a></li>
+</ul>
+<h2 id="tomcat-安装路径"><a href="#tomcat-安装路径" class="headerlink" title="tomcat 安装路径"></a>tomcat 安装路径</h2><pre><code>C:\Program Files\Apache Software Foundation\Tomcat 9.0</code></pre><h3 id="环境变量设置"><a href="#环境变量设置" class="headerlink" title="环境变量设置"></a>环境变量设置</h3><ul>
+<li>CATALINA_HOME      “C:\Program Files\Apache Software Foundation\Tomcat 9.0”</li>
+<li>CLASS_PATH         %CATALINA_HOME%\lib;</li>
+</ul>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>/bin</li>
+<li>/conf</li>
+<li>/logs</li>
+<li>/webapps</li>
+</ul>
+<h2 id="启动tomcat-服务器"><a href="#启动tomcat-服务器" class="headerlink" title="启动tomcat 服务器"></a>启动tomcat 服务器</h2><pre><code>startup</code></pre><h2 id="jsp-篇"><a href="#jsp-篇" class="headerlink" title="jsp 篇"></a>jsp 篇</h2><h3 id="jsp-指令"><a href="#jsp-指令" class="headerlink" title="jsp 指令"></a>jsp 指令</h3><ul>
+<li>jsp 代码写在 &lt;% %&gt; 中</li>
+</ul>
+<h4 id="page-指令"><a href="#page-指令" class="headerlink" title="page 指令"></a>page 指令</h4><pre><code>&lt;%@ page language=&quot;java contentType=&quot;text/html; charset=GB18030&quot; pageEncoding=&quot;GB18030&quot; %&gt;</code></pre><ul>
+<li>language</li>
+<li>extends 设置jsp页面继承的java类</li>
+<li>import 导入java包<br>  &lt;%@ import=”java.util.*” %&gt;</li>
+<li>pageEncoding<br>  &lt;%@ page pageEncoding=”GB18030” %&gt;</li>
+<li>contentType<br>  &lt;%@ page contentType=”text/html; charset=UTF-8” %&gt;</li>
+<li>session<br>  &lt;%@ page session=”false” %&gt;</li>
+<li>buffer 设置out缓冲区大小，默认8kb， 单位kb<br>  &lt;%@ page buffer=”128kb” %&gt;</li>
+<li>autoFlush 页面缓存满时是否刷新，默认 true<br>  &lt;%@ page autoFlush=”true” %&gt;</li>
+<li>isErrorPage<br>  &lt;%@ page isErrorPage=”true” %&gt;</li>
+<li>errorPage<br>  &lt;%@ page errorPage=”error.jsp” %&gt;</li>
+</ul>
+<h4 id="include-指令"><a href="#include-指令" class="headerlink" title="include 指令"></a>include 指令</h4><pre><code>&lt;%@ include file=&quot;path&quot; %&gt;</code></pre><ul>
+<li>被包含页面 &lt;%@ page pageEncoding=”GB18030” %&gt;</li>
+<li>包含页面   &lt;%@ page language=”java” contentType=”text/html;charset=GB18030” pageEncoding=”GB18030” %&gt;</li>
+</ul>
+<h4 id="taglib-指令"><a href="#taglib-指令" class="headerlink" title="taglib 指令"></a>taglib 指令</h4><pre><code>&lt;%@ taglib prefix=&quot;tagPrefix&quot; url=&quot;tagURL&quot; %&gt;</code></pre><ul>
+<li><p>prefix 制定标签前缀</p>
+</li>
+<li><p>uri 标签库存放位置</p>
+<p>  &lt;%@ taglib prefix=”c” uri=”<a href="http://java.sun.com/jsp/jstl/core&quot;" target="_blank" rel="noopener">http://java.sun.com/jsp/jstl/core&quot;</a> %&gt;</p>
+</li>
+</ul>
+<h3 id="jsp-脚本标识"><a href="#jsp-脚本标识" class="headerlink" title="jsp 脚本标识"></a>jsp 脚本标识</h3><ul>
+<li>表达式 &lt;% =表达式  %&gt;</li>
+<li>声明标识 &lt;%! 声明的代码%&gt;. 用于定义全局方法和变量，用于在整个jsp使用.</li>
+</ul>
+<h4 id="代码片段"><a href="#代码片段" class="headerlink" title="代码片段"></a>代码片段</h4><pre><code>&lt;% java代码或者是片段 %&gt;</code></pre><h4 id="jsp-注释"><a href="#jsp-注释" class="headerlink" title="jsp 注释"></a>jsp 注释</h4><ul>
+<li>隐藏注释<br>  &lt;%– –%&gt;</li>
+<li>动态注释<br>  &lt;%– &lt;%=new Date()%&gt;–&gt;</li>
+</ul>
+<h3 id="jsp-动作标识"><a href="#jsp-动作标识" class="headerlink" title="jsp 动作标识"></a>jsp 动作标识</h3><ul>
+<li><a href="jsp:include" target="_blank" rel="noopener">jsp:include</a> 包含文件标识<br>  &lt;jsp:include page=”url” flush=”false|true” /&gt;<br>  &lt;jsp:include page=”url” flush=”false|true”&gt; 子动作标识用于传递参数<a href="jsp:param" target="_blank" rel="noopener">jsp:param</a><br>  </li>
+</ul>
+<p>动态页面会被jsp编译器编译执行</p>
+<ul>
+<li><p><a href="jsp:forward" target="_blank" rel="noopener">jsp:forward</a>请求转发标识<br>  &lt;jsp:forward page=”url”/&gt;<br>  &lt;jsp:forward page=”url&gt;</p>
+<pre><code>子动作标识&lt;jsp:param&gt;
+&lt;/jsp:forward&gt;</code></pre></li>
+<li><p><a href="jsp:param" target="_blank" rel="noopener">jsp:param</a>传递参数标识<br>  &lt;jsp:forward page=”modify.jsp”&gt;</p>
+<pre><code>&lt;jsp:param name=&quot;userId&quot; value=&quot;7&quot;/&gt;</code></pre><p>  </p>
+</li>
+</ul>
+<h2 id="jsp-内置对象"><a href="#jsp-内置对象" class="headerlink" title="jsp 内置对象"></a>jsp 内置对象</h2><h3 id="request"><a href="#request" class="headerlink" title="request"></a>request</h3><ul>
+<li>&lt;a href=delete.jsp?Id=1”&gt;删除</li>
+<li>&lt;% request.getParameter(“id”) %&gt;</li>
+<li>request.setAttribute(String name, Object object);  请求转发时，将数据保存到request中</li>
+</ul>
+<h3 id="response"><a href="#response" class="headerlink" title="response"></a>response</h3><ul>
+<li>重定向网页 response.sendRedirect(String path);</li>
+</ul>
+<h4 id="处理-HTTP-表头"><a href="#处理-HTTP-表头" class="headerlink" title="处理 HTTP 表头"></a>处理 HTTP 表头</h4><ul>
+<li><p>禁用缓存<br>  response.setHeader(“Cache-Control”,”no-store”);<br>  response.setDateHeader(“Expires”,0);</p>
+</li>
+<li><p>设置页面自动刷新</p>
+<p>  response.setHeader(“refresh”, “10”);</p>
+</li>
+<li><p>定时跳转网页</p>
+<p>  response.setHeader(“refresh”, “5;URL=login.jsp”);</p>
+</li>
+</ul>
+<h4 id="设置输出缓冲"><a href="#设置输出缓冲" class="headerlink" title="设置输出缓冲"></a>设置输出缓冲</h4><ul>
+<li>flushBuffer()</li>
+<li>getBufferSize()</li>
+<li>setBufferSize(int size)</li>
+<li>reset()</li>
+<li>isCommitted()</li>
+</ul>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><h4 id="创建及获取客户的对话"><a href="#创建及获取客户的对话" class="headerlink" title="创建及获取客户的对话"></a>创建及获取客户的对话</h4><ul>
+<li>session.setAttribute(String name, Object obj);</li>
+<li>session.getAttribute(String name);</li>
+</ul>
+<h4 id="移除制定的绑定对象"><a href="#移除制定的绑定对象" class="headerlink" title="移除制定的绑定对象"></a>移除制定的绑定对象</h4><ul>
+<li>session.removeAttribute(“username”);</li>
+</ul>
+<h4 id="销毁-session"><a href="#销毁-session" class="headerlink" title="销毁 session"></a>销毁 session</h4><ul>
+<li>session.invalidate();</li>
+</ul>
+<h4 id="超时会话管理"><a href="#超时会话管理" class="headerlink" title="超时会话管理"></a>超时会话管理</h4><ul>
+<li>getLastAccessedTime()</li>
+<li>getMaxInactiveInterval()</li>
+<li>setMaxInactiveInterval()</li>
+</ul>
+<h3 id="application对象"><a href="#application对象" class="headerlink" title="application对象"></a>application对象</h3><p>application 对象用户保存所有应用程序中的共有数据。服务器启东时自动创建，服务器停止时销毁。</p>
+<h4 id="访问应用程序初始化参数"><a href="#访问应用程序初始化参数" class="headerlink" title="访问应用程序初始化参数"></a>访问应用程序初始化参数</h4><p>应用程序初始化参数在 web.xml文件中配置。通过<context-param> 配置</context-param></p>
+<pre><code>&lt;context-param&gt;
+    &lt;param-name&gt;url&lt;/param-name&gt;
+    &lt;param-value&gt;jdbc:mysql://localhost/db_database&lt;/param-value&gt;
+&lt;/context-param&gt;
+&lt;/web-app&gt;
+
+application.getInitParameter(String name);
+application.getInitParameter(&quot;url&quot;);</code></pre><ul>
+<li><p>getAttributeName()</p>
+<p>  &lt;%<br>  Enumeration enema= application.getInitParameterNames();<br>  while(enema.hasMoreElements()){</p>
+<pre><code>String name=(String)enema.nextElements();
+String value = application.getInitParameter(name);
+out.println(name+&quot;: &quot;);
+out.println(value);</code></pre><p>  }<br>  %&gt;</p>
+</li>
+</ul>
+<h4 id="管理应用环境属性"><a href="#管理应用环境属性" class="headerlink" title="管理应用环境属性"></a>管理应用环境属性</h4><ul>
+<li>getAttributeNames()</li>
+<li>getAttribute(String name)</li>
+<li>setAttribute(String key, Object obj)</li>
+<li>removeAttribute(String name)</li>
+</ul>
+<h3 id="out-对象"><a href="#out-对象" class="headerlink" title="out 对象"></a>out 对象</h3><p>用于在web浏览器上输出信息，并且管理应用服务器上的输出缓冲区。</p>
+<ul>
+<li>向客户端输出数据<br>  out.print(“”);<br>  out.println(“”);</li>
+</ul>
+<h4 id="管理数据缓冲"><a href="#管理数据缓冲" class="headerlink" title="管理数据缓冲"></a>管理数据缓冲</h4><ul>
+<li>clear()</li>
+<li>clearBuffer()</li>
+<li>flush()</li>
+<li>isAutoFlush()</li>
+<li>getBufferSize()</li>
+</ul>
+<h3 id="其他内置对象"><a href="#其他内置对象" class="headerlink" title="其他内置对象"></a>其他内置对象</h3><h4 id="pageContext"><a href="#pageContext" class="headerlink" title="pageContext"></a>pageContext</h4><p>通过pageContext 可以获取request,response,session,applicaition,exception 等对象。创建和初始化由容器完成。</p>
+<ul>
+<li>forward(java.lang.String relativeUrlpath)</li>
+<li>getAttribute(String name)</li>
+<li>getAttributeNamesInScope(int scope)</li>
+<li>getException()</li>
+<li>getRequest()</li>
+<li>getResponse()</li>
+<li>getSession()</li>
+<li>getOut()</li>
+<li>getApplication()</li>
+<li>setAttribute()</li>
+<li>removeAttribute()</li>
+</ul>
+<h4 id="读取web-xml配置信息的config对象"><a href="#读取web-xml配置信息的config对象" class="headerlink" title="读取web.xml配置信息的config对象"></a>读取web.xml配置信息的config对象</h4><ul>
+<li>getServletContext()</li>
+<li>getServletName()</li>
+<li>getInitParameter()</li>
+<li>getInitParameterNames()</li>
+</ul>
+<h4 id="应答或请求的page对象"><a href="#应答或请求的page对象" class="headerlink" title="应答或请求的page对象"></a>应答或请求的page对象</h4><p>page 对象代表jsp本身</p>
+<ul>
+<li>getClass()</li>
+<li>hashCode()</li>
+<li>toString()</li>
+<li>equals(Object o)</li>
+</ul>
+<h4 id="获取异常信息的exception对象"><a href="#获取异常信息的exception对象" class="headerlink" title="获取异常信息的exception对象"></a>获取异常信息的exception对象</h4><p>getMessage()<br>getLocalizedmessage()<br>toString()<br>fillInStackTrace()</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/javaweb_tomcat/" data-id="ck1g6qpqk000mut9kemvmwkv9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javaweb/">javaweb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp/">jsp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/13/Spark机器学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spark机器学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/13/firefox/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">好用的Firefox浏览器插件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Emmet/">Emmet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hbase/">Hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IEDA/">IEDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Virtualbox/">Virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vscode/">Vscode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WSL/">WSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dataset/">dataset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docs/">docs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/firefox/">firefox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipv6/">ipv6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mail/">mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ml/">ml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pdf/">pdf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resources/">resources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/snap/">snap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/terminal/">terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/util/">util</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vimrc/">vimrc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/website/">website</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window10/">window10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xfce4/">xfce4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xrdp/">xrdp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/库/">库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搜狗输入法/">搜狗输入法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网站模板/">网站模板</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备/">设备</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/BigData/" style="font-size: 10px;">BigData</a> <a href="/tags/Emmet/" style="font-size: 10px;">Emmet</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 12.5px;">IDEA</a> <a href="/tags/IEDA/" style="font-size: 10px;">IEDA</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/Virtualbox/" style="font-size: 12.5px;">Virtualbox</a> <a href="/tags/Vscode/" style="font-size: 10px;">Vscode</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/dataset/" style="font-size: 10px;">dataset</a> <a href="/tags/docs/" style="font-size: 10px;">docs</a> <a href="/tags/emulator/" style="font-size: 10px;">emulator</a> <a href="/tags/firefox/" style="font-size: 10px;">firefox</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/ipv6/" style="font-size: 10px;">ipv6</a> <a href="/tags/javaweb/" style="font-size: 10px;">javaweb</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mail/" style="font-size: 10px;">mail</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/ml/" style="font-size: 10px;">ml</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/pdf/" style="font-size: 10px;">pdf</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/resources/" style="font-size: 10px;">resources</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/snap/" style="font-size: 10px;">snap</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/terminal/" style="font-size: 10px;">terminal</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/util/" style="font-size: 10px;">util</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/vimrc/" style="font-size: 10px;">vimrc</a> <a href="/tags/website/" style="font-size: 12.5px;">website</a> <a href="/tags/window10/" style="font-size: 10px;">window10</a> <a href="/tags/windows/" style="font-size: 17.5px;">windows</a> <a href="/tags/windows10/" style="font-size: 12.5px;">windows10</a> <a href="/tags/xfce4/" style="font-size: 10px;">xfce4</a> <a href="/tags/xrdp/" style="font-size: 10px;">xrdp</a> <a href="/tags/库/" style="font-size: 10px;">库</a> <a href="/tags/搜狗输入法/" style="font-size: 10px;">搜狗输入法</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/网站模板/" style="font-size: 10px;">网站模板</a> <a href="/tags/设备/" style="font-size: 10px;">设备</a> <a href="/tags/资源/" style="font-size: 10px;">资源</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/07/hello-world3/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/07/hello-world2/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/08/Spring-Security学习笔记/">Spring-Security学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/08/优秀的资源站点/">优秀的资源站点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-android" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/android/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/android/">windows下创建android项目</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="windows下创建android项目"><a href="#windows下创建android项目" class="headerlink" title="windows下创建android项目"></a>windows下创建android项目</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h4 id="单位"><a href="#单位" class="headerlink" title="单位"></a>单位</h4><ul>
+<li>dp(dip) device independent pixels (设备独立像素)</li>
+<li>px(pixels)</li>
+<li>pt(point) 1pt = 1/72 英寸</li>
+<li>sp(scaled pixels)</li>
+</ul>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><ul>
+<li><p>C:\Program Files\Android-SDK-Manager\tools</p>
+</li>
+<li><p>C:\Program Files\Android-SDK-Manager\platform-tools</p>
+</li>
+<li><p>ANT_HOME  C:\Program Files\apache-ant-1.10.5</p>
+</li>
+<li><p>gradle4.1 C:\Program Files\Android Studio\gradle\gradle-4.1\bin</p>
+</li>
+</ul>
+<h3 id="gradle-仓库设置"><a href="#gradle-仓库设置" class="headerlink" title="gradle 仓库设置"></a>gradle 仓库设置</h3><pre><code>maven{
+        url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;
+    }</code></pre><h2 id="创建项目-默认ant构建"><a href="#创建项目-默认ant构建" class="headerlink" title="创建项目(默认ant构建)"></a>创建项目(默认ant构建)</h2><pre><code>android create project --target android-23 --package com.example.foo --name Foo --activity HelloWorldAcitvity --path .\MyAndroidd</code></pre><ul>
+<li>–name 生成的.apk文件名称</li>
+<li>–gradle 使用Gradle 格式</li>
+<li>–gradleversion Gradle版本</li>
+</ul>
+<h3 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h3><ul>
+<li>AndroidManifext.xml 告知Android新建项目有关内容的配置文件</li>
+<li>bin 生成的二进制代码文件(编译好的类文件)</li>
+<li>build.properties 可编辑的属性文件</li>
+<li>build.xml Ant构建控制文件</li>
+<li>project.properties 保存所用到的SDK版本和库</li>
+<li>其他已知文件</li>
+</ul>
+<h3 id="创建gradle构建项目"><a href="#创建gradle构建项目" class="headerlink" title="创建gradle构建项目"></a>创建gradle构建项目</h3><pre><code>android create project --target android-23 --package com.example.foo --gradle --gradle-version 4.6</code></pre><p>–name Foo –activity HelloWorldActivity –path HelloGradle</p>
+<h3 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h3><ul>
+<li><p>ant 构建</p>
+<p>  ant debug</p>
+</li>
+<li><p>gradle 构建</p>
+<p> gradlew build </p>
+</li>
+</ul>
+<h3 id="部署到虚拟机"><a href="#部署到虚拟机" class="headerlink" title="部署到虚拟机"></a>部署到虚拟机</h3><pre><code>android create avd -n my_droid -t 2 --abi default/x86_64</code></pre><ul>
+<li><p>android 调试桥服务器与模拟器进行通信</p>
+<p>  adb start-server<br>  emulator -avd my_droid</p>
+</li>
+</ul>
+<h2 id="adb-使用"><a href="#adb-使用" class="headerlink" title="adb 使用"></a>adb 使用</h2><ul>
+<li>安装应用<br>  adb install package.apk</li>
+<li>卸载应用<br>  adb uninstall com.exaple.packageName</li>
+<li>shell 打开手机shell<br>  adb shell</li>
+<li>查看日志<br>  adb logcat</li>
+</ul>
+<h3 id="ant-的缺点"><a href="#ant-的缺点" class="headerlink" title="ant 的缺点"></a>ant 的缺点</h3><p>ant 自身无法处理依赖项，而maven提供依赖项管理功能，maven是java环境中使用最广泛的构建工具</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="常用缩略短语"><a href="#常用缩略短语" class="headerlink" title="常用缩略短语"></a>常用缩略短语</h3><ul>
+<li>NPE (NUll Pointer Exception)</li>
+<li>ANR (Application Not Responding</li>
+<li>FC (Force Close)</li>
+</ul>
+<h3 id="Android-Studio"><a href="#Android-Studio" class="headerlink" title="Android Studio"></a>Android Studio</h3><ul>
+<li>查看日志 View-&gt;Tool Window-&gt;logcat   alt + 6</li>
+</ul>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>利用Log.d() 方法可以方便进行android应用程序调试, 该方法在LogCat窗口输出必要的值和信息.</p>
+<pre><code>import android.util.Log;
+Log.d(&quot;Testing&quot;, &quot;Checkpoint 1&quot;);</code></pre><p>Log.d() 方法不支持变量, 可以通过String.format()格式化输出.</p>
+<h4 id="检查代码"><a href="#检查代码" class="headerlink" title="检查代码"></a>检查代码</h4><pre><code>cmd: lint .
+androidStudio: Analyze-&gt;Inspect Code.</code></pre><h2 id="HttpClient"><a href="#HttpClient" class="headerlink" title="HttpClient"></a>HttpClient</h2><p>因为android6.0 以后官方不在支持Httpclient</p>
+<h3 id="添加库"><a href="#添加库" class="headerlink" title="添加库"></a>添加库</h3><h3 id="httpclient"><a href="#httpclient" class="headerlink" title="httpclient"></a>httpclient</h3><p>在模块build.properties </p>
+<ul>
+<li><p>在android{}标签中添加</p>
+<p>  useLibrary ‘org.apache.http.legacy’</p>
+</li>
+<li><p>在dependencies{}标签添加</p>
+<p>  compile group: ‘org.apache.httpcomponents’, name: ‘httpclient-android’, version: ‘4.3.5.1’</p>
+</li>
+</ul>
+<h3 id="design"><a href="#design" class="headerlink" title="design"></a>design</h3><ul>
+<li>desgin<br>  implementation ‘com.android.support:design:26.0.0-beta1’</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/android/" data-id="ck1g6qpqh000gut9klvkad2o0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-github" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/github/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/github/">github的使用学习记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="查看配置信息"><a href="#查看配置信息" class="headerlink" title="查看配置信息"></a>查看配置信息</h2><pre><code>git config --list</code></pre><h2 id="本地配置"><a href="#本地配置" class="headerlink" title="本地配置"></a>本地配置</h2><pre><code>git config --global user.name &quot;warmfrog&quot;
+git config --global user.email &quot;1594914459@qq.com&quot;</code></pre><h2 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h2><pre><code>echo &quot;# ShareBook&quot; &gt;&gt; README.md
+git init
+git add README.md
+git commit -m &quot;first commit&quot;
+git remote add origin https://github.com/warmfrog/Sharebook.git
+or
+git remote add origin git@github.com:warmfrog/Sharebook.git
+git push -u origin master</code></pre><h2 id="push-已存在的仓库"><a href="#push-已存在的仓库" class="headerlink" title="push 已存在的仓库"></a>push 已存在的仓库</h2><pre><code>git config --global user.name &quot;warmfrog&quot;
+git config --global user.email &quot;1594914459@qq.com&quot;
+
+git remote add origin https://github.com/warmfrog/ShareBook.git
+git push -u origin master</code></pre><h2 id="git-push-每次都需要输入用户名和密码"><a href="#git-push-每次都需要输入用户名和密码" class="headerlink" title="git push 每次都需要输入用户名和密码"></a>git push 每次都需要输入用户名和密码</h2><p>为了不每次都输入用户名和密码，删除以https提交的方式，然后修改提交方式</p>
+<pre><code>git remote rm origin
+git remote add orign git@github.com:warmfrog/Sharebook.git</code></pre><p>再次push时</p>
+<pre><code>git push -u origin master</code></pre><p>后面就可以使用</p>
+<pre><code>git push</code></pre><p>来直接push了</p>
+<h2 id="修改项目后的push"><a href="#修改项目后的push" class="headerlink" title="修改项目后的push"></a>修改项目后的push</h2><h3 id="修改文件后push"><a href="#修改文件后push" class="headerlink" title="修改文件后push"></a>修改文件后push</h3><p>将clone下来的项目修改后，如果需要push，则先将修改后的文件add，commit后，再push</p>
+<pre><code>git add 修改的文件
+git commit -m &quot;修改的内容提示&quot;
+git push</code></pre><h3 id="删除后文件后push"><a href="#删除后文件后push" class="headerlink" title="删除后文件后push"></a>删除后文件后push</h3><pre><code>git rm 删除的文件
+git commit -m &quot;删除的信息&quot;
+git push</code></pre><h4 id="批量删除或者修改后"><a href="#批量删除或者修改后" class="headerlink" title="批量删除或者修改后"></a>批量删除或者修改后</h4><pre><code>git commit -a
+git push</code></pre><h2 id="隐藏本地改变，并-pull-远程仓库"><a href="#隐藏本地改变，并-pull-远程仓库" class="headerlink" title="隐藏本地改变，并 pull 远程仓库"></a>隐藏本地改变，并 pull 远程仓库</h2><pre><code>git stash</code></pre><p>当我们改变本地文件后，使用git pull命令时会有冲突，这时可以用stash隐藏改变，然后pull。pull之后可以</p>
+<pre><code>git stash apply 恢复改变
+git stash list  列出改变
+git stash drop  删除改变
+git help stash  查看更多stash命令</code></pre><h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>创建分支</p>
+<pre><code>git branch hello</code></pre><p>转到分支</p>
+<pre><code>git checkout hello</code></pre><p>查看分支</p>
+<pre><code>git branch</code></pre><p>查看所有分支，包括远程</p>
+<pre><code>git branch -a</code></pre><p>删除远程分支</p>
+<pre><code>git push origin :remote_branch_name
+git push orinin :issu8</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/github/" data-id="ck1g6qpqi000iut9kd6ug5duz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Spark机器学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/Spark机器学习笔记/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/Spark机器学习笔记/">Spark机器学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><p>机器学习是数据通过算法构建出模型并对模型进行评估，评估的性能如果达到要求就拿这个模型来测试其他数据，如果达不到要求就要调整算法来重新建立模型，再次进行评估，如此循环反复，最终获得满意的经验来处理其他数据。</p>
+<ol>
+<li>监督学习</li>
+</ol>
+<p>监督是从给定的训练数据集中学习一个函数(模型)，当新的数据到来时，可以</p>
+<h2 id="官方文档地址"><a href="#官方文档地址" class="headerlink" title="官方文档地址"></a><a href="http://spark.apache.org/docs/latest/ml-guide.html" target="_blank" rel="noopener">官方文档地址</a></h2><p>MLlib 是Spark 机器学习库。它的目标是使实际的机器学习规模化，简单化。简单讲，它提供了如下工具：</p>
+<ul>
+<li>机器学习算法(ML Algorithms)：常用的机器学习算法如 聚类(classification), 回归(regression), 聚簇(clustering), 协同过滤(collaborative filtering)</li>
+<li>特征化(Featurization): 特征提取，转换，降维，选择</li>
+<li>流水线(Pipelines): 构造，评估，调优(tuning) 机器学习管道(ML Pipelines).</li>
+<li>持久化(Persistence): 保存和载入算法，模型，和流水线(Pipelines).</li>
+<li>工具：线性代数，统计，数据处理</li>
+</ul>
+<h2 id="推荐系统-Recommender-system"><a href="#推荐系统-Recommender-system" class="headerlink" title="推荐系统(Recommender system)"></a><a href="https://en.wikipedia.org/wiki/Recommender_system#Collaborative_filtering" target="_blank" rel="noopener">推荐系统(Recommender system)</a></h2><p>推荐系统典型的通过以下两种方式产生推荐列表：通过<a href="https://en.wikipedia.org/wiki/Collaborative_filtering" target="_blank" rel="noopener">协同过滤</a>或者通过<a href="https://en.wikipedia.org/wiki/Content-based_filtering" target="_blank" rel="noopener">基于内容的过滤</a>(基于个性方法)。<a href="https://en.wikipedia.org/wiki/Collaborative_filtering" target="_blank" rel="noopener">协同过滤</a>从用户过去的行为和其他用户的相同决定构建模型。这个模型用于预测物品或者用户感兴趣的。<a href="https://en.wikipedia.org/wiki/Content-based_filtering" target="_blank" rel="noopener">基于内容的过滤</a>方法利用一系列离散的物品特点来推荐另外拥有相同特点的物品。这些方法通常结合为<a href="https://en.wikipedia.org/wiki/Recommender_system#Hybrid_recommender_systems" target="_blank" rel="noopener">混合推荐系统(Hybrid Recommender Systems)</a>.</p>
+<h2 id="协同滤波-Collaborative-filter"><a href="#协同滤波-Collaborative-filter" class="headerlink" title="协同滤波(Collaborative filter)"></a>协同滤波(Collaborative filter)</h2><p>设计一个推荐系统广泛使用的一个方法是协同滤波。协同滤波方法基于收集和分析大量用户的行为，活动，喜好，基于与其他用户的相似度预测用户会的喜好。协同滤波的关键优点是它不依赖于机器分析内容，因此，它有能力精确推荐复杂的物品例如电影而不需要去了解物品本身。在推荐系统中很多算法用来测量用户相似度或者物品相似度。例如，k-nearest neighbor (k-NN)方法和 Allen首先实现的<a href="https://en.wikipedia.org/wiki/Pearson_correlation" target="_blank" rel="noopener">皮尔森纠正(Pearson Correlation)</a>.</p>
+<p>协同滤波是基于人们过去赞同的未来也会赞同的假设，并且他们会喜欢与他们过去喜欢的物品相似的物品。</p>
+<p>当从用户模型构建行为时，一个区别通常是显式的数据收集和隐式的数据收集。</p>
+<p>协同滤波著名的例子之一是 item-item的协同滤波， Amazon.com 推荐系统的流行推荐算法。</p>
+<p>协同滤波算法一个典型类型是使用<a href="https://en.wikipedia.org/wiki/Matrix_factorization_(recommender_systems)" target="_blank" rel="noopener">矩阵分解</a>，一个(低秩矩阵近似](<a href="https://en.wikipedia.org/wiki/Low_rank_approximation)的方法。" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Low_rank_approximation)的方法。</a></p>
+<p>协同滤波方法是基于内存的分类和基于协同滤波的模型。基于内存方法的一个著名示例是基于用户的算法，基于模型的算法是 <a href="https://en.wikipedia.org/wiki/Recommender_system#cite_note-42" target="_blank" rel="noopener">Kernel-Mapping Recommender</a>。</p>
+<p>协同滤波常用于推荐系统。这种技术是为了补充user-item关联矩阵的缺失的入口。spark.mllib目前支持基于模型的协同滤波，用于预测缺失的由一小部分潜在因素描述的用户和产品关系的入口。sparkmllib使用ALS(alternating least squares)(交替最小二乘法)算法来学习这些潜在的因素。spark.mllib的实现拥有下列参数:<br>jiqi</p>
+<ul>
+<li>numBlocks 是用来并行化计算的块得数量(设置-1自动配置)</li>
+<li>rank 是特点数量(通常被引用作为潜在因子数量)</li>
+<li>iterations 是ALS 算法要运行的迭代次数</li>
+<li>lambda 明确了正则化(regularization)参数</li>
+<li>implicitPrefs 明确是否使用ALS变量的精确的反馈或者使用隐式的反馈数据</li>
+<li>alpha 是可应用的参数暗示用于控制在偏好观察中基线自信ALS的反馈变量</li>
+</ul>
+<h2 id="显式-Explicit-vs-隐式反馈-implicit-feedback"><a href="#显式-Explicit-vs-隐式反馈-implicit-feedback" class="headerlink" title="显式(Explicit) vs. 隐式反馈(implicit feedback)"></a>显式(Explicit) vs. 隐式反馈(implicit feedback)</h2><p>基于矩阵分解的协同滤波标准方法user-item矩阵作为具体的偏好，例如，用户给电影的评分。</p>
+<p>通常现实世界中使用仅有隐式反馈的样例(视图，点击，购买，喜好，分享等). spark.mllib处理这种数据的方法采纳于隐式数据集的协同滤波(Collaborative Filtering for Implicit Feddback Datasets). 必要的，替代直接试图使用评分矩阵，这种方法将数据看做对用户动作(点击数，用户看电影花费的累计)观察的强度表示.这些数字关系到观察用户偏好的信心水平，而不是对item项显式的评分。这种模型试图找到潜在因子的能够用来预测用户对某个item的预期偏好.</p>
+<h2 id="正则参数的规模"><a href="#正则参数的规模" class="headerlink" title="正则参数的规模"></a>正则参数的规模</h2><p>自v1.1版本，我们在更新用户因子方面使用规模化(scale)正则参数lambda来用由用户生成的评分解决每个最小平方问题,或者更新产品因子的评分。这种方法叫做”ALS-WR”在 “<a href="http://dx.doi.org/10.1007/978-3-540-68880-8_32" target="_blank" rel="noopener">Netflix Prize 的大规模协同滤波</a>”这一章讨论过.它使lamda更少的依赖数据集的规模，因此我们可以使用从样本集中学得的最好参数到全部数据集，并且期待相似的性能。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>下列实例，载入评分数据。每一行由一个用户，一个产品，一个评分组成。我们使用默认的假定评分为显式的ALS.train()方法。我们通过测量评分预测中的方差(Mean Squared Error)评估推荐模型.</p>
+<p>更多细节参考 <a href="http://spark.apache.org/docs/2.4.0/api/java/org/apache/spark/mllib/recommendation/ALS.html" target="_blank" rel="noopener">ALS Java docs</a></p>
+<pre><code>import scala.Tuple2;
+
+import org.apache.spark.api.java.*;
+import org.apache.spark.mllib.recommendation.ALS;
+import org.apache.spark.mllib.recommendation.MatrixFactorizationModel;
+import org.apache.spark.mllib.recommendation.Rating;
+import org.apache.spark.SparkConf;
+
+SparkConf conf = new SparkConf().setAppName(&quot;Java Coolaborative Filtering Example&quot;);
+JavaSparkContext jsc = new JavaSparkContext(conf);
+
+//load and parse the data
+String path = &quot;data/mllib/als/test.data&quot;;
+JavaRDD&lt;String&gt; data = jsc.textFile(path);
+JavaRDD&lt;Rating&gt; ratings = data.map(s -&gt; {
+    String[] sarray = s.split(&quot;,&quot;);
+    return new Rating(Integer.parseInt(sarray[0]),
+        Integer.parseInt(sarray[1]),
+        Double.parseDouble(sarray[2]));
+});
+
+//Build the recommendation model using ALS
+int rank = 10;
+int numIterations = 10;
+MatrixFactorizationModel model = ALS.train(JavaRDD.toRDD(ratings), rank, numIterations, 0.01);
+
+//Evaluate the model on rating data
+JavaRDD&lt;Tuple2&lt;Object, Object&gt;&gt; userProducts = rating.map(r -&gt; new Tuple2&lt;&gt;(r.user(), r.product()));
+JavaPairRDD&lt;Tuple2&lt;Integer, Integer&gt;, Double&gt; predictions = JavaPairRDD.fromJavaRDD(
+    model.predict(JavaRDD.toRDD(userProducts)).toJavaRDD()
+         .map(r -&gt; new Tuple&lt;&gt;(new Tuple2&lt;&gt;(r.user(), r.prodduct()), r.rating()))
+    );
+JavaRDD&lt;Tuple2&lt;Double, Double&gt;&gt; rateAndPreds = JavaPairRDD.fromJavaRDD(
+    ratings.map(r -&gt; new Tuple2&lt;&gt;(new Tuple2&lt;&gt;(r.user(), r.product()), r.rating()))
+    .join(predictions).values();
+double MSE = rateAndPreds.mapToDouble(pair -&gt;{
+    double err = pair._1() - pair._2();
+    return err * err;
+}).mean();
+System.out.println(&quot;mean Squared Error = &quot; + MSE ));
+
+//save and load model
+model.save(jsc.sc(), &quot;target/tmp/myCollaborativeFilter&quot;);
+MatrixFacorizationModel sameModel = MatrixFactorizationModel.load(jsc.sc(),
+    &quot;target/tmp/myCollaborativeFilter&quot;);</code></pre><h2 id="MLlib-中的聚类和分类"><a href="#MLlib-中的聚类和分类" class="headerlink" title="MLlib 中的聚类和分类"></a>MLlib 中的聚类和分类</h2><p>聚类和分类是机器学习中两个常用的算法，聚类将数据分开为不同的集合，分类对新数据进行类别预测。</p>
+<h3 id="聚类和分类"><a href="#聚类和分类" class="headerlink" title="聚类和分类"></a>聚类和分类</h3><p>(1)什么是聚类</p>
+<p>聚类(Clustering)是将数据对象分组成多个类或簇(Cluster),它的目标是：在同一个簇中的对象之间具有较高的相似度，不同簇中的对象差别很大。聚类是人们日常生活中的常见行为，“物以类聚，人以群分”,其核心思想在于分组，人们不断改进聚类模式来学习如何区分各个事务和人.</p>
+<p>(2)什么是分类</p>
+<p>数据仓库、数据库、或其他信息库中有许多可以为商业、科研等活动的决策提供所需要的知识。分类和预测即是其中的两种数据分析形式，可以用来抽取能够描述重要数据集合或预测未来数据趋势。分类方法(Classification)用于预测数据对象的离散类别(Categorical Label)；预测方法(Prediction)用于预测数据对象的连续取值。</p>
+<pre><code>**分类流程**: 新样本-&gt;特征选取-&gt;分类-&gt;评价
+**训练流程**: 训练集-&gt;特征选取-&gt;训练-&gt;分类器</code></pre><p>最初，机器学习的分类应用大多是在这些方法及基于内存基础上所构造的算法。目前，数据挖掘方法都要求具有基于外存以处理大规模数据集合能力，同时具有可扩展能力。</p>
+<h3 id="MLlib-中的聚类和分类-1"><a href="#MLlib-中的聚类和分类-1" class="headerlink" title="MLlib 中的聚类和分类"></a>MLlib 中的聚类和分类</h3><p>MLlib目前已经实现了K-Means聚类算法，朴素贝叶斯和决策树分类算法。</p>
+<p>(1) K-Means 算法</p>
+<p>K-Means聚类算法能够轻松的对聚类问题建模，并且能够在分布式的环境下运行。</p>
+<p>K-Means 聚类算法中的K是聚类的数目，在算法中会强制要求用户数据。如果将新闻聚类成注入政治、经济、文化等大类，可以选择10<del>20的数字作为K。因为这种顶级类别的数量是很小的。如果要对这些新闻详细分类，选择50</del>100的数字也是没有问题的。</p>
+<p>K-Means聚类算法主要可以分为三步。第一步是为待聚类的点寻找聚类中心；第二部是计算每个点聚类中心的距离，将每个点聚类到离该点最近的聚类中去；第三部是计算聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心点。反复执行第二部，知道聚类中心不再进行大范围的移动，或者聚类次数达到要求为止。</p>
+<p>(2)MLlib 之 K-Means源码解析</p>
+<p>MLlib的K-Means的原理是：在同一个数据集上，跑多个K-Means算法(每个成为一个run),然后返回效果最好的那个聚类的类簇中心。初始的类簇中心店的选取有两种方法，一种是随机，另一种是采用KMeans||(KMeans++ 的xianshi法的停止条件是迭代次数达到设置的次数，或者在某一次迭代后所有run的K-Means算法都收敛。</p>
+<ol>
+<li>类簇中心初始化</li>
+</ol>
+<p>对每个运行的K-Means随机选择K个点作为初始类簇：</p>
+<pre><code>private def initRandom(data: RDD[Array[Double]]): Array[ClusterCenters] = {
+    //Sample all the cluster centers in one pass to avoid repeated scans
+val sample = data.takeSample(true, runs * k, new Random().nextInt()).toSeqArray
+.tabulate(runs)(r =&gt; sample.slice(r * k, (r + 1).toArray))
+}</code></pre><ol start="2">
+<li>计算属于某个类簇的点</li>
+</ol>
+<p>在每一次迭代中，首先会计算属于各个类簇的点，然后更新各个类簇的中心</p>
+<pre><code>//K-Means算法的并行实现通过Spark的mapPartitions函数，通过该函数获取到分区的迭代器。可以在每个分区内计算该分区内的点属于哪个类簇，之后对于每个运行算法中的每个类簇计算属于该类簇的点的个数以及累加和。
+
+val totalContribs = data.mapPartitions { points =&gt;
+val runs = activeCenters.length
+val k = activeCenters(0).length
+val dims = activeCenters(0)(0).length
+
+val sums = Array.fill(runs, k)(new DoubleMatrix(dims))
+val counts = Array.fill(runs, k)(0L)
+
+for(point &lt;- points; (centers, runIndex) &lt;- activeCenters.zipWithIndex){
+//找到距离改点最近的聚类中心点
+val (bestCenter, const) = KMeans.findClosest(centers, point)
+//统计该运行算法开销
+costAccum(runIndex) += cost
+//将距离该点最近的类簇的点数量加1，sum.divi(count)就是了I类簇的新中心
+counts(runIndex)(bestCenter) +=1
+}
+
+val contribs = for(i &lt;- until runs; j &lt;- 0 until k) yield{
+    ((i,j), (sums(i)(j), counts(i)(j)))
+}
+contribs.iterator
+//对于每个运行算法的每个类簇计算属于该类簇的点的个数和加和
+}.reduceByKey(mergeContribs).collectAsMap()</code></pre><h2 id="DataFrame-based-API-is-primary-API"><a href="#DataFrame-based-API-is-primary-API" class="headerlink" title="DataFrame-based API is primary API"></a><a href="http://spark.apache.org/docs/latest/mllib-statistics.html" target="_blank" rel="noopener">DataFrame-based API is primary API</a></h2><p>0, 基于RDD的API在spark.mllib 中现在进入维护状态。现在Spark主要的机器学习API是在spark.ml包中的基于 DataFrame 的API.</p>
+<h2 id="MLlib-RDD-based-API"><a href="#MLlib-RDD-based-API" class="headerlink" title="MLlib: RDD-based API"></a>MLlib: RDD-based API</h2><pre><code>package spark.mllib</code></pre><h3 id="DataTypes"><a href="#DataTypes" class="headerlink" title="DataTypes"></a>DataTypes</h3><p>MLlib支持向量和矩阵存储在单机上，同样支持存储在一个或多个RDD的分布式矩阵。本地向量和本地矩阵是服务于公共接口的简单数据模型。底层的线性代数操作有<a href="http://www.scalanlp.org/" target="_blank" rel="noopener">Breeze</a>提供。</p>
+<h4 id="本地向量-Local-vector"><a href="#本地向量-Local-vector" class="headerlink" title="本地向量(Local vector)"></a>本地向量(Local vector)</h4><p>本地向量有整数类型的和0为索引开始的和双类型的值，存储在单机上。MLlib支持两种类型的本地向量：稠密和稀疏的。一个稠密向量有一个二位数组支持表示它的入口值，而一个稀疏矩阵由两个并行数组支持：索引和值。例如，一个向量(1.0, 0.0, 3.0)可以被表示为稠密形式[1.0, 0.0, 3.0] 或者稀疏形式(3,[0,2],[1.0,3.0]), 3 是向量大小。</p>
+<p>本地向量类是<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/Vector.html" target="_blank" rel="noopener">Vector</a>,我们提供两种实现：<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/DenseVector.html" target="_blank" rel="noopener">DenseVector</a> 和<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/SparseVector.html" target="_blank" rel="noopener">SparseVector</a>. 我们推荐使用Vectors 中实现的工厂方法创建本地向量，参考<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/Vector.html" target="_blank" rel="noopener">Ｖector Java docs</a> 和<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/Vectors.html" target="_blank" rel="noopener">Vectors Java docs</a>查看更多细节。</p>
+<pre><code>import org.apache.spark.mllib.linalg.Vector;
+import org.apache.spark.mllib.linalg.Vectors;
+
+Vector dv = Vectors.dense(1.0, 0.0, 3.0);
+Vector sv = Vectors.sparse(3, new int[]{0,2}, new double[]{1.0, 3.0});</code></pre><h4 id="标签点-Labeled-point"><a href="#标签点-Labeled-point" class="headerlink" title="标签点(Labeled point)"></a>标签点(Labeled point)</h4><p>一个标签点是一个本地向量，稀疏的或者稠密的，与一个标签/回复相关联。在ＭLlib中，标签点在有监督的学习算法(supervised learning algorithms)中使用. 我们使用double存储一个标签，如此我们就能在回归(regression)和聚类(classification)中使用标签点了。对于二进制分类，一个标签可能是０或１．对于多分类，标签可能是从０，１，２，３开始的索引。</p>
+<p>一个标签点表示为<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/regression/LabeledPoint.html" target="_blank" rel="noopener">LabeledPoint</a></p>
+<pre><code>import org.apache.spark.mllib.linalg.Vectors;
+import org.apache.spark.mllib.regression.LabeledPoint;
+
+LabeledPoint pos = new LabeledPoint(1.0, Vectors.dense(1.0, 0.0, 3.0));\
+LabeledPoint neg = new LabeledPoint(0.0, Vectors.sparse(3, new int[]{0,2}, new double[]{1.0, 3.0}));</code></pre><h5 id="Sparse-data"><a href="#Sparse-data" class="headerlink" title="Sparse data"></a>Sparse data</h5><p>实际中很常见的是拥有稀疏的训练数据。MLlib 支持读取存储为LIBSVM格式的训练示例，　是<a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/" target="_blank" rel="noopener">LIBSVM</a>　和　<a href="http://www.csie.ntu.edu.tw/~cjlin/liblinear/" target="_blank" rel="noopener">LIBLINEAR</a>　默认的数据格式。它是一种每一个使用如下方式表示稀疏标签特征向量的文本格式。</p>
+<pre><code>label index1:value1 index2:value2</code></pre><p>索引以递增的顺序，载入完成后，特征索引被转换为以０作为开始的索引。</p>
+<p><a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/util/MLUtils.html" target="_blank" rel="noopener">MLUtils.loadLibSVMFile</a>读取存储为LIBSVM格式的训练示例。</p>
+<pre><code>import org.apache.spark.mllib.regression.LabeledPoint;
+import org.apache.spark.mllib.util.MLUtils;
+import org.apache.spark.api.java.JavaRDD;
+
+JavaRDD&lt;LabeledPoint&gt; examples = MLUtils.loadLibSVMFile(jsc.sc(), &quot;data/mllib/sample_libsvm_data.txt&quot;).toJavaRDD();</code></pre><h4 id="本地矩阵"><a href="#本地矩阵" class="headerlink" title="本地矩阵"></a>本地矩阵</h4><p>一个本地矩阵是一个有整数类型的行和列索引的双类型值，存储在单机上。ＭL支持稠密矩阵，</p>
+<p>本地矩阵的基础类是<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/Matrix.html" target="_blank" rel="noopener">Matrix</a>,我们提供两种实现：<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/SparseMatrix.html" target="_blank" rel="noopener">SparseＭatrix</a>和<a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/DenseMatrix.html" target="_blank" rel="noopener">DenseMatrix</a>. 我们推荐使用Matrices中的工厂方法。记住，本地矩阵按列存储。</p>
+<pre><code>import org.apache.spark.mllib.linalg.Matrix;
+import org.apache.spark.mllib.linalg.Matrices;
+
+Matrix dm = Matrices.dense(3, 2, new double[]{1.0, 3.0, 5.0, 2.0, 4.0, 6.0});
+Matrix sm = Matrices.sparse(3, 3, new int[]{0, 1, 3}, new int[]{0,2,1}, new double[]{9, 6, 8});</code></pre><h3 id="分布式矩阵"><a href="#分布式矩阵" class="headerlink" title="分布式矩阵"></a>分布式矩阵</h3><p>一个分布式矩阵是一个行列索引为long类型的双精度类型的值，在一个或多个RDD上分布存储。选择合适的格式存储大规模和分布式矩阵是很重要的。转换一个分布式矩阵到不同的合适可能需要全局的梳理(shuffle)，代价是昂贵的。目前已经实现了四种类型的分布式矩阵。</p>
+<p>基础类型是 RowMatrix. 一个行矩阵是一个面向行分布的矩阵没有无意义的行索引， 例如一个集合向量集合。它有RDD的一行为基础，每一行是一个本地向量。我们假定行矩阵列的数量不是很巨大，这样单本地向量可以合理的与驱动程序交流沟通，因此能够在单个节点上存储，操作。一个有索引的行矩阵(IndexedRowMatrix)相似于带索引的行矩阵(RowMatrix), IndexedRowMatrix可以用来索引行和执行join操作。一个坐标矩阵(CoordinateMatrix) 是分布式矩阵存储为坐标列表(<a href="https://en.wikipedia.org/wiki/Sparse_matrix#Coordinate_list_.28COO.29" target="_blank" rel="noopener">coordianate list</a>)的格式,由RDD入口提供支持。一个块矩阵(BlockMatrix)是一个分布式矩阵由Matrix RDD(是一个(Int, Int, Matrix)的元祖)支持。</p>
+<h4 id="RowMatrix"><a href="#RowMatrix" class="headerlink" title="RowMatrix"></a>RowMatrix</h4><pre><code>import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.mllib.linalg.Vector;
+import org.apache.spark.mllib.linalg.distributed.RowMatrix;
+
+JavaRDD&lt;Vector&gt; rows = ...;
+RowMatrix mat = new RowMatrix(rows.rdd());
+
+long m = mat.numRows()
+long n = mat.numCols()</code></pre><h4 id="IndexedRowMatrix"><a href="#IndexedRowMatrix" class="headerlink" title="IndexedRowMatrix"></a>IndexedRowMatrix</h4><p>一个 <a href="http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/linalg/distributed/IndexedRowMatrix.html" target="_blank" rel="noopener">IndexedRowMatrix</a>可以从一个JavaRDD<indexedrow> 实例创建，IndexedRow 是一个(long, Vector)的封装。一个IndexRowMatrix 可以去掉索引转换为RowMatrix.</indexedrow></p>
+<pre><code>import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.mllib.linalg.distributed.IndexedRow;
+import org.apache.spark.mllib.linalg.distributed.IndexedRowMatrix;
+import org.apache.spark.mllib.linalg.distributed.RowMatrix;
+
+JavaRDD&lt;IndexedRow&gt; rows = ...;
+IndexedRowMatrix mat = new IndexedRowMatrix(rows.rdd());
+long m = mat.numRows();
+long n = mat.numCols();</code></pre><h4 id="CoordinateMatrix"><a href="#CoordinateMatrix" class="headerlink" title="CoordinateMatrix"></a>CoordinateMatrix</h4><p>CoordinateMatrix是有RDD入口提供支持的分布式矩阵。每个入口是(i: Long, j: Long, value: Double)类型的元组. CoordinateMatrix 只应该在矩阵维度很大而且矩阵非常稀疏的情况下才能使用。</p>
+<p>CoordinateMatrix 可以从一个JavaRDD<matrixentry>实例创建，MatrixEntry是一个(long,long,double)的封装， CoordinateMatrix 可以转换为IndexedRowMatrix通过调用toIndexedRowMatrix.</matrixentry></p>
+<pre><code>import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.mllib.linalg.distributed.CoordinateMatrix;
+import org.apache.spark.mllib.linalg.distributed.IndexedRowMatrix;
+import org.apache.spark.mllib.linalg.distributed.MatrixEntry;
+
+JavaRDD&lt;MatrixEntry&gt; entries = ...
+CoordinateMatrix mat = new CoordinateMatrix(entries.rdd());
+
+long m = mat.numRows();
+long n = mat.numCols();
+
+IndexedRowMatrix indexedRowMatrix = mat.toIndexedRowMatrix();</code></pre><h4 id="BlockMatrix"><a href="#BlockMatrix" class="headerlink" title="BlockMatrix"></a>BlockMatrix</h4><p>BlockMatrix 有RDD的MatrixBlocks提供支持，MatrixBlocks是一个((Int, Int), Matrix)类型的元祖,(Int,Int)是块索引，Matrix 是一个子矩阵。 BlockMatrix 支持add，multiply操作，validate()方法用于验证BlockMatrix是否合适的创建。</p>
+<pre><code>JavaRDD&lt;MatrixEntry&gt; entries=...;
+CoordinateMatrix coorMat = new CoordinateMatrix(entries.rdd());
+BlockMatrix matA = coorMat.toBlockMatrix().cache();
+mat.validate();
+BlocakMatrix ata = matA.transpose().multiply(matA);</code></pre><h2 id="基于RDD-Api的基础的统计-Basic-Statistics-RDD-based-API"><a href="#基于RDD-Api的基础的统计-Basic-Statistics-RDD-based-API" class="headerlink" title="基于RDD Api的基础的统计(Basic Statistics -RDD-based API)"></a>基于RDD Api的基础的统计(Basic Statistics -RDD-based API)</h2><p>我们通过在Statistics中的colStats函数获得RDD[Vector]的列总结统计。</p>
+<pre><code>import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.mllib.linalg.Vector;
+import org.apache.spark.mllib.linalg.Vectors;
+
+import org.apache.spark.mllib.stat.MultivariateStatisticalSummary;
+import org.apache.spark.mllib.stat.Statistics;
+
+JavaRDD&lt;Vector&gt; mat = jsc.parallelize(
+    Arrays.asList(
+        Vectors.dense(1.0, 10.0, 100.0);
+        Vectors.dense(2.0, 20.0, 200.0);
+        Vectors.dense(3.0, 30.0, 300.0);
+    )
+);
+
+MultivariateStatisticalSummary summary = Statistics.colStats(mat.rdd());
+System.out.println(summary.mean());    
+System.out.println(summary.variance());            //列宽变量
+System.out.println(summary.numNonzeros(());        //每一列的非0数</code></pre><h3 id="相关性"><a href="#相关性" class="headerlink" title="相关性"></a>相关性</h3><p>统计学中计算两列数据的相关性是很常见的。在spark.mllib中我们提供了在很多列之间计算列祖相关的灵活性。目前支持的相关性方法是 Pearson 和 Spearman 相关。</p>
+<pre><code>[Statistics](http://spark.apache.org/docs/latest/api/java/org/apache/spark/mllib/stat/Statistics.html)提供了方法计算两列之间的相关性。取决于输入类型，两个JavaDoubleRDDs 或者JavaRDD&lt;Vector&gt;,输出相应的为Double或者相关矩阵。
+
+import java.util.Arrays;
+
+import org.apache.spark.api.java.JavaDoubleRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.mllib.linalg.Matrix;
+import org.apache.spark.mllib.linalg.Vector;
+import org.apache.spark.mllib.linalg.Vectors;
+import org.apache.spark.mllib.stat.Statistics;
+
+//与seriesX必须拥有相同的分区
+JavaDoubleRDD seriesX = jsc.parallelizeDoubles(
+    Arrays.asList(11.0, 22.0, 33.0, 33.0, 555.0)
+);
+
+//使用Pearson计算相关性
+//如果没有明确方法，Pearson是默认方法
+Double correlation = Statics.corr(seriesX.srdd(), seriesY.srdd(), &quot;pearson&quot;);
+System.out.println(&quot;Correalation is: &quot; + corrlation);
+
+JavaRDD&lt;Vector&gt; data = jsc.parallelize(
+    Arrays.asList(
+        Vectors.dense(1.0, 10.0, 100.0),
+        Vectors.dense(2.0, 20.0, 200.0),
+        Vectors.dense(5.0, 33.0, 366.0)
+    )
+);
+
+//计算相关性矩阵使用Peason&apos;s 方法
+//使用 “spearman&quot; 作为Spearman方法</code></pre><h3 id="分层样本-Stratified-sampleing"><a href="#分层样本-Stratified-sampleing" class="headerlink" title="分层样本(Stratified sampleing)"></a>分层样本(Stratified sampleing)</h3><p>不想其他统计工具，</p>
+<h2 id="基于RDD的聚类和回归-Classfication-and-Regression-RDD-based"><a href="#基于RDD的聚类和回归-Classfication-and-Regression-RDD-based" class="headerlink" title="基于RDD的聚类和回归(Classfication and Regression - RDD-based)"></a><a href="http://spark.apache.org/docs/latest/mllib-classification-regression.html" target="_blank" rel="noopener">基于RDD的聚类和回归(Classfication and Regression - RDD-based)</a></h2><p>spark.mllib包支持各种方法，二分聚类，多类聚类，回归分析。下表概括了每种类型的支持算法。</p>
+<table>
+<thead>
+<tr>
+<th align="left">问题类型(Problem Type)</th>
+<th align="left">支持的方法(Supported Method)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">二分聚类(Binary Classification)</td>
+<td align="left">线性 SVMS(LINEAR SVMs), 逻辑回归(logistic regression), 决策树(decision trees), 随机森林(random forests), 梯度增加树(gradient-bosted trees), 朴素贝叶斯(naive Bayes)</td>
+</tr>
+<tr>
+<td align="left">多类聚类</td>
+<td align="left">逻辑回归(logistic regression), 决策树(decision trees), 随机森林(random forests),朴素贝叶斯(naive Bayes)</td>
+</tr>
+<tr>
+<td align="left">回归</td>
+<td align="left">线性最小平方(linear lease squares), 套索(Lasso), 山脊回归(ridge regression), 决策树(decision trees), 随机森林(random forests), 梯度增加树(gradient-bosted trees), 等压回归(isotonic regression)</td>
+</tr>
+</tbody></table>
+<h3 id="线性方法"><a href="#线性方法" class="headerlink" title="线性方法"></a><a href="http://spark.apache.org/docs/latest/mllib-linear-methods.html" target="_blank" rel="noopener">线性方法</a></h3><h4 id="Mathematical-formulation"><a href="#Mathematical-formulation" class="headerlink" title="Mathematical formulation"></a>Mathematical formulation</h4><h4 id="Loss-functions"><a href="#Loss-functions" class="headerlink" title="Loss functions"></a>Loss functions</h4><h4 id="Regularizers"><a href="#Regularizers" class="headerlink" title="Regularizers"></a>Regularizers</h4><h4 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h4><h4 id="分类-Classifacation"><a href="#分类-Classifacation" class="headerlink" title="分类(Classifacation)"></a>分类(Classifacation)</h4><p>最常用的分类是二分聚类，分为有名的正值和负值。如果超过两类，叫多类分类。spark.mllib支持两种线性分类方法</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/Spark机器学习笔记/" data-id="ck1g6qpqj000kut9kch188go8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ml/">ml</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark/">spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-javaweb_tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/javaweb_tomcat/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/javaweb_tomcat/">javaweb_tomcat</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="tomcat-篇"><a href="#tomcat-篇" class="headerlink" title="tomcat 篇"></a>tomcat 篇</h2><ul>
+<li>FAQ <a href="https://wiki.apache.org/tomcat/FAQ" target="_blank" rel="noopener">https://wiki.apache.org/tomcat/FAQ</a></li>
+<li>WIKI <a href="https://wiki.apache.org/tomcat/" target="_blank" rel="noopener">https://wiki.apache.org/tomcat/</a></li>
+<li>tomcat9.0 home page <a href="http://tomcat.apache.org/tomcat-9.0-doc/index.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-9.0-doc/index.html</a></li>
+</ul>
+<h2 id="tomcat-安装路径"><a href="#tomcat-安装路径" class="headerlink" title="tomcat 安装路径"></a>tomcat 安装路径</h2><pre><code>C:\Program Files\Apache Software Foundation\Tomcat 9.0</code></pre><h3 id="环境变量设置"><a href="#环境变量设置" class="headerlink" title="环境变量设置"></a>环境变量设置</h3><ul>
+<li>CATALINA_HOME      “C:\Program Files\Apache Software Foundation\Tomcat 9.0”</li>
+<li>CLASS_PATH         %CATALINA_HOME%\lib;</li>
+</ul>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>/bin</li>
+<li>/conf</li>
+<li>/logs</li>
+<li>/webapps</li>
+</ul>
+<h2 id="启动tomcat-服务器"><a href="#启动tomcat-服务器" class="headerlink" title="启动tomcat 服务器"></a>启动tomcat 服务器</h2><pre><code>startup</code></pre><h2 id="jsp-篇"><a href="#jsp-篇" class="headerlink" title="jsp 篇"></a>jsp 篇</h2><h3 id="jsp-指令"><a href="#jsp-指令" class="headerlink" title="jsp 指令"></a>jsp 指令</h3><ul>
+<li>jsp 代码写在 &lt;% %&gt; 中</li>
+</ul>
+<h4 id="page-指令"><a href="#page-指令" class="headerlink" title="page 指令"></a>page 指令</h4><pre><code>&lt;%@ page language=&quot;java contentType=&quot;text/html; charset=GB18030&quot; pageEncoding=&quot;GB18030&quot; %&gt;</code></pre><ul>
+<li>language</li>
+<li>extends 设置jsp页面继承的java类</li>
+<li>import 导入java包<br>  &lt;%@ import=”java.util.*” %&gt;</li>
+<li>pageEncoding<br>  &lt;%@ page pageEncoding=”GB18030” %&gt;</li>
+<li>contentType<br>  &lt;%@ page contentType=”text/html; charset=UTF-8” %&gt;</li>
+<li>session<br>  &lt;%@ page session=”false” %&gt;</li>
+<li>buffer 设置out缓冲区大小，默认8kb， 单位kb<br>  &lt;%@ page buffer=”128kb” %&gt;</li>
+<li>autoFlush 页面缓存满时是否刷新，默认 true<br>  &lt;%@ page autoFlush=”true” %&gt;</li>
+<li>isErrorPage<br>  &lt;%@ page isErrorPage=”true” %&gt;</li>
+<li>errorPage<br>  &lt;%@ page errorPage=”error.jsp” %&gt;</li>
+</ul>
+<h4 id="include-指令"><a href="#include-指令" class="headerlink" title="include 指令"></a>include 指令</h4><pre><code>&lt;%@ include file=&quot;path&quot; %&gt;</code></pre><ul>
+<li>被包含页面 &lt;%@ page pageEncoding=”GB18030” %&gt;</li>
+<li>包含页面   &lt;%@ page language=”java” contentType=”text/html;charset=GB18030” pageEncoding=”GB18030” %&gt;</li>
+</ul>
+<h4 id="taglib-指令"><a href="#taglib-指令" class="headerlink" title="taglib 指令"></a>taglib 指令</h4><pre><code>&lt;%@ taglib prefix=&quot;tagPrefix&quot; url=&quot;tagURL&quot; %&gt;</code></pre><ul>
+<li><p>prefix 制定标签前缀</p>
+</li>
+<li><p>uri 标签库存放位置</p>
+<p>  &lt;%@ taglib prefix=”c” uri=”<a href="http://java.sun.com/jsp/jstl/core&quot;" target="_blank" rel="noopener">http://java.sun.com/jsp/jstl/core&quot;</a> %&gt;</p>
+</li>
+</ul>
+<h3 id="jsp-脚本标识"><a href="#jsp-脚本标识" class="headerlink" title="jsp 脚本标识"></a>jsp 脚本标识</h3><ul>
+<li>表达式 &lt;% =表达式  %&gt;</li>
+<li>声明标识 &lt;%! 声明的代码%&gt;. 用于定义全局方法和变量，用于在整个jsp使用.</li>
+</ul>
+<h4 id="代码片段"><a href="#代码片段" class="headerlink" title="代码片段"></a>代码片段</h4><pre><code>&lt;% java代码或者是片段 %&gt;</code></pre><h4 id="jsp-注释"><a href="#jsp-注释" class="headerlink" title="jsp 注释"></a>jsp 注释</h4><ul>
+<li>隐藏注释<br>  &lt;%– –%&gt;</li>
+<li>动态注释<br>  &lt;%– &lt;%=new Date()%&gt;–&gt;</li>
+</ul>
+<h3 id="jsp-动作标识"><a href="#jsp-动作标识" class="headerlink" title="jsp 动作标识"></a>jsp 动作标识</h3><ul>
+<li><a href="jsp:include" target="_blank" rel="noopener">jsp:include</a> 包含文件标识<br>  &lt;jsp:include page=”url” flush=”false|true” /&gt;<br>  &lt;jsp:include page=”url” flush=”false|true”&gt; 子动作标识用于传递参数<a href="jsp:param" target="_blank" rel="noopener">jsp:param</a><br>  </li>
+</ul>
+<p>动态页面会被jsp编译器编译执行</p>
+<ul>
+<li><p><a href="jsp:forward" target="_blank" rel="noopener">jsp:forward</a>请求转发标识<br>  &lt;jsp:forward page=”url”/&gt;<br>  &lt;jsp:forward page=”url&gt;</p>
+<pre><code>子动作标识&lt;jsp:param&gt;
+&lt;/jsp:forward&gt;</code></pre></li>
+<li><p><a href="jsp:param" target="_blank" rel="noopener">jsp:param</a>传递参数标识<br>  &lt;jsp:forward page=”modify.jsp”&gt;</p>
+<pre><code>&lt;jsp:param name=&quot;userId&quot; value=&quot;7&quot;/&gt;</code></pre><p>  </p>
+</li>
+</ul>
+<h2 id="jsp-内置对象"><a href="#jsp-内置对象" class="headerlink" title="jsp 内置对象"></a>jsp 内置对象</h2><h3 id="request"><a href="#request" class="headerlink" title="request"></a>request</h3><ul>
+<li>&lt;a href=delete.jsp?Id=1”&gt;删除</li>
+<li>&lt;% request.getParameter(“id”) %&gt;</li>
+<li>request.setAttribute(String name, Object object);  请求转发时，将数据保存到request中</li>
+</ul>
+<h3 id="response"><a href="#response" class="headerlink" title="response"></a>response</h3><ul>
+<li>重定向网页 response.sendRedirect(String path);</li>
+</ul>
+<h4 id="处理-HTTP-表头"><a href="#处理-HTTP-表头" class="headerlink" title="处理 HTTP 表头"></a>处理 HTTP 表头</h4><ul>
+<li><p>禁用缓存<br>  response.setHeader(“Cache-Control”,”no-store”);<br>  response.setDateHeader(“Expires”,0);</p>
+</li>
+<li><p>设置页面自动刷新</p>
+<p>  response.setHeader(“refresh”, “10”);</p>
+</li>
+<li><p>定时跳转网页</p>
+<p>  response.setHeader(“refresh”, “5;URL=login.jsp”);</p>
+</li>
+</ul>
+<h4 id="设置输出缓冲"><a href="#设置输出缓冲" class="headerlink" title="设置输出缓冲"></a>设置输出缓冲</h4><ul>
+<li>flushBuffer()</li>
+<li>getBufferSize()</li>
+<li>setBufferSize(int size)</li>
+<li>reset()</li>
+<li>isCommitted()</li>
+</ul>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><h4 id="创建及获取客户的对话"><a href="#创建及获取客户的对话" class="headerlink" title="创建及获取客户的对话"></a>创建及获取客户的对话</h4><ul>
+<li>session.setAttribute(String name, Object obj);</li>
+<li>session.getAttribute(String name);</li>
+</ul>
+<h4 id="移除制定的绑定对象"><a href="#移除制定的绑定对象" class="headerlink" title="移除制定的绑定对象"></a>移除制定的绑定对象</h4><ul>
+<li>session.removeAttribute(“username”);</li>
+</ul>
+<h4 id="销毁-session"><a href="#销毁-session" class="headerlink" title="销毁 session"></a>销毁 session</h4><ul>
+<li>session.invalidate();</li>
+</ul>
+<h4 id="超时会话管理"><a href="#超时会话管理" class="headerlink" title="超时会话管理"></a>超时会话管理</h4><ul>
+<li>getLastAccessedTime()</li>
+<li>getMaxInactiveInterval()</li>
+<li>setMaxInactiveInterval()</li>
+</ul>
+<h3 id="application对象"><a href="#application对象" class="headerlink" title="application对象"></a>application对象</h3><p>application 对象用户保存所有应用程序中的共有数据。服务器启东时自动创建，服务器停止时销毁。</p>
+<h4 id="访问应用程序初始化参数"><a href="#访问应用程序初始化参数" class="headerlink" title="访问应用程序初始化参数"></a>访问应用程序初始化参数</h4><p>应用程序初始化参数在 web.xml文件中配置。通过<context-param> 配置</context-param></p>
+<pre><code>&lt;context-param&gt;
+    &lt;param-name&gt;url&lt;/param-name&gt;
+    &lt;param-value&gt;jdbc:mysql://localhost/db_database&lt;/param-value&gt;
+&lt;/context-param&gt;
+&lt;/web-app&gt;
+
+application.getInitParameter(String name);
+application.getInitParameter(&quot;url&quot;);</code></pre><ul>
+<li><p>getAttributeName()</p>
+<p>  &lt;%<br>  Enumeration enema= application.getInitParameterNames();<br>  while(enema.hasMoreElements()){</p>
+<pre><code>String name=(String)enema.nextElements();
+String value = application.getInitParameter(name);
+out.println(name+&quot;: &quot;);
+out.println(value);</code></pre><p>  }<br>  %&gt;</p>
+</li>
+</ul>
+<h4 id="管理应用环境属性"><a href="#管理应用环境属性" class="headerlink" title="管理应用环境属性"></a>管理应用环境属性</h4><ul>
+<li>getAttributeNames()</li>
+<li>getAttribute(String name)</li>
+<li>setAttribute(String key, Object obj)</li>
+<li>removeAttribute(String name)</li>
+</ul>
+<h3 id="out-对象"><a href="#out-对象" class="headerlink" title="out 对象"></a>out 对象</h3><p>用于在web浏览器上输出信息，并且管理应用服务器上的输出缓冲区。</p>
+<ul>
+<li>向客户端输出数据<br>  out.print(“”);<br>  out.println(“”);</li>
+</ul>
+<h4 id="管理数据缓冲"><a href="#管理数据缓冲" class="headerlink" title="管理数据缓冲"></a>管理数据缓冲</h4><ul>
+<li>clear()</li>
+<li>clearBuffer()</li>
+<li>flush()</li>
+<li>isAutoFlush()</li>
+<li>getBufferSize()</li>
+</ul>
+<h3 id="其他内置对象"><a href="#其他内置对象" class="headerlink" title="其他内置对象"></a>其他内置对象</h3><h4 id="pageContext"><a href="#pageContext" class="headerlink" title="pageContext"></a>pageContext</h4><p>通过pageContext 可以获取request,response,session,applicaition,exception 等对象。创建和初始化由容器完成。</p>
+<ul>
+<li>forward(java.lang.String relativeUrlpath)</li>
+<li>getAttribute(String name)</li>
+<li>getAttributeNamesInScope(int scope)</li>
+<li>getException()</li>
+<li>getRequest()</li>
+<li>getResponse()</li>
+<li>getSession()</li>
+<li>getOut()</li>
+<li>getApplication()</li>
+<li>setAttribute()</li>
+<li>removeAttribute()</li>
+</ul>
+<h4 id="读取web-xml配置信息的config对象"><a href="#读取web-xml配置信息的config对象" class="headerlink" title="读取web.xml配置信息的config对象"></a>读取web.xml配置信息的config对象</h4><ul>
+<li>getServletContext()</li>
+<li>getServletName()</li>
+<li>getInitParameter()</li>
+<li>getInitParameterNames()</li>
+</ul>
+<h4 id="应答或请求的page对象"><a href="#应答或请求的page对象" class="headerlink" title="应答或请求的page对象"></a>应答或请求的page对象</h4><p>page 对象代表jsp本身</p>
+<ul>
+<li>getClass()</li>
+<li>hashCode()</li>
+<li>toString()</li>
+<li>equals(Object o)</li>
+</ul>
+<h4 id="获取异常信息的exception对象"><a href="#获取异常信息的exception对象" class="headerlink" title="获取异常信息的exception对象"></a>获取异常信息的exception对象</h4><p>getMessage()<br>getLocalizedmessage()<br>toString()<br>fillInStackTrace()</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/javaweb_tomcat/" data-id="ck1g6qpqk000mut9kemvmwkv9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javaweb/">javaweb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp/">jsp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-firefox" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/firefox/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/firefox/">好用的Firefox浏览器插件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ul>
+<li><p><a href="https://addons.mozilla.org/en-US/firefox/addon/youdao-dictionary/" target="_blank" rel="noopener">有道翻译插件</a></p>
+</li>
+<li><p><a href="https://addons.mozilla.org/zh-CN/firefox/addon/adblock-plus/" target="_blank" rel="noopener">去广告插件 Adblock Plus</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/firefox/" data-id="ck1g6qpql000out9kud7uutch" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/firefox/">firefox</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-linux-命令小程序学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/linux-命令小程序学习/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/linux-命令小程序学习/">linux-命令小程序学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h2><p>wc 字数统计工具</p>
+<pre><code>echo &quot;this is a test&quot; &gt;&gt; test.txt
+wc test.txt</code></pre><p><img src="/img/wc-echo-1.png" alt="result"></p>
+<pre><code>echo &quot;this is a test&quot; &gt;&gt; test.txt
+wc test.txt</code></pre><p><img src="/img/wc-echo-2.png" alt="result"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/linux-命令小程序学习/" data-id="ck1g6qpqm000qut9khmap685a" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-linux配置远程免密登录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/linux配置远程免密登录/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/linux配置远程免密登录/">linux配置远程免密登录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在本地执行</p>
+<pre><code>ssh-keygen -t rsa</code></pre><p>这会在用户目录生成 id_rsa 和 id_rsa.pub 两个文件</p>
+<p>将 id_rsa.pub 发送到远程要登陆的linux 服务器</p>
+<pre><code>scp ./id_rsa.pub  username@remotehost:/home/username/</code></pre><p>然后追加到 ~/.ssh/authorized_keys</p>
+<pre><code>cat ~/.id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</code></pre><p>然后就可以在本地免密远程登录了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/linux配置远程免密登录/" data-id="ck1g6qpqn000sut9kl8vedwap" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mysql_database" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/mysql_database/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/mysql_database/">mysql_database</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>create database ShareBook;
+use ShareBook;</code></pre><h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><h3 id="Mysql-查看帮助"><a href="#Mysql-查看帮助" class="headerlink" title="Mysql 查看帮助"></a>Mysql 查看帮助</h3><pre><code>? contents
+? data types
+? create
+? create table
+? int
+? show</code></pre><h3 id="表修改"><a href="#表修改" class="headerlink" title="表修改"></a>表修改</h3><ul>
+<li>外键支持</li>
+</ul>
+<p>mysql只有InnoDB 引擎支持外键，所以可以在建表最后添加 engine=InnoDB 来更改默认引擎，也可以通过修改： alter table user engine = innodb;然后通过下面代码增加约束</p>
+<pre><code>alter table Admin add constraint foreign key (username) references User(username) on delete restrict on update cascade;</code></pre><ul>
+<li><p>查看表的详细描述信息</p>
+<p>  show create table user \G;</p>
+</li>
+<li><p>unique 字段约束设置</p>
+<p>  alter table user add unique(user_email);</p>
+</li>
+<li><p>添加外键约束</p>
+<p>  alter table Admin add constraint foreign key (username) references User(username);</p>
+</li>
+<li><p>删除外键</p>
+<p>  alter table user drop foreign key fk_user_1;</p>
+</li>
+<li><p>修改字段</p>
+<p>  alter table user modify user_email varchar(21);</p>
+</li>
+<li><p>添加列</p>
+<p>  alter table user add column age int(3);</p>
+</li>
+<li><p>删除字段</p>
+<p>  alter table user drop column age;</p>
+</li>
+<li><p>字段改名</p>
+<p>  alter table user change age age1 int(4);</p>
+</li>
+<li><p>修改字段顺序</p>
+<p>  alter table user add birth date after ename;<br>  alter table user modify age int(3) first;</p>
+</li>
+<li><p>表改名</p>
+<p>  alter table user rename users;</p>
+</li>
+</ul>
+<h3 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h3><h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><ul>
+<li><p>插入多条记录</p>
+<p>  insert into user (username,pswd)<br>  values<br>  (“warmfrog”, “159491”),<br>  (“warmfrog2”, “159492”);</p>
+</li>
+</ul>
+<h4 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h4><ul>
+<li><p>更新多表记录</p>
+<p>  update user a, book b set a.username=”warmfrog11”, b.book_name=”Software” where a.user_id=book.book_owner_id;</p>
+</li>
+</ul>
+<h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><ul>
+<li><p>去重显示</p>
+<p>  select distinct book_name from book;</p>
+</li>
+<li><p>排序</p>
+<p>  select * from user order by user_id;</p>
+</li>
+<li><p>显示前3条记录</p>
+<p>  select * from user order by user_id, register_time desc limit 3;</p>
+</li>
+</ul>
+<p>limit 和 order by 一起配合进行分页查询</p>
+<h4 id="删除多条记录"><a href="#删除多条记录" class="headerlink" title="删除多条记录"></a>删除多条记录</h4><pre><code>delete from User where username in (&apos;warmfrog10&apos;,&apos;warmfrog9&apos;);</code></pre><h2 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h2><h3 id="user"><a href="#user" class="headerlink" title="user"></a>user</h3><p>   create table user(<br>        user_id bigint auto_increment,<br>        nickname varchar(20),<br>        password varchar(20),<br>        address varchar(50),<br>        register_time timestamp,<br>        phone_number varchar(11) unique,<br>        user_email varchar(20) unique,<br>        primary key (user_id)<br>    )engine=InnoDB character set=utf8;</p>
+<h3 id="book"><a href="#book" class="headerlink" title="book"></a>book</h3><pre><code>create table book(
+    book_id bigint auto_increment,
+    order_id bigint,
+    book_owner_id bigint,
+    book_name varchar(30),
+    book_author varchar(40),
+    book_author2 varchar(40),
+    book_translator varchar(40),
+    book_intro varchar(500),
+    book_publish_time timestamp,
+    book_publisher varchar(20),
+    book_edition tinyint,
+    book_isbn varchar(20),
+    book_rent_price float,
+    book_buy_price float,
+    foreign key(book_owner_id) references user(user_id) on delete cascade on update cascade,
+    foreign key(order_id) references orders(order_id),
+    primary key(book_id)
+  )engine=InnoDB character set=utf8;</code></pre><h3 id="orders"><a href="#orders" class="headerlink" title="orders"></a>orders</h3><pre><code>create table orders(
+    order_id bigint auto_increment,
+    start_time timestamp,
+    trade_type varchar(10),
+    current_status varchar(10),
+    deliver_id bigint,
+    customer_id bigint,
+    primary key(order_id)
+  )engine=InnoDB character set=utf8;</code></pre><h3 id="deliver"><a href="#deliver" class="headerlink" title="deliver"></a>deliver</h3><p>   create table deliver(<br>        deliver_id bigint auto_increment,<br>        deliver_order_id bigint,<br>        deliver_status varchar(10),<br>        deliver_method varchar(10),<br>        foreign key(deliver_order_id) references orders(order_id) on delete restrict on update cascade,<br>        primary key (deliver_id)<br>      )engine=InnoDB character set=utf8;</p>
+<p> <a href="https://dev.mysql.com/doc/refman/8.0/en/" target="_blank" rel="noopener">MySQL 8.0 Reference Manual</a></p>
+<h2 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h2><h4 id="连接到数据库"><a href="#连接到数据库" class="headerlink" title="连接到数据库"></a>连接到数据库</h4><pre><code>mysql -h localhost -u warmfrog -p</code></pre><h4 id="查看数据库"><a href="#查看数据库" class="headerlink" title="查看数据库"></a>查看数据库</h4><pre><code>show databases;
+
+select database();</code></pre><h4 id="使用数据库"><a href="#使用数据库" class="headerlink" title="使用数据库"></a>使用数据库</h4><pre><code>user test</code></pre><h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><pre><code>create database *menagerie*;</code></pre><h2 id="表操作"><a href="#表操作" class="headerlink" title="表操作"></a>表操作</h2><h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a><a href="https://dev.mysql.com/doc/refman/8.0/en/creating-tables.html" target="_blank" rel="noopener">创建表</a></h4><pre><code>create table pet (name varchar(20), owner varchar(20), species varchar(20), sex char(1), birth date, death date);</code></pre><h4 id="查看表"><a href="#查看表" class="headerlink" title="查看表"></a>查看表</h4><pre><code>show tables;</code></pre><h4 id="描述表信息"><a href="#描述表信息" class="headerlink" title="描述表信息"></a>描述表信息</h4><pre><code>describe pet;</code></pre><h2 id="数据操作-1"><a href="#数据操作-1" class="headerlink" title="数据操作"></a>数据操作</h2><h4 id="将数据载入表"><a href="#将数据载入表" class="headerlink" title="将数据载入表"></a>将数据载入表</h4><p>有如下数据，保存为 pet.txt. \N 表示 NULL. 数据之间以 tab 间隔.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>owner</th>
+<th>species</th>
+<th>sex</th>
+<th>birth</th>
+<th>death</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fluffy</td>
+<td>Harold</td>
+<td>cat</td>
+<td>f</td>
+<td>1993-02-04</td>
+<td>\N</td>
+</tr>
+<tr>
+<td>Claws</td>
+<td>Gwen</td>
+<td>cat</td>
+<td>m</td>
+<td>1994-03-17</td>
+<td>\N</td>
+</tr>
+<tr>
+<td>Buffy</td>
+<td>Harold</td>
+<td>dog</td>
+<td>f</td>
+<td>1989-05-13</td>
+<td>\N</td>
+</tr>
+<tr>
+<td>Fang</td>
+<td>Benny</td>
+<td>dog</td>
+<td>m</td>
+<td>1990-08-27</td>
+<td>\N</td>
+</tr>
+<tr>
+<td>Bowser</td>
+<td>Diane</td>
+<td>dog</td>
+<td>m</td>
+<td>1979-08-31</td>
+<td>1995-07-29</td>
+</tr>
+<tr>
+<td>Chirpy</td>
+<td>Gwen</td>
+<td>bird</td>
+<td>f</td>
+<td>1998-09-11</td>
+<td>\N</td>
+</tr>
+<tr>
+<td>Whistler</td>
+<td>Gwen</td>
+<td>bird</td>
+<td>\N</td>
+<td>1997-12-09</td>
+<td>\N</td>
+</tr>
+<tr>
+<td>Slim</td>
+<td>Benny</td>
+<td>snake</td>
+<td>m</td>
+<td>1996-04-29</td>
+<td>\N</td>
+</tr>
+<tr>
+<td><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>****</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 载入操作</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<pre><code>load data local infile /mnt/d/pet.txt into table pet;</code></pre><h4 id="显示结果"><a href="#显示结果" class="headerlink" title="显示结果"></a>显示结果</h4><pre><code>mysql&gt; load data local infile &apos;/root/pet.txt&apos; into table pet;
+Query OK, 8 rows affected, 48 warnings (0.01 sec)
+Records: 8  Deleted: 0  Skipped: 0  Warnings: 48</code></pre><h4 id="查看表中所有数据"><a href="#查看表中所有数据" class="headerlink" title="查看表中所有数据"></a>查看表中所有数据</h4><pre><code>select * from pet;</code></pre><h4 id="删除表中所有数据"><a href="#删除表中所有数据" class="headerlink" title="删除表中所有数据"></a>删除表中所有数据</h4><pre><code>delete from pet;</code></pre><h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><h4 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h4><pre><code>1.  select * from pet where name = &apos;Bowser&apos;;
+
+2.  SELECT * FROM pet WHERE birth &gt;= &apos;1998-1-1&apos;;
+
+3.  SELECT * FROM pet WHERE species = &apos;dog&apos; AND sex = &apos;f&apos;;
+
+4.  SELECT * FROM pet WHERE species = &apos;snake&apos; OR species = &apos;bird&apos;;
+
+5.  SELECT * FROM pet WHERE (species = &apos;cat&apos; AND sex = &apos;m&apos;) OR (species = &apos;dog&apos; AND sex = &apos;f&apos;);</code></pre><h4 id="选择特定列"><a href="#选择特定列" class="headerlink" title="选择特定列"></a>选择特定列</h4><pre><code>1.  SELECT name, birth FROM pet;
+
+2.  SELECT owner FROM pet;</code></pre><h4 id="去重显示"><a href="#去重显示" class="headerlink" title="去重显示"></a>去重显示</h4><pre><code>1.   SELECT DISTINCT owner FROM pet;</code></pre><h4 id="按序显示"><a href="#按序显示" class="headerlink" title="按序显示"></a>按序显示</h4><pre><code>1.  SELECT name, birth FROM pet ORDER BY birth;
+
+2.  SELECT name, birth FROM pet ORDER BY birth DESC;
+
+3.  SELECT name, species, birth FROM pet ORDER BY species, birth DESC;</code></pre><h4 id="图案匹配"><a href="#图案匹配" class="headerlink" title="图案匹配"></a>图案匹配</h4><pre><code>‘%’ 表示匹配任意数量的字符。
+
+1.  SELECT * FROM pet WHERE name LIKE &apos;b%&apos;;
+2.  SELECT * FROM pet WHERE name LIKE &apos;%fy&apos;;
+3.  SELECT * FROM pet WHERE name LIKE &apos;%w%&apos;;
+
+一个 ‘_&apos; 表示一个字符，5个’_&apos; 的字符 &apos;_____&apos; 表示仅仅匹配 5 个字符.
+
+4.  &lt;SELECT * FROM pet WHERE name LIKE &apos;_____&apos;;&gt;</code></pre><h4 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h4><pre><code>1.  . 匹配任意单个字符。
+2.  [...] 匹配方括号内的任意字符，[abc] 匹配 a, b, c.
+3.  * 表示匹配 0 个或 多个 * 之前的字符.
+4.  为了定位一个图案的开始和结束字符，^ 在开头， $ 在结尾.
+
+示例：
+
+1.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;^b&apos;);
+
+2.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;^b&apos; COLLATE utf8mb4_0900_as_cs);
+
+3.  SELECT * FROM pet WHERE REGEXP_LIKE(name, BINARY &apos;^b&apos;);
+
+4.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;^b&apos;, &apos;c&apos;);
+
+5.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;fy$&apos;);
+
+6.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;w&apos;);
+
+7.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;^.....$&apos;);    正好匹配5个字符.
+
+8.  SELECT * FROM pet WHERE REGEXP_LIKE(name, &apos;^.{5}$&apos;);    同7.</code></pre><h2 id="计数"><a href="#计数" class="headerlink" title="计数"></a>计数</h2><h5 id="查看有多少宠物"><a href="#查看有多少宠物" class="headerlink" title="查看有多少宠物"></a>查看有多少宠物</h5><pre><code>1. SELECT COUNT(*) FROM pet;</code></pre><h5 id="查看拥有宠物的人养了多少宠物"><a href="#查看拥有宠物的人养了多少宠物" class="headerlink" title="查看拥有宠物的人养了多少宠物"></a>查看拥有宠物的人养了多少宠物</h5><pre><code>2. SELECT owner, COUNT(*) FROM pet GROUP BY owner;
+
+3. SELECT species, COUNT(*) FROM pet GROUP BY species;
+
+4. SELECT sex, COUNT(*) FROM pet GROUP BY sex;
+
+5. SELECT species, sex, COUNT(*) FROM pet GROUP BY species, sex;
+
+6. SELECT species, sex, COUNT(*) FROM pet
+   WHERE species = &apos;dog&apos; OR species = &apos;cat&apos;
+   GROUP BY species, sex;
+
+7. SELECT species, sex, COUNT(*) FROM pet
+-&gt; WHERE sex IS NOT NULL
+-&gt; GROUP BY species, sex;</code></pre><h2 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h2><h4 id="创建表-event"><a href="#创建表-event" class="headerlink" title="创建表 event"></a><a href="https://dev.mysql.com/doc/refman/8.0/en/multiple-tables.html" target="_blank" rel="noopener">创建表 event</a></h4><pre><code>create table event (name varchar(20), date date, type varchar(15), remark varchar(255));</code></pre><h4 id="载入下表数据"><a href="#载入下表数据" class="headerlink" title="载入下表数据"></a>载入下表数据</h4><table summary="pet record data that will appear in a tab delimited text file, as described in the preceding text."><col width="15%"><col width="15%"><col width="15%"><col width="35%"><thead><tr>
+              <th scope="col">name</th>
+              <th scope="col">date</th>
+              <th scope="col">type</th>
+              <th scope="col">remark</th>
+            </tr></thead><tbody><tr>
+              <td scope="row">Fluffy</td>
+              <td>1995-05-15</td>
+              <td>litter</td>
+              <td>4 kittens, 3 female, 1 male</td>
+            </tr><tr>
+              <td scope="row">Buffy</td>
+              <td>1993-06-23</td>
+              <td>litter</td>
+              <td>5 puppies, 2 female, 3 male</td>
+            </tr><tr>
+              <td scope="row">Buffy</td>
+              <td>1994-06-19</td>
+              <td>litter</td>
+              <td>3 puppies, 3 female</td>
+            </tr><tr>
+              <td scope="row">Chirpy</td>
+              <td>1999-03-21</td>
+              <td>vet</td>
+              <td>needed beak straightened</td>
+            </tr><tr>
+              <td scope="row">Slim</td>
+              <td>1997-08-03</td>
+              <td>vet</td>
+              <td>broken rib</td>
+            </tr><tr>
+              <td scope="row">Bowser</td>
+              <td>1991-10-12</td>
+              <td>kennel</td>
+              <td></td>
+            </tr><tr>
+              <td scope="row">Fang</td>
+              <td>1991-10-12</td>
+              <td>kennel</td>
+              <td></td>
+            </tr><tr>
+              <td scope="row">Fang</td>
+              <td>1998-08-28</td>
+              <td>birthday</td>
+              <td>Gave him a new chew toy</td>
+            </tr><tr>
+              <td scope="row">Claws</td>
+              <td>1998-03-17</td>
+              <td>birthday</td>
+              <td>Gave him a new flea collar</td>
+            </tr><tr>
+              <td scope="row">Whistler</td>
+              <td>1998-12-09</td>
+              <td>birthday</td>
+              <td>First birthday</td>
+</tr></tbody></table>
+
+<pre><code>load data local infile &apos;/root/event.txt&apos; into table event;</code></pre><h4 id="查询宠物年龄和家庭情况"><a href="#查询宠物年龄和家庭情况" class="headerlink" title="查询宠物年龄和家庭情况"></a>查询宠物年龄和家庭情况</h4><pre><code>select pet.name,
+timestampdiff(year,birth,date) as age,
+remark
+from pet inner join event
+on pet.name = event.name
+where event.type = &apos;litter&apos;;</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/mysql_database/" data-id="ck1g6qpqn000uut9kqb6wi2jt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python包pandas处理数据学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/python包pandas处理数据学习笔记/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/python包pandas处理数据学习笔记/">python包pandas处理数据学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>pandas 有两种数据结构： 序列(Series), 数据帧(DataFrame)。数据帧是序列的容器，序列是标量的容器。</p>
+<pre><code>for col in df.columns:
+    series = df[col]</code></pre><h2 id="10-Minutes-to-pandas"><a href="#10-Minutes-to-pandas" class="headerlink" title="10 Minutes to pandas"></a>10 Minutes to pandas</h2><p>导入pandas</p>
+<pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt</code></pre><h3 id="创建数据对象"><a href="#创建数据对象" class="headerlink" title="创建数据对象"></a>创建数据对象</h3><pre><code>s = pd.Series([1,3,5,np.nan,6,8])
+dates = pd.date_range(&apos;20130101&apos;, periods = 6)
+df = pd.DataFrame(np.random.randn(6,4), index=dates, columns = list(&apos;ABCD&apos;))</code></pre><h3 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h3><pre><code>df.head()
+df.tail(3)
+df.index
+df.columns
+df.values
+df.describe()
+df.T
+df.sort_index(axis=1, ascending=False)
+df.sort_values(by=&apos;B&apos;)</code></pre><h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><pre><code>df[&apos;A&apos;]
+df[0:3]</code></pre><h4 id="根据标签选择"><a href="#根据标签选择" class="headerlink" title="根据标签选择"></a>根据标签选择</h4><pre><code>df.loc[dates[0]]
+df.loc[:,[&apos;A&apos;,&apos;B&apos;]]
+df.loc[&apos;20130102&apos;:&apos;20130104&apos;, [&apos;A&apos;,&apos;B&apos;]]
+df.loc[&apos;20130102&apos;,[&apos;A&apos;,&apos;B&apos;]]</code></pre><ul>
+<li><p>获取标量值</p>
+<p>  df.loc[date[0],’A’]</p>
+</li>
+<li><p>更快的获取标量：</p>
+<p>  df.at[dates[0],’A’]</p>
+</li>
+</ul>
+<h4 id="根据位置选择"><a href="#根据位置选择" class="headerlink" title="根据位置选择"></a>根据位置选择</h4><ul>
+<li><p>通过整数位置选择：</p>
+<p>  df.iloc[3]</p>
+</li>
+<li><p>切片：</p>
+<p>  df.iloc[3:5, 0:2]<br>  df.iloc[[1,2,4],[0,2]]<br>  df.iloc[1:3,:]<br>  df.iloc[:,1:3]<br>  df.iloc[1,1]</p>
+</li>
+<li><p>更快的获取标量:</p>
+<p>  df.iat[1,1]</p>
+</li>
+</ul>
+<h4 id="Boolean索引"><a href="#Boolean索引" class="headerlink" title="Boolean索引"></a>Boolean索引</h4><pre><code>df[df.A &gt; 0]
+df[df &gt; 0]</code></pre><ul>
+<li><p>isin()方法过滤</p>
+<p>  df2[df2[‘E’].isin([‘two’,’four’])]</p>
+</li>
+</ul>
+<h4 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h4><pre><code>s1 = pd.Series([1,2,3,4,5,6], index = pd.date_range(&apos;20130102&apos;, periods=6))
+df.at[dates[0],&apos;A&apos;] = 0
+df.iat[0,1] = 0
+df.loc[:,&apos;D&apos;] = np.array[5] * len(df))</code></pre><ul>
+<li><p>拷贝</p>
+<p>  df2 = df.copy()</p>
+</li>
+</ul>
+<h4 id="缺失的数据"><a href="#缺失的数据" class="headerlink" title="缺失的数据"></a>缺失的数据</h4><pre><code>df1 = df.reindex(index = dates[0:4], columns = list(df.columns) + [&apos;E&apos;])
+df1.loc[dates[0]:dates[1], &apos;E&apos;] = 1</code></pre><ul>
+<li><p>丢弃遗失数据行</p>
+<p>  df1.dropna(how = ‘any’)</p>
+</li>
+<li><p>填充缺失的数据</p>
+<p>  df1.fillna(value=5)</p>
+</li>
+<li><p>是否为空</p>
+<p>  pd.isna(df1)</p>
+</li>
+</ul>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><h4 id="统计"><a href="#统计" class="headerlink" title="统计"></a>统计</h4><pre><code>df.mean()
+df.mean(1)</code></pre><h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><ul>
+<li><p>应用函数到数据 </p>
+<p>  df.apply(np.cumsum)<br>  df.apply(lambda x: x.max() - x.min())</p>
+</li>
+</ul>
+<h4 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h4><ul>
+<li><p>拼接</p>
+<p>  pd.concat(pieces)</p>
+</li>
+<li><p>Join</p>
+<p>  pd.join(left,right, on = ‘key’)</p>
+</li>
+<li><p>Merge</p>
+<p>  pd.merge(left,right, on = ‘key’)</p>
+</li>
+<li><p>Append</p>
+<p>  df.append(s, ignore_index= True)</p>
+</li>
+</ul>
+<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><pre><code>df.groupby([&apos;A&apos;,&apos;B&apos;]).sum()</code></pre><h3 id="时间序列"><a href="#时间序列" class="headerlink" title="时间序列"></a>时间序列</h3><pre><code>rng = pd.date_range(&apos;1/1/12012&apos;, period=100, freq=&apos;S&apos;)
+ts = pd.Series(np.random.randint(0,500, len(rng)), index = rng)</code></pre><h3 id="从输入输出获取数据"><a href="#从输入输出获取数据" class="headerlink" title="从输入输出获取数据"></a>从输入输出获取数据</h3><h4 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h4><pre><code>df.to_csv(&apos;foo.csv&apos;)
+pd.read_csv(&apos;foo.csv&apos;)</code></pre><h4 id="HDF5"><a href="#HDF5" class="headerlink" title="HDF5"></a>HDF5</h4><h4 id="Excel"><a href="#Excel" class="headerlink" title="Excel"></a>Excel</h4><pre><code>df.to_excel(&apos;foo.xlsx&apos;, sheet_name=&apos;Sheet1&apos;)
+pd.read_excel(&apos;foo.xlsx&apos;, &apos;Sheet1&apos;, index_col=None, na_values=[&apos;NA&apos;])</code></pre><h3 id="Idioms"><a href="#Idioms" class="headerlink" title="Idioms"></a>Idioms</h3><ul>
+<li><p>if-then</p>
+<p>  df.loc[df.AAA &gt;= 5, ‘BBB’] = -1;<br>  df.loc[df.AAA &gt;=5, [‘BBB’,’CCC’]] = 555;<br>  df.loc[df.AAA &lt;5, [‘BBB’, ‘CCC’]] = 2000;</p>
+</li>
+</ul>
+<h4 id="Splitting"><a href="#Splitting" class="headerlink" title="Splitting"></a>Splitting</h4><pre><code>dflow = df[df.AAA &lt;=5];
+dfhigh = df[df.AAA &gt; 5];</code></pre><h4 id="构建条件-Criteria"><a href="#构建条件-Criteria" class="headerlink" title="构建条件(Criteria)"></a>构建条件(Criteria)</h4><pre><code>newseries = df.loc[(df[&apos;BBB&apos;] &lt; 25 &amp; (df[&apos;CCC&apos;] &gt;= -40), &apos;AAA&apos;)];
+df.loc[(df[&apos;BBB&apos;] &gt; 25) | (df[&apos;CCC&apos;] &gt;= 75), &apos;AAA&apos;] = 0.1;
+
+Crit1 = df.AAA &lt;= 5.5
+Crit2 = df.BBB == 10.0
+Crit3 = df.CCC &gt; -40.0
+AllCrit = Crit1 &amp; Crit2 &amp; Crit3
+CritList = [Crit1, Crit2, Crit3]
+AllCrit = functools.reduce(lambda x,y: x &amp; y, CritList)
+df[AllCrit
+]</code></pre><h2 id="必要的基础功能"><a href="#必要的基础功能" class="headerlink" title="必要的基础功能"></a>必要的基础功能</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/python包pandas处理数据学习笔记/" data-id="ck1g6qpqo000wut9k6ghojft6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-spark概念学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/13/spark概念学习/" class="article-date">
+  <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished">2019-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/spark概念学习/">spark概念学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="spark-概念学习"><a href="#spark-概念学习" class="headerlink" title="spark 概念学习"></a><a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html" target="_blank" rel="noopener">spark</a> 概念学习</h2><p>Apache Spark 是一个快速通用的族计算系统。它为Java, Scala, Python, R 提供了高层次的API, 并且提供了一个优化的引擎来支持通用图计算。</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h2 id="RDD-Programming-Guide"><a href="#RDD-Programming-Guide" class="headerlink" title="RDD Programming Guide"></a><a href="https://spark.apache.org/docs/latest/rdd-programming-guide.html" target="_blank" rel="noopener">RDD Programming Guide</a></h2><p>为了用 Java 编写spark应用 ，需要添加以下maven 依赖</p>
+<pre><code>groupId = org.apache.spark
+artifactId = spark-core_2.11
+version = 2.4.0</code></pre><p>如果要进入HDFS 族， 则要添加一下依赖</p>
+<pre><code>groupId = org.apache.hadoop
+artifactId = hadoop-client
+version = &lt;your-hdfs-version&gt;</code></pre><h3 id="Resilient-Distributed-Datasets-RDDs"><a href="#Resilient-Distributed-Datasets-RDDs" class="headerlink" title="Resilient Distributed Datasets (RDDs)"></a>Resilient Distributed Datasets (RDDs)</h3><p>Spark 围绕 RDD 的概念。 RDD 是一个可以平行操作的容错的集合元素。 有两种方式可以创建RDD： 从驱动程序里并行化一个已存在的集合， 或者引用一个外部存储系统的数据集， HDFS， HBase， 或者其他 Hadoop 输入格式的数据源.</p>
+<h3 id="Parallelized-Collections"><a href="#Parallelized-Collections" class="headerlink" title="Parallelized Collections"></a>Parallelized Collections</h3><p>并行化集合通过在你的驱动程序种调用 JavaSparkContext 的 parallelize 方法作用于一个已存在的集合创建。集合中的元素被复制从而组成一个可以被并行操作的分布式数据集。示例如下:</p>
+<pre><code>List&lt;Integer&gt; data = Arrays.asList(1,2,3,4,5);
+JavaRDD&lt;Integer&gt;  distData = sc.parallelize(data);</code></pre><p>一旦创建， 该分布式数据集可以被并行操作。例如，我们可以调用 distData.reduce((a,b) -&gt; a + b ) 来加列表中的元素</p>
+<p>并行集合的一个重要的参数是切割数据集的分区数。 Spark 会在族上<br>的每一个分区运行任务。典型的你想要在每个簇上为每个CPU分配2-4个分区。通常，Spark尝试会基于你的簇自动设置分区数量。然而，你也可以通过人工传递第二个参数 sc.parallelize(data,10) 设置它。注意：在代码的某些地方使用数据切片(分区的同义词)来保持向后兼容性。</p>
+<h3 id="外部数据集"><a href="#外部数据集" class="headerlink" title="外部数据集"></a>外部数据集</h3><p>Spark可以从Hadoop支持的任意存储数据源创建分布式数据集，包括你的本地文件系统，HDFS, Cassandra, HBae, Amazon S3, 等等。Spark 支持文本文件，SequenceFiles， 以及其他任何Hadoop 的输入格式。</p>
+<p>文本 RDD 可以使用 SparkContext 的 textFile 方法创建。这个方法使用 URI 作为文件参数， (可以是本地文件，或者 hdfs://, s3a://, etc URI) 然后读到一个行的集合中。以下是一次调用:</p>
+<pre><code>JavaRDD&lt;String&gt; distFile = sc.textFile(&quot;data.txt&quot;);</code></pre><p>一旦创建， distFile 可以进行数据集操作。例如，我们可以将所有行的大小都加起来使用 map 和 reduce 操作如下: distFile.map(s-&gt; s.length()).ruduce((a,b) -&gt; a + b).</p>
+<p>除了文本文件，Spark 的 Java API 同样支持几个其他的数据格式：</p>
+<ul>
+<li>JavaSparkContext.wholeTextFiles 让你读取一个包含多个文本文件的目录， 返回 （filename， content）的pairs。 相对于 textFile， textFile 只返回每个文件的每行记录。</li>
+</ul>
+<ul>
+<li><p>对于序列文件 SequenceFiles， 使用 SparkContext 的 sequenceFile[K, V] 方法， K，V 是文件的key 类型 和值类型。这些应该是 Hadoop Writable 接口的子类， 像 IntWritable 和 Text。</p>
+</li>
+<li><p>对于其他的Hadoop输入格式， 你可以使用 JavaSparkContext.hadoopRDD 方法， 该方法采取任意 JobConf 和输入格式类， key 类 和 value 类。 你也可以使用 JavaSparkContext.newAPIHadoopRDD 为基于新的 MapReduce API（org.apache.hadoop.mapreduced) 的输入格式。</p>
+</li>
+<li><p>JavaRDD.saveASObjectFile 和 JavaSparkContext.objectFile 支持保存一个 RDD 用一种简单的格式包含序列化的Java对象。这不像 特定数据元格式像 Avro 那样有效， Avro 提供一种简单的方式保存任意RDD.</p>
+</li>
+</ul>
+<h3 id="RDD-Operations-分布式数据集合的操作"><a href="#RDD-Operations-分布式数据集合的操作" class="headerlink" title="RDD Operations 分布式数据集合的操作"></a>RDD Operations 分布式数据集合的操作</h3><p>RDDs 支持两种类型的操作: 转换(transformations), 它创建一个新的数据集从一个已存在的集合， 操作(actions), action 在数据集上运行一个计算之后返回给驱动程序一个值. 例如， map 是一个转换，将数据集的每个元素通过一个函数操作，然后返回一个新的 RDD 表示结果。另一方面， reduce 是一个 action 来聚集所有的 RDD 元素 通过使用一些函数的方式，并返回最终的结果给驱动程序。</p>
+<p>Spark中所有的转换都是懒惰的， 它们并不立刻计算结果。相反，它们只是记住了应用在数据集上的转换。转换只有在驱动程序需要结果的时候才进行计算。这种设计允许 Spark 更有效的运行。例如，我们可以创建一个数据集通过在一个reduce过程使用map 只返回 reduce 的结果给驱动， 而不是 大量的 mapped 的数据集。</p>
+<p>默认，每个转换的 RDD 可能会重新计算在你每次执行action 的时候。然而，你也可以持久化一个 RDD 到内存中使用persist( or cache) 方法， Spark 会在粗上保存 元素 为了你下次查询能够更快的进入。同样有方法支持持久化 RDD 到磁盘，或者在多个节点之间复制。</p>
+<h3 id="Basics-基础-Java"><a href="#Basics-基础-Java" class="headerlink" title="Basics 基础(Java)"></a>Basics 基础(Java)</h3><pre><code>JavaRDD&lt;String&gt; lines = sc.textFile(&quot;data.txt&quot;);
+JavaRDD&lt;Integer&gt; lineLengths = lines.map(s -&gt; s.length());
+int totalLength = lineLengths.reduce((a,b) -&gt; a + b);</code></pre><h3 id="Passing-Functions-to-Spark"><a href="#Passing-Functions-to-Spark" class="headerlink" title="Passing Functions to Spark"></a>Passing Functions to Spark</h3><p>Spark API 为了在簇上运行，严重依赖传递给驱动程序的函数。 在Java中，函数表现为继承了 org.apache.spark.api.java.function 包中接口的类。 有两种方式创建这样的函数：</p>
+<ul>
+<li><p>在你自己的类中实现函数接口， 可以通过 匿名(anonymous)内部类或有名类， 传递一个实例给 Spark。</p>
+</li>
+<li><p>使用 lamda 表达式简明的定义实现.</p>
+</li>
+</ul>
+<p>为了简单，大多数指导使用lamda 表达式， 它易于使用相同的API 形成长形式的语句。例如，可以将代码写成下列形式： </p>
+<pre><code>JavaRDD&lt;String&gt; lines = sc.textFile(&quot;data.txt&quot;);
+JavaRDD&lt;Integer&gt; lineLengths = line.map(new Function&lt;String, Integer&gt;(){
+    public Integer call(String s) {
+        return s.length();
+    }
+});
+int totalLength = lineLength.reduce(new Function2&lt;Integer, Integer, Integer&gt;((){
+    public Integer call(Integer a, Integer b){
+        return a + b;
+    }
+});</code></pre><p>或者笨重的下列方式：</p>
+<pre><code>class GetLength implements Function&lt;String, Integer&gt;{
+    public Integer call(String s) { return s.length()(); }
+}
+class Sum implemnets Function2&lt;Integer, Integer, Integer&gt;
+{
+    public Integer call(Integer a, Integer b) { return a + b;}
+}
+
+JavaRDD&lt;String&gt; lines =sc.textFile(&quot;data.txt&quot;);
+JavaRDD&lt;Integer&gt; lineLengths = lines.map(new GetLength());
+int totalLength = lineLengths.reduce(new Sum());</code></pre><h3 id="理解簇"><a href="#理解簇" class="headerlink" title="理解簇"></a>理解簇</h3><p>Spark 难点之一就是理解跨簇执行代码时候变量和方法的范围和生命周期。RDD 操作可以修改它们范围之外的变量，这通常是造成困惑的来源。在下面的例子中我们看使用一个foreach() 来递增一个计数器，但是在其他操作中相同的问题也会发生。</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>考虑下列的 RDD 元素， 表现可能不同，这取决于它们是否运行在相同的 JVM。 一种通常的例子是运行 Spark 在本地模式 对比运行Spark 应用在簇中(例如 spark-submit to YARN)。</p>
+<pre><code>int counter = 0;
+JavaRDD&lt;Integer&gt; rdd = sc.parallelize(data);
+
+// Wrong: Don&apos;t do this!!
+rdd.foreach(x -&gt; count += x);
+
+println(&quot;Counter value: &quot; + counter);</code></pre><h3 id="Local-vs-cluster-modes-本地模式-对比-簇模式"><a href="#Local-vs-cluster-modes-本地模式-对比-簇模式" class="headerlink" title="Local vs. cluster modes 本地模式 对比 簇模式"></a>Local vs. cluster modes 本地模式 对比 簇模式</h3><p>上述代码的行为是未定义的， 可能不会预期工作。为了执行工作，Spark 将 RDD 作为划分为 <em>任务*， 每个任务被一个 *执行者</em> 执行。在计算之前， Spark 计算任务闭包。 闭包是处理器在RDD上执行计算时必须知道的变量和方法(当前是 foreach())。这个闭包被序列化被发送到每个 <em>执行者</em>。</p>
+<p>发送个每个 <em>执行者</em> 的闭包中的变量现在被复制，因此，当 counter 被foreach 函数引用时，它不再是驱动节点上的 counter 了。驱动节点内存中仍然有一个 counter, 但是不再对 <em>执行者</em> 可见了。<em>执行者</em> 只看见序列化闭包的拷贝。 因此， counter 的最终值仍然是 0， 因为所有对 counter 的操作都引用的是序列化闭包中的值。</p>
+<p>在本地模式，有些情况， foreach 函数实际上会在和驱动相同的 JVM 中执行， 并且会引用相同的原始 counter, 实际上将会更新 counter.</p>
+<p>为了确保在这些场景上代码预期工作， 应该使用 Accumulator(累加器). 当在簇中跨worker节点执行时，在 Spark 中提供了一个特别的方法来安全更新变量 Accumulator。Accumulator 一节 会讨论更多细节。</p>
+<p>通常， 簇构造 像循环或者本地定义方法， 不应该使用可变的全局状态。 Spark 没有定义且不保证闭包外引用可变对象的行为。一些代码可能在本地模式下工作，但在分布式环境下可能不会预期工作。需要使用 Accumulator 作为替代。</p>
+<h3 id="打印-RDD-元素"><a href="#打印-RDD-元素" class="headerlink" title="打印 RDD 元素"></a>打印 RDD 元素</h3><p>另一种常见的错误是尝试使用rdd.foreach(println) 或者 rdd.map(println) 打印RDD中的元素. 在单机模式下，会打印预期结果。 为了在驱动上打印所有的元素，可以使用 collect() 方法首先将RDD 带到驱动节点：<br>rdd.collect().foreach(println). 这可能造成驱动节点内存用尽，但是，collect() 在单机上获取了整个 RDD；如果你想要打印少量 RDD中的元素，一种更安全的方法是使用take(): rdd.take(100).foreach(println)</p>
+<h3 id="Working-with-Key-Value-Pairs-处理键值对"><a href="#Working-with-Key-Value-Pairs-处理键值对" class="headerlink" title="Working with Key-Value Pairs 处理键值对"></a>Working with Key-Value Pairs 处理键值对</h3><p>大多数在RDDs 上的Spark 操作包含对象的任意类型，RDD 上的 key-value pairs 只能获得一些少量特定的操作。最常用的分布式 “shuffle” 操作，例如通过key来聚集或分组。</p>
+<p>在 Java中，键值对表示为 Scala标准库中的 scala.Tuple2 类。你可以简单调用 new Tuple2(a,b) 创建一个元组，访问数据域通过 tuple._1() 和 tuple._2().</p>
+<p>RDD 键值对表示为 JavaPairRDD 类，你可以构造 JavaPairRDD 从 JavaRDD 使用特定的 map 操作， 像 mapToPair 和 flatMapToPair. JavaPairRDD 将有同样的 标准 RDD 函数和特定的键值对。</p>
+<p>例如，下面代码使用 reduceByKey 操作在键值对上来计算一个文件中每行文本出现了多少次：</p>
+<pre><code>JavaRDD&lt;String&gt; lines = sc.textFile(&quot;data.txt&quot;);
+JavaPairRDD&lt;String, Integer&gt; pairs = lines.mapToPair(s -&gt; new Tuple2(s,1));
+JavaPairRDD&lt;String,Integer&gt; counts = pairs.reduceByKey((a,b) -&gt; a + b);</code></pre><p>我们可以使用 counts.sortByKey(), 例如，为了按字母排序，最终 counts.collect() 将结果返回给驱动程序作为对象数组。</p>
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><p>下面的表格列出了Spark 支持的一些常用的转换操作。</p>
+<table>
+<tr><th>Transformation</th><th>Meaning</th></tr>
+<tbody>
+<tr><td>map(func)</td><td>对原来源中的每个元素做func 操作，返回一个新的分布式数据集</td></tr>
+<tr><td>filter(func)</td><td>对在原来源上的每个元素做func 判断，如果为True，则添加到要返回的新的数据集上</td></tr>
+<tr><td>flatMap(func)</td><td>与map相似，但是每个输入可以被映射到0个或多个输出（所以func 返回一个 Seq 而不是单个 item）</td></tr>
+<tr><td>mapPartition(func)</td><td>Similar to map, but runs separately on each partition (block) of the RDD, so func must be of type Iterator<t> => Iterator<u> when running on an RDD of type T. </u></t></td></tr>
+<tr><td>mapPartitionWithIndex(func)</td><td>Similar to mapPartitions, but also provides func with an integer value representing the index of the partition, so func must be of type (Int, Iterator<t>) => Iterator<u> when running on an RDD of type T. </u></t></td></tr>
+<tr><td>sample(withReplacement, fraction, seed) </td><td>Sample a fraction fraction of the data, with or without replacement, using a given random number generator seed. </td></tr>
+<tr><td>union(otherDataset) </td><td>Return a new dataset that contains the union of the elements in the source dataset and the argument. </td></tr>
+<tr><td>intersection(otherDataset) </td><td>Return a new RDD that contains the intersection of elements in the source dataset and the argument. </td></tr>
+<tr><td>distinct([numPartitions])) </td><td>Return a new dataset that contains the distinct elements of the source dataset.</td></tr>
+<tr><td>groupByKey([numPartitions]) </td><td>When called on a dataset of (K, V) pairs, returns a dataset of (K, Iterable<v>) pairs.
+Note: If you are grouping in order to perform an aggregation (such as a sum or average) over each key, using reduceByKey or aggregateByKey will yield much better performance.
+Note: By default, the level of parallelism in the output depends on the number of partitions of the parent RDD. You can pass an optional numPartitions argument to set a different number of tasks. </v></td></tr>
+<tr><td>reduceByKey(func, [numPartitions]) </td><td>When called on a dataset of (K, V) pairs, returns a dataset of (K, V) pairs where the values for each key are aggregated using the given reduce function func, which must be of type (V,V) => V. Like in groupByKey, the number of reduce tasks is configurable through an optional second argument. </td></tr>
+<tr><td>aggregateByKey(zeroValue)(seqOp, combOp, [numPartitions]) </td><td>When called on a dataset of (K, V) pairs, returns a dataset of (K, U) pairs where the values for each key are aggregated using the given combine functions and a neutral "zero" value. Allows an aggregated value type that is different than the input value type, while avoiding unnecessary allocations. Like in groupByKey, the number of reduce tasks is configurable through an optional second argument. </td></tr>
+<tr><td>sortByKey([ascending], [numPartitions]) </td><td>When called on a dataset of (K, V) pairs where K implements Ordered, returns a dataset of (K, V) pairs sorted by keys in ascending or descending order, as specified in the boolean ascending argument.</td></tr>
+<tr><td>join(otherDataset, [numPartitions]) </td><td>When called on datasets of type (K, V) and (K, W), returns a dataset of (K, (V, W)) pairs with all pairs of elements for each key. Outer joins are supported through leftOuterJoin, rightOuterJoin, and fullOuterJoin. </td></tr>
+<tr><td>cogroup(otherDataset, [numPartitions]) </td><td>When called on datasets of type (K, V) and (K, W), returns a dataset of (K, (Iterable<v>, Iterable<w>)) tuples. This operation is also called groupWith. </w></v></td></tr>
+<tr><td>cartesian(otherDataset) </td><td>When called on datasets of types T and U, returns a dataset of (T, U) pairs (all pairs of elements). </td></tr>
+<tr><td>pipe(command, [envVars]) </td><td>Pipe each partition of the RDD through a shell command, e.g. a Perl or bash script. RDD elements are written to the process's stdin and lines output to its stdout are returned as an RDD of strings. </td></tr>
+<tr><td>coalesce(numPartitions) </td><td>Decrease the number of partitions in the RDD to numPartitions. Useful for running operations more efficiently after filtering down a large dataset. </td></tr>
+<tr><td>repartition(numPartitions) </td><td>Reshuffle the data in the RDD randomly to create either more or fewer partitions and balance it across them. This always shuffles all data over the network. </td></tr>
+<tr><td>repartitionAndSortWithinPartitions(partitioner) </td><td>Repartition the RDD according to the given partitioner and, within each resulting partition, sort records by their keys. This is more efficient than calling repartition and then sorting within each partition because it can push the sorting down into the shuffle machinery. </td></tr>
+</tbody>
+</table>
+
+<h3 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h3><p>下表列出一些Spark支持的常用的 action 操作</p>
+<table class="table">
+<tr><th>Action</th><th>Meaning</th></tr>
+<tr>
+  <td> <b>reduce</b>(<i>func</i>) </td>
+  <td> Aggregate the elements of the dataset using a function <i>func</i> (which takes two arguments and returns one). The function should be commutative and associative so that it can be computed correctly in parallel. </td>
+</tr>
+<tr>
+  <td> <b>collect</b>() </td>
+  <td> Return all the elements of the dataset as an array at the driver program. This is usually useful after a filter or other operation that returns a sufficiently small subset of the data. </td>
+</tr>
+<tr>
+  <td> <b>count</b>() </td>
+  <td> Return the number of elements in the dataset. </td>
+</tr>
+<tr>
+  <td> <b>first</b>() </td>
+  <td> Return the first element of the dataset (similar to take(1)). </td>
+</tr>
+<tr>
+  <td> <b>take</b>(<i>n</i>) </td>
+  <td> Return an array with the first <i>n</i> elements of the dataset. </td>
+</tr>
+<tr>
+  <td> <b>takeSample</b>(<i>withReplacement</i>, <i>num</i>, [<i>seed</i>]) </td>
+  <td> Return an array with a random sample of <i>num</i> elements of the dataset, with or without replacement, optionally pre-specifying a random number generator seed.</td>
+</tr>
+<tr>
+  <td> <b>takeOrdered</b>(<i>n</i>, <i>[ordering]</i>) </td>
+  <td> Return the first <i>n</i> elements of the RDD using either their natural order or a custom comparator. </td>
+</tr>
+<tr>
+  <td> <b>saveAsTextFile</b>(<i>path</i>) </td>
+  <td> Write the elements of the dataset as a text file (or set of text files) in a given directory in the local filesystem, HDFS or any other Hadoop-supported file system. Spark will call toString on each element to convert it to a line of text in the file. </td>
+</tr>
+<tr>
+  <td> <b>saveAsSequenceFile</b>(<i>path</i>) <br> (Java and Scala) </td>
+  <td> Write the elements of the dataset as a Hadoop SequenceFile in a given path in the local filesystem, HDFS or any other Hadoop-supported file system. This is available on RDDs of key-value pairs that implement Hadoop's Writable interface. In Scala, it is also
+   available on types that are implicitly convertible to Writable (Spark includes conversions for basic types like Int, Double, String, etc). </td>
+</tr>
+<tr>
+  <td> <b>saveAsObjectFile</b>(<i>path</i>) <br> (Java and Scala) </td>
+  <td> Write the elements of the dataset in a simple format using Java serialization, which can then be loaded using
+    <code>SparkContext.objectFile()</code>. </td>
+</tr>
+<tr>
+  <td> <b>countByKey</b>() <a name="CountByLink"></a> </td>
+  <td> Only available on RDDs of type (K, V). Returns a hashmap of (K, Int) pairs with the count of each key. </td>
+</tr>
+<tr>
+  <td> <b>foreach</b>(<i>func</i>) </td>
+  <td> Run a function <i>func</i> on each element of the dataset. This is usually done for side effects such as updating an <a href="#accumulators">Accumulator</a> or interacting with external storage systems.
+  <br><b>Note</b>: modifying variables other than Accumulators outside of the <code>foreach()</code> may result in undefined behavior. See <a href="#understanding-closures-a-nameclosureslinka">Understanding closures </a> for more details.</td>
+</tr>
+</table>
+
+<h3 id="Shuffle-operations"><a href="#Shuffle-operations" class="headerlink" title="Shuffle operations"></a>Shuffle operations</h3><p>Spark特定的操作出发 shuffle 事件。在Spark的机制中，shuffle 是重新分布数据从而跨区形成不同分组。典型的包括跨执行机和机器的复制数据，使 shuffle 操作变得复杂和代价巨大。</p>
+<h3 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h3><p>为了弄清在shuffle 操作中发生了什么， 考虑 reduceByKey操作。 reduceByKey 操作生成一个新的RDD 使所有的单 key 的值结合为一个元组 – key 和reduce 函数的执行结果(对应于key的所有联系的值). 挑战是不是key的所有值都有必要在相同的分区， 甚至在相同的机器，但是他们必须并置来计算结果。</p>
+<p>在Spark中，数据在特定地方的特定操作通常不是跨区分布。 在计算中，单个任务会操作单个分区，因此，为了组织<br>数据让单个 reduceByKey reduce 任务执行，Spark 需要执行 all-to-all 操作。它必须读取为所有的key读取所有分区的所有值，然后为每个key计算最终结果带来跨分区的所有值，这就是 <em>shuffle</em>.</p>
+<p>虽然新shuffle 的数据在每个分区中元素集合是确定的，所以是分区自己的顺序，而不是元素的顺序。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/13/spark概念学习/" data-id="ck1g6qpqp000yut9ksvwpjwok" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Emmet/">Emmet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hbase/">Hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IEDA/">IEDA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RDD/">RDD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Virtualbox/">Virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vscode/">Vscode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WSL/">WSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/">cmd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dataset/">dataset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docs/">docs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/emulator/">emulator</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/firefox/">firefox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipv6/">ipv6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mail/">mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ml/">ml</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pdf/">pdf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resources/">resources</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/snap/">snap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/terminal/">terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/util/">util</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vimrc/">vimrc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/website/">website</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window10/">window10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xfce4/">xfce4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xrdp/">xrdp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/库/">库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搜狗输入法/">搜狗输入法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网站模板/">网站模板</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备/">设备</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/BigData/" style="font-size: 10px;">BigData</a> <a href="/tags/Emmet/" style="font-size: 10px;">Emmet</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 12.5px;">IDEA</a> <a href="/tags/IEDA/" style="font-size: 10px;">IEDA</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/tags/RDD/" style="font-size: 10px;">RDD</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Spring/" style="font-size: 12.5px;">Spring</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/Virtualbox/" style="font-size: 12.5px;">Virtualbox</a> <a href="/tags/Vscode/" style="font-size: 10px;">Vscode</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/dataset/" style="font-size: 10px;">dataset</a> <a href="/tags/docs/" style="font-size: 10px;">docs</a> <a href="/tags/emulator/" style="font-size: 10px;">emulator</a> <a href="/tags/firefox/" style="font-size: 10px;">firefox</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/ipv6/" style="font-size: 10px;">ipv6</a> <a href="/tags/javaweb/" style="font-size: 10px;">javaweb</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mail/" style="font-size: 10px;">mail</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/ml/" style="font-size: 10px;">ml</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/pdf/" style="font-size: 10px;">pdf</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/resources/" style="font-size: 10px;">resources</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/snap/" style="font-size: 10px;">snap</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/terminal/" style="font-size: 10px;">terminal</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/util/" style="font-size: 10px;">util</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/vimrc/" style="font-size: 10px;">vimrc</a> <a href="/tags/website/" style="font-size: 12.5px;">website</a> <a href="/tags/window10/" style="font-size: 10px;">window10</a> <a href="/tags/windows/" style="font-size: 17.5px;">windows</a> <a href="/tags/windows10/" style="font-size: 12.5px;">windows10</a> <a href="/tags/xfce4/" style="font-size: 10px;">xfce4</a> <a href="/tags/xrdp/" style="font-size: 10px;">xrdp</a> <a href="/tags/库/" style="font-size: 10px;">库</a> <a href="/tags/搜狗输入法/" style="font-size: 10px;">搜狗输入法</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/网站模板/" style="font-size: 10px;">网站模板</a> <a href="/tags/设备/" style="font-size: 10px;">设备</a> <a href="/tags/资源/" style="font-size: 10px;">资源</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/07/hello-world3/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/07/hello-world2/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/08/Spring-Security学习笔记/">Spring-Security学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/08/优秀的资源站点/">优秀的资源站点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
