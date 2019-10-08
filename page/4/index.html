@@ -200,6 +200,444 @@
             
 
   
+    <article id="post-20天学习大数据" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/01/13/20天学习大数据/" target="_blank">20天学习大数据</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/01/13/20天学习大数据/" class="archive-article-date">
+        <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <ul>
+<li>hadoop</li>
+<li>hbase</li>
+<li>python</li>
+<li>spark</li>
+<li>机器学习</li>
+<li>流处理</li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/01/13/20天学习大数据/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Hadoop在windows下的单机配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/01/13/Hadoop在windows下的单机配置/" target="_blank">Hadoop在windows下的单机配置</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/01/13/Hadoop在windows下的单机配置/" class="archive-article-date">
+        <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <ul>
+<li><p>hadoop home /D:/Env/hadoop-2.9.2</p>
+<p>  vim D:/Env/hadoop-2.9.2/etc/hadoop/hadoop-env.cmd<br>  set JAVA_HOME=C:\PROGRA~1\Java\jdk1.8.0_171</p>
+</li>
+</ul>
+<h2 id="配置伪分布式模式"><a href="#配置伪分布式模式" class="headerlink" title="配置伪分布式模式"></a>配置伪分布式模式</h2><ul>
+<li>修改hadoop-2.9.2\etc\hadoop\core-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义了namenode的位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 此目录为hdfs的根目录，存储的文件即存储在该目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/D:/HDFS<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改hadoop-2.9.2\etc\hadoop\hdfs-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义数据复制的数量，1 表示复制 1份 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改hadoop-2.9.2\etc\hadoop\mapred-site.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义了JobTracker的位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.job.tracker<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:9001<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>由于hadoop 在windows下运行需要winutil, 所以需要另外下载。下载[winutil](https://github.com/steveloughran/winutils), 将原hadoop 的bin 目录重命名为bin.bak， 将hadoop2.8.3/bin 目录复制到hadoop根目录。</code></pre><h3 id="启动hadoop"><a href="#启动hadoop" class="headerlink" title="启动hadoop"></a>启动hadoop</h3><p>首次启动hadoop, 需要格式化hadoop将要用到的HDFS文件系统</p>
+<ul>
+<li><p>格式化 NameNode<br>  hadoop namenode -format</p>
+</li>
+<li><p>启动 Hadoop</p>
+<p>  start-dfs</p>
+</li>
+<li><p>终止 Hadoop</p>
+<p>  stop-dfs</p>
+</li>
+</ul>
+<p>这会打开两个窗口，一个datanode, 一个namenode.</p>
+<ul>
+<li><p>查看java 进程</p>
+<p>  jps</p>
+</li>
+<li><p>查看文件系统</p>
+<p>  hadoop fs -ls /</p>
+</li>
+<li><p>创建目录</p>
+<p>  hadoop fs -mkdir /user</p>
+</li>
+<li><p>从本地拷贝文件</p>
+<p>  hadoop fs -copyFromLocal test.txt /</p>
+</li>
+<li><p>文件拷贝</p>
+<p>  hadoop fs -cp /test.txt /data</p>
+</li>
+<li><p>查看hdfs 文件内容</p>
+<p>  hadoop fs -cat /test.txt</p>
+</li>
+<li><p>下载文件到本地</p>
+<p>  hadoop fs -copyToLocal /text.txt</p>
+</li>
+<li><p>查看帮助</p>
+<p>  hadoop fs -help</p>
+</li>
+</ul>
+<h4 id="网页查看-hadoop"><a href="#网页查看-hadoop" class="headerlink" title="网页查看 hadoop"></a>网页查看 hadoop</h4><pre><code>[localhost:50070](http://localhost:50070)</code></pre>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hadoop</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/01/13/Hadoop在windows下的单机配置/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Mi-pro大数据环境配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/01/13/Mi-pro大数据环境配置/" target="_blank">Mi-pro大数据环境配置</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/01/13/Mi-pro大数据环境配置/" class="archive-article-date">
+        <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>这是我在自己笔记本中学习大数据的配置，使用 Virtualbox6.0 虚拟机软件. 对每台虚拟机设置了网卡1 NAT网卡和网卡2 桥接网卡，桥接网卡设置界面名称 Realtec USB FE Family Controller, 并在每台虚拟机中安装了 openssh-server. NAT网卡是的虚拟机可以通过宿主机联网，桥接网卡使虚拟机拥有和主机不同的独立局域网ip，并和宿主机在同一个网段。</p>
+<p>目前安装了5台 ubuntu 18.04 linux主机，每台设置内存1GB，硬盘20GB，显存128MB，开启3D加速:</p>
+<ul>
+<li><a href="mailto:node1@192.168.101.237" target="_blank" rel="noopener">node1@192.168.101.237</a></li>
+<li><a href="mailto:node2@192.168.101.239" target="_blank" rel="noopener">node2@192.168.101.239</a></li>
+<li><a href="mailto:node3@192.168.101.240" target="_blank" rel="noopener">node3@192.168.101.240</a></li>
+<li><a href="mailto:node4@192.168.101.241" target="_blank" rel="noopener">node4@192.168.101.241</a></li>
+<li><a href="mailto:node5@192.168.101.243" target="_blank" rel="noopener">node5@192.168.101.243</a></li>
+</ul>
+<p>添加用户</p>
+<pre><code>sudo su root
+useradd hadoop
+passwd &quot;159491&quot;</code></pre><p>将hadoop 添加到sudoers, NOPASSWD 表示切换sudo时无须密码</p>
+<pre><code>chmod u+x /etc/sudoers
+vim /etc/sudoers
+hadoop ALL=NOPASSWD:ALL</code></pre><p>测试hadoop 用户是否有sudo 权限</p>
+<pre><code>sudo whoami</code></pre><p>创建用户目录</p>
+<pre><code>sudo mkdir /home/hadoop
+sudo chown hadoop /home/hadoop</code></pre><p>生成rsa密匙</p>
+<pre><code>ssh-keygen -t rsa</code></pre><p>因为总共有4台虚拟机，每台虚拟机都要用ssh-keygen -t rsa 生成密匙，然后将生成的所有共识 id_rsa追加到同一个authorized_keys 文件中，并复制到每台虚拟机的 hadoop/.ssh/ 目录中。并且修改权限为 chmod 700 ~/.ssh/authorized_keys.</p>
+<p>配置完成后，就可以在任意一台虚拟机通过 ssh hostname , 例如 ssh node4 访问对应node4主机，而不需要密码。</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li><p>关闭屏幕锁</p>
+<p>  Settings-&gt;Privacy-&gt;Screen Lock-&gt;Off</p>
+</li>
+<li><p>软件包目录 /home/node1/Documents</p>
+</li>
+<li><p>环境安装目录 /env</p>
+</li>
+</ul>
+<h3 id="软件安装目录-Virtualbox"><a href="#软件安装目录-Virtualbox" class="headerlink" title="软件安装目录 Virtualbox"></a>软件安装目录 Virtualbox</h3><ul>
+<li>java8 /env/jdk1.8</li>
+<li>hadoop-2.9.2 /env/hadoop-2.9.2</li>
+</ul>
+<h3 id="设置环境变量-Virtualbox"><a href="#设置环境变量-Virtualbox" class="headerlink" title="设置环境变量 Virtualbox"></a>设置环境变量 Virtualbox</h3><h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><pre><code>vim ~/.bashrc</code></pre><ul>
+<li><p>添加 Java 环境变量</p>
+<p>  export JAVA_HOME=/env/jdk1.8<br>  export JRE_HOME=${JAVA_HOME}/jre<br>  export CLASSPATH=:${JAVA_HOME}/lib:${JRE_HOME}/lib<br>  export PATH=${JAVA_HOME}/bin:$PATH</p>
+</li>
+<li><p>hadoop 环境变量 .bashrc</p>
+<p>  export HADOOP_HOME=/env/hadoop-2.9.2<br>  export HADOOP_PREFIX=$HADOOP_HOME<br>  export HADOOP_MAPRED_HOME=$HADOOP_HOME<br>  export HADOOP_COMMON_HOME=$HADOOP_HOME<br>  export HADOOP_HDFS_HOME=$HADOOP_HOME<br>  export YARN_HOME=$HADOOP_HOME<br>  export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native<br>  export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin<br>  export HADOOP_INSTALL=$HADOOP_HOME</p>
+</li>
+<li><p>修改hadoop 配置文件， $HADOOP_HOME/etc/hadoop/hadoop-env.sh</p>
+</li>
+</ul>
+<p>添加</p>
+<pre><code>export HADOOP_NAMENODE_OPTS=&quot; -Xms1024m -Xmx1024m -XX:+UseParallelGC&quot;
+export HADOOP_DATANODE_OPTS=&quot; -Xms1024m -Xmx1024m&quot;
+export HADOOP_LOG_DIR=/data/logs/hadoop</code></pre><p>由于本机只有8G内存，并且开了5个虚拟机，所以上述相应的调小了些。该为如下</p>
+<pre><code>export HADOOP_NAMENODE_OPTS=&quot; -Xms256m -Xmx512m -XX:+UseParallelGC&quot;
+export HADOOP_DATANODE_OPTS=&quot; -Xms256m -Xmx512m&quot;
+export HADOOP_LOG_DIR=/data/logs/hadoop</code></pre><p>修改 JAVA_HOME</p>
+<pre><code>export JAVA_HOME=/env/jdk1.8</code></pre><ul>
+<li><p>使环境变量生效</p>
+<p>  source ~/.bashrc</p>
+</li>
+</ul>
+<p>注意每台主机都有该相同的.bashrc 配置文件</p>
+<h3 id="复制虚拟机"><a href="#复制虚拟机" class="headerlink" title="复制虚拟机"></a>复制虚拟机</h3><p>上述配置完成后，关闭虚拟机，然后复制3份，重命名为node2,node3,node4</p>
+<p>修改每台虚拟机/etc/hosts</p>
+<pre><code>192.168.101.237 node1
+192.168.101.239  node2
+192.168.101.240 node3
+192.168.101.241 node4
+192.168.101.243 node5</code></pre><p>重启网卡，使立刻生效</p>
+<p>sudo /etc/init.d/networking restart</p>
+<p>修改每台虚拟机/etc/hostname,node1只写node1,其他也一样</p>
+<pre><code>node1
+node2
+node3
+node4
+node5</code></pre><p>然后每台主机执行</p>
+<pre><code>hostname 主机名</code></pre><p>例如虚拟机node1</p>
+<pre><code>hostname node1</code></pre><h3 id="hadoop-系统配置"><a href="#hadoop-系统配置" class="headerlink" title="hadoop 系统配置"></a>hadoop 系统配置</h3><ul>
+<li><p>创建目录,在每台虚拟机上创建，并将拥有者付给hadoop用户</p>
+<p>  sudo mkdir -p /data/logs/hadoop<br>  sudo mkdir -p /data/hadoop/hdfs/nn<br>  sudo mkdir /data/hadoop/hdfs/dn<br>  chown hadoop /data<br>  chown hadoop /data/*</p>
+</li>
+<li><p>core-site.xml</p>
+  <configuration>
+      <property>
+              <name>fs.defaultFS</name>
+              <!-- 此处每台虚拟机的地址做相应调整，如node1,node2-->
+              <value>hdfs://node1:8020</value>
+      </property>
+  </configuration>
+</li>
+<li><p>hdfs-site.xml</p>
+   <property>
+              <name>dfs.replication</name>
+              <value>1</value>
+      </property>
+      <property>
+              <name>dfs.namenode.name.dir</name>
+              <value>file:///data/hadoop/hdfs/nn</value>
+      </property>
+      <property>
+              <name>dfs.datanode.data.dir</name>
+              <value>file:///data/hadoop/hdfs/dn</value>
+      </property>
+</li>
+<li><p>格式化 namenode</p>
+</li>
+</ul>
+<p>对每个虚拟机进行此操作</p>
+<pre><code>hdfs namenode -format</code></pre><h3 id="虚拟机配置结果"><a href="#虚拟机配置结果" class="headerlink" title="虚拟机配置结果"></a>虚拟机配置结果</h3><ul>
+<li>node1 OK</li>
+<li>node2 OK</li>
+<li>node3 OK</li>
+<li>node4 OK</li>
+</ul>
+<h3 id="友情提示"><a href="#友情提示" class="headerlink" title="友情提示"></a>友情提示</h3><p>安装 Hadoop 和 HBase 这种分布式系统最好用一些批量执行命令的小工具，比如pssh或dsh。</p>
+<h3 id="Virtualbox端口转发"><a href="#Virtualbox端口转发" class="headerlink" title="Virtualbox端口转发"></a>Virtualbox端口转发</h3><p>在Virtualbox 设置网卡为NAT 模式，点击高级，配置NAT 转发规则，配置主机IP 和端口，虚拟机IP 和端口，然后就可以通过 主机IP 和端口访问在主机中访问虚拟机中提供的服务了。</p>
+<h3 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h3><p>修改所有节点core-site.xml fs.defaultFS = hdfs://node1:8020, 并在所有节点上进行如下操作，进行数据删除</p>
+<pre><code>rm -rf /data/hadoop/hdfs/nn/current
+rm -rf /data/hadoop/hdfs/dn/current</code></pre><h3 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h3><ul>
+<li><p>在node1 上启动namenode<br>  hadoop-daemon.sh –script hdfs start namenode</p>
+</li>
+<li><p>停止namenode</p>
+<p>  hadoop-daemon.sh –script hdfs stop namenode</p>
+</li>
+<li><p>在node2-node4 上启动 datanode</p>
+<p>  hadoop-daemons.sh –script hdfs start datanode</p>
+</li>
+</ul>
+<p>关闭 datanode</p>
+<pre><code>hadoop-daemons.sh --script hdfs stop datanode</code></pre>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hadoop</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">BigData</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/01/13/Mi-pro大数据环境配置/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hbase基本操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -464,219 +902,6 @@ scan &apos;test&apos;,{VERSIONS=&gt;5}</code></pre><ul>
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2019/01/13/Linux的基本操作命令记录/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mi-pro大数据环境配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/13/Mi-pro大数据环境配置/" target="_blank">Mi-pro大数据环境配置</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/13/Mi-pro大数据环境配置/" class="archive-article-date">
-        <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>这是我在自己笔记本中学习大数据的配置，使用 Virtualbox6.0 虚拟机软件. 对每台虚拟机设置了网卡1 NAT网卡和网卡2 桥接网卡，桥接网卡设置界面名称 Realtec USB FE Family Controller, 并在每台虚拟机中安装了 openssh-server. NAT网卡是的虚拟机可以通过宿主机联网，桥接网卡使虚拟机拥有和主机不同的独立局域网ip，并和宿主机在同一个网段。</p>
-<p>目前安装了5台 ubuntu 18.04 linux主机，每台设置内存1GB，硬盘20GB，显存128MB，开启3D加速:</p>
-<ul>
-<li><a href="mailto:node1@192.168.101.237" target="_blank" rel="noopener">node1@192.168.101.237</a></li>
-<li><a href="mailto:node2@192.168.101.239" target="_blank" rel="noopener">node2@192.168.101.239</a></li>
-<li><a href="mailto:node3@192.168.101.240" target="_blank" rel="noopener">node3@192.168.101.240</a></li>
-<li><a href="mailto:node4@192.168.101.241" target="_blank" rel="noopener">node4@192.168.101.241</a></li>
-<li><a href="mailto:node5@192.168.101.243" target="_blank" rel="noopener">node5@192.168.101.243</a></li>
-</ul>
-<p>添加用户</p>
-<pre><code>sudo su root
-useradd hadoop
-passwd &quot;159491&quot;</code></pre><p>将hadoop 添加到sudoers, NOPASSWD 表示切换sudo时无须密码</p>
-<pre><code>chmod u+x /etc/sudoers
-vim /etc/sudoers
-hadoop ALL=NOPASSWD:ALL</code></pre><p>测试hadoop 用户是否有sudo 权限</p>
-<pre><code>sudo whoami</code></pre><p>创建用户目录</p>
-<pre><code>sudo mkdir /home/hadoop
-sudo chown hadoop /home/hadoop</code></pre><p>生成rsa密匙</p>
-<pre><code>ssh-keygen -t rsa</code></pre><p>因为总共有4台虚拟机，每台虚拟机都要用ssh-keygen -t rsa 生成密匙，然后将生成的所有共识 id_rsa追加到同一个authorized_keys 文件中，并复制到每台虚拟机的 hadoop/.ssh/ 目录中。并且修改权限为 chmod 700 ~/.ssh/authorized_keys.</p>
-<p>配置完成后，就可以在任意一台虚拟机通过 ssh hostname , 例如 ssh node4 访问对应node4主机，而不需要密码。</p>
-<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
-<li><p>关闭屏幕锁</p>
-<p>  Settings-&gt;Privacy-&gt;Screen Lock-&gt;Off</p>
-</li>
-<li><p>软件包目录 /home/node1/Documents</p>
-</li>
-<li><p>环境安装目录 /env</p>
-</li>
-</ul>
-<h3 id="软件安装目录-Virtualbox"><a href="#软件安装目录-Virtualbox" class="headerlink" title="软件安装目录 Virtualbox"></a>软件安装目录 Virtualbox</h3><ul>
-<li>java8 /env/jdk1.8</li>
-<li>hadoop-2.9.2 /env/hadoop-2.9.2</li>
-</ul>
-<h3 id="设置环境变量-Virtualbox"><a href="#设置环境变量-Virtualbox" class="headerlink" title="设置环境变量 Virtualbox"></a>设置环境变量 Virtualbox</h3><h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><pre><code>vim ~/.bashrc</code></pre><ul>
-<li><p>添加 Java 环境变量</p>
-<p>  export JAVA_HOME=/env/jdk1.8<br>  export JRE_HOME=${JAVA_HOME}/jre<br>  export CLASSPATH=:${JAVA_HOME}/lib:${JRE_HOME}/lib<br>  export PATH=${JAVA_HOME}/bin:$PATH</p>
-</li>
-<li><p>hadoop 环境变量 .bashrc</p>
-<p>  export HADOOP_HOME=/env/hadoop-2.9.2<br>  export HADOOP_PREFIX=$HADOOP_HOME<br>  export HADOOP_MAPRED_HOME=$HADOOP_HOME<br>  export HADOOP_COMMON_HOME=$HADOOP_HOME<br>  export HADOOP_HDFS_HOME=$HADOOP_HOME<br>  export YARN_HOME=$HADOOP_HOME<br>  export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native<br>  export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin<br>  export HADOOP_INSTALL=$HADOOP_HOME</p>
-</li>
-<li><p>修改hadoop 配置文件， $HADOOP_HOME/etc/hadoop/hadoop-env.sh</p>
-</li>
-</ul>
-<p>添加</p>
-<pre><code>export HADOOP_NAMENODE_OPTS=&quot; -Xms1024m -Xmx1024m -XX:+UseParallelGC&quot;
-export HADOOP_DATANODE_OPTS=&quot; -Xms1024m -Xmx1024m&quot;
-export HADOOP_LOG_DIR=/data/logs/hadoop</code></pre><p>由于本机只有8G内存，并且开了5个虚拟机，所以上述相应的调小了些。该为如下</p>
-<pre><code>export HADOOP_NAMENODE_OPTS=&quot; -Xms256m -Xmx512m -XX:+UseParallelGC&quot;
-export HADOOP_DATANODE_OPTS=&quot; -Xms256m -Xmx512m&quot;
-export HADOOP_LOG_DIR=/data/logs/hadoop</code></pre><p>修改 JAVA_HOME</p>
-<pre><code>export JAVA_HOME=/env/jdk1.8</code></pre><ul>
-<li><p>使环境变量生效</p>
-<p>  source ~/.bashrc</p>
-</li>
-</ul>
-<p>注意每台主机都有该相同的.bashrc 配置文件</p>
-<h3 id="复制虚拟机"><a href="#复制虚拟机" class="headerlink" title="复制虚拟机"></a>复制虚拟机</h3><p>上述配置完成后，关闭虚拟机，然后复制3份，重命名为node2,node3,node4</p>
-<p>修改每台虚拟机/etc/hosts</p>
-<pre><code>192.168.101.237 node1
-192.168.101.239  node2
-192.168.101.240 node3
-192.168.101.241 node4
-192.168.101.243 node5</code></pre><p>重启网卡，使立刻生效</p>
-<p>sudo /etc/init.d/networking restart</p>
-<p>修改每台虚拟机/etc/hostname,node1只写node1,其他也一样</p>
-<pre><code>node1
-node2
-node3
-node4
-node5</code></pre><p>然后每台主机执行</p>
-<pre><code>hostname 主机名</code></pre><p>例如虚拟机node1</p>
-<pre><code>hostname node1</code></pre><h3 id="hadoop-系统配置"><a href="#hadoop-系统配置" class="headerlink" title="hadoop 系统配置"></a>hadoop 系统配置</h3><ul>
-<li><p>创建目录,在每台虚拟机上创建，并将拥有者付给hadoop用户</p>
-<p>  sudo mkdir -p /data/logs/hadoop<br>  sudo mkdir -p /data/hadoop/hdfs/nn<br>  sudo mkdir /data/hadoop/hdfs/dn<br>  chown hadoop /data<br>  chown hadoop /data/*</p>
-</li>
-<li><p>core-site.xml</p>
-  <configuration>
-      <property>
-              <name>fs.defaultFS</name>
-              <!-- 此处每台虚拟机的地址做相应调整，如node1,node2-->
-              <value>hdfs://node1:8020</value>
-      </property>
-  </configuration>
-</li>
-<li><p>hdfs-site.xml</p>
-   <property>
-              <name>dfs.replication</name>
-              <value>1</value>
-      </property>
-      <property>
-              <name>dfs.namenode.name.dir</name>
-              <value>file:///data/hadoop/hdfs/nn</value>
-      </property>
-      <property>
-              <name>dfs.datanode.data.dir</name>
-              <value>file:///data/hadoop/hdfs/dn</value>
-      </property>
-</li>
-<li><p>格式化 namenode</p>
-</li>
-</ul>
-<p>对每个虚拟机进行此操作</p>
-<pre><code>hdfs namenode -format</code></pre><h3 id="虚拟机配置结果"><a href="#虚拟机配置结果" class="headerlink" title="虚拟机配置结果"></a>虚拟机配置结果</h3><ul>
-<li>node1 OK</li>
-<li>node2 OK</li>
-<li>node3 OK</li>
-<li>node4 OK</li>
-</ul>
-<h3 id="友情提示"><a href="#友情提示" class="headerlink" title="友情提示"></a>友情提示</h3><p>安装 Hadoop 和 HBase 这种分布式系统最好用一些批量执行命令的小工具，比如pssh或dsh。</p>
-<h3 id="Virtualbox端口转发"><a href="#Virtualbox端口转发" class="headerlink" title="Virtualbox端口转发"></a>Virtualbox端口转发</h3><p>在Virtualbox 设置网卡为NAT 模式，点击高级，配置NAT 转发规则，配置主机IP 和端口，虚拟机IP 和端口，然后就可以通过 主机IP 和端口访问在主机中访问虚拟机中提供的服务了。</p>
-<h3 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h3><p>修改所有节点core-site.xml fs.defaultFS = hdfs://node1:8020, 并在所有节点上进行如下操作，进行数据删除</p>
-<pre><code>rm -rf /data/hadoop/hdfs/nn/current
-rm -rf /data/hadoop/hdfs/dn/current</code></pre><h3 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h3><ul>
-<li><p>在node1 上启动namenode<br>  hadoop-daemon.sh –script hdfs start namenode</p>
-</li>
-<li><p>停止namenode</p>
-<p>  hadoop-daemon.sh –script hdfs stop namenode</p>
-</li>
-<li><p>在node2-node4 上启动 datanode</p>
-<p>  hadoop-daemons.sh –script hdfs start datanode</p>
-</li>
-</ul>
-<p>关闭 datanode</p>
-<pre><code>hadoop-daemons.sh --script hdfs stop datanode</code></pre>
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hadoop</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">BigData</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/13/Mi-pro大数据环境配置/">展开全文 >></a>
     </p>
     
 
@@ -1083,207 +1308,6 @@ export SPARK_YARN_USER_ENV==&quot;CLASSPATH=/env/hadoop-2.9.2/etc/hadoop&quot;</
 
 
   
-    <article id="post-Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/" target="_blank">Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/" class="archive-article-date">
-        <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>在Virtualbox中安装5台虚拟机，要求5台ubuntu 虚拟机能够相互ping通，并且可以访问外网。</p>
-<p>5台虚拟机如果要相互ping通，则需要在同一个网段，并且与网关在同一个网段，网关设为相同的地址。我的虚拟机地址设置为</p>
-<pre><code>主机node1 192.168.101.237
-主机node2 192.168.101.239
-主机node3 192.168.101.240
-主机node4 192.168.101.241
-主机node5 192.168.101.243</code></pre><p>所有主机网管设置为 192.168.101.102， 即 VirtualBox Host-Only Ethernet Adapter 的IP 地址</p>
-<p>安装虚拟机，配置网络连接方式为hostonly，5台虚拟机均选择网络适配器 VirtualBox Host-Only Ethernet Adapter. 在 win10 宿主机上对以太网进行共享，右击 <em>以太网</em> -&gt; <em>属性</em> -&gt; <em>共享</em> -&gt; 勾选两个复选框，选择分享到 VirtualBox Host-Only Ethernet Adapter 网卡。</p>
-<p>虚拟机安装完后，对每台虚拟机: 修改 /etc/network/interfaces.</p>
-<p>首先，查看网卡名称</p>
-<pre><code>ifconfig</code></pre><p>我的为 enp0s3</p>
-<p>修改 /etc/network/interfaces</p>
-<pre><code>sudo vim /etc/network/interfaces</code></pre><p>添加以下设置静态ip，网关设置为 VirtualBox Host-Only Ethernet Adapter 网卡的IP地址</p>
-<pre><code>auto enp0s3
-iface enp0s3 inet static
-address 192.168.101.237
-netmask 255.255.255.0
-gateway 192.168.101.102</code></pre><p>重启网卡</p>
-<pre><code>/etc/init.d/networking restart</code></pre><p>设置DNS</p>
-<pre><code>sudo vim /etc/systemd/resolved.conf</code></pre><p>修改DNS</p>
-<pre><code>DNS=114.114.114.114</code></pre><p>重启虚拟机</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Virtualbox</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-css" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/13/css/" target="_blank">CSS层叠样式表学习笔记</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/13/css/" class="archive-article-date">
-        <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><ul>
-<li><p>id 选择器  </p>
-<p>  #para1{</p>
-<pre><code>color:red;</code></pre><p>  }</p>
-</li>
-<li><p>class 选择器</p>
-<p>  .center{</p>
-<pre><code>text-align: center;</code></pre><p>  }</p>
-</li>
-</ul>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/13/css/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-android" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1446,7 +1470,7 @@ androidStudio: Analyze-&gt;Inspect Code.</code></pre><h2 id="HttpClient"><a href
 
 
   
-    <article id="post-github" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -1454,7 +1478,7 @@ androidStudio: Analyze-&gt;Inspect Code.</code></pre><h2 id="HttpClient"><a href
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2019/01/13/github/" target="_blank">github的使用学习记录</a>
+	  <a class="article-title" href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/" target="_blank">Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机</a>
   
     </h1>
   
@@ -1462,7 +1486,7 @@ androidStudio: Analyze-&gt;Inspect Code.</code></pre><h2 id="HttpClient"><a href
 
   
   
-<a href="/2019/01/13/github/" class="archive-article-date">
+<a href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/" class="archive-article-date">
         <time datetime="2019-01-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
 </a>
 
@@ -1475,40 +1499,28 @@ androidStudio: Analyze-&gt;Inspect Code.</code></pre><h2 id="HttpClient"><a href
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="查看配置信息"><a href="#查看配置信息" class="headerlink" title="查看配置信息"></a>查看配置信息</h2><pre><code>git config --list</code></pre><h2 id="本地配置"><a href="#本地配置" class="headerlink" title="本地配置"></a>本地配置</h2><pre><code>git config --global user.name &quot;warmfrog&quot;
-git config --global user.email &quot;1594914459@qq.com&quot;</code></pre><h2 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h2><pre><code>echo &quot;# ShareBook&quot; &gt;&gt; README.md
-git init
-git add README.md
-git commit -m &quot;first commit&quot;
-git remote add origin https://github.com/warmfrog/Sharebook.git
-or
-git remote add origin git@github.com:warmfrog/Sharebook.git
-git push -u origin master</code></pre><h2 id="push-已存在的仓库"><a href="#push-已存在的仓库" class="headerlink" title="push 已存在的仓库"></a>push 已存在的仓库</h2><pre><code>git config --global user.name &quot;warmfrog&quot;
-git config --global user.email &quot;1594914459@qq.com&quot;
+    <p>在Virtualbox中安装5台虚拟机，要求5台ubuntu 虚拟机能够相互ping通，并且可以访问外网。</p>
+<p>5台虚拟机如果要相互ping通，则需要在同一个网段，并且与网关在同一个网段，网关设为相同的地址。我的虚拟机地址设置为</p>
+<pre><code>主机node1 192.168.101.237
+主机node2 192.168.101.239
+主机node3 192.168.101.240
+主机node4 192.168.101.241
+主机node5 192.168.101.243</code></pre><p>所有主机网管设置为 192.168.101.102， 即 VirtualBox Host-Only Ethernet Adapter 的IP 地址</p>
+<p>安装虚拟机，配置网络连接方式为hostonly，5台虚拟机均选择网络适配器 VirtualBox Host-Only Ethernet Adapter. 在 win10 宿主机上对以太网进行共享，右击 <em>以太网</em> -&gt; <em>属性</em> -&gt; <em>共享</em> -&gt; 勾选两个复选框，选择分享到 VirtualBox Host-Only Ethernet Adapter 网卡。</p>
+<p>虚拟机安装完后，对每台虚拟机: 修改 /etc/network/interfaces.</p>
+<p>首先，查看网卡名称</p>
+<pre><code>ifconfig</code></pre><p>我的为 enp0s3</p>
+<p>修改 /etc/network/interfaces</p>
+<pre><code>sudo vim /etc/network/interfaces</code></pre><p>添加以下设置静态ip，网关设置为 VirtualBox Host-Only Ethernet Adapter 网卡的IP地址</p>
+<pre><code>auto enp0s3
+iface enp0s3 inet static
+address 192.168.101.237
+netmask 255.255.255.0
+gateway 192.168.101.102</code></pre><p>重启网卡</p>
+<pre><code>/etc/init.d/networking restart</code></pre><p>设置DNS</p>
+<pre><code>sudo vim /etc/systemd/resolved.conf</code></pre><p>修改DNS</p>
+<pre><code>DNS=114.114.114.114</code></pre><p>重启虚拟机</p>
 
-git remote add origin https://github.com/warmfrog/ShareBook.git
-git push -u origin master</code></pre><h2 id="git-push-每次都需要输入用户名和密码"><a href="#git-push-每次都需要输入用户名和密码" class="headerlink" title="git push 每次都需要输入用户名和密码"></a>git push 每次都需要输入用户名和密码</h2><p>为了不每次都输入用户名和密码，删除以https提交的方式，然后修改提交方式</p>
-<pre><code>git remote rm origin
-git remote add orign git@github.com:warmfrog/Sharebook.git</code></pre><p>再次push时</p>
-<pre><code>git push -u origin master</code></pre><p>后面就可以使用</p>
-<pre><code>git push</code></pre><p>来直接push了</p>
-<h2 id="修改项目后的push"><a href="#修改项目后的push" class="headerlink" title="修改项目后的push"></a>修改项目后的push</h2><h3 id="修改文件后push"><a href="#修改文件后push" class="headerlink" title="修改文件后push"></a>修改文件后push</h3><p>将clone下来的项目修改后，如果需要push，则先将修改后的文件add，commit后，再push</p>
-<pre><code>git add 修改的文件
-git commit -m &quot;修改的内容提示&quot;
-git push</code></pre><h3 id="删除后文件后push"><a href="#删除后文件后push" class="headerlink" title="删除后文件后push"></a>删除后文件后push</h3><pre><code>git rm 删除的文件
-git commit -m &quot;删除的信息&quot;
-git push</code></pre><h4 id="批量删除或者修改后"><a href="#批量删除或者修改后" class="headerlink" title="批量删除或者修改后"></a>批量删除或者修改后</h4><pre><code>git commit -a
-git push</code></pre><h2 id="隐藏本地改变，并-pull-远程仓库"><a href="#隐藏本地改变，并-pull-远程仓库" class="headerlink" title="隐藏本地改变，并 pull 远程仓库"></a>隐藏本地改变，并 pull 远程仓库</h2><pre><code>git stash</code></pre><p>当我们改变本地文件后，使用git pull命令时会有冲突，这时可以用stash隐藏改变，然后pull。pull之后可以</p>
-<pre><code>git stash apply 恢复改变
-git stash list  列出改变
-git stash drop  删除改变
-git help stash  查看更多stash命令</code></pre><h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>创建分支</p>
-<pre><code>git branch hello</code></pre><p>转到分支</p>
-<pre><code>git checkout hello</code></pre><p>查看分支</p>
-<pre><code>git branch</code></pre><p>查看所有分支，包括远程</p>
-<pre><code>git branch -a</code></pre><p>删除远程分支</p>
-<pre><code>git push origin :remote_branch_name
-git push orinin :issu8</code></pre>
     
 
     
@@ -1524,11 +1536,7 @@ git push orinin :issu8</code></pre>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Virtualbox</a>
         		</li>
       		
 		</ul>
@@ -1538,7 +1546,7 @@ git push orinin :issu8</code></pre>
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/13/github/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/01/13/Virtualbox中通过HostOnly方式搭建5台ubuntu虚拟机/">展开全文 >></a>
     </p>
     
 
@@ -2055,31 +2063,19 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color5">IEDA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Security</a>
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">resources</a>
+                <a href="javascript:void(0)" class="js-tag color3">BigData</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">资源</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WSL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Unity</a>
+                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2091,23 +2087,15 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IEDA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">BigData</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Virtualbox</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2119,15 +2107,11 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Virtualbox</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">css</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2135,11 +2119,7 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2155,6 +2135,10 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
@@ -2163,7 +2147,7 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2183,15 +2167,15 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">snap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">hbase</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hdfs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">snap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2223,10 +2207,6 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">pdf</a>
               </li>
              
@@ -2235,15 +2215,19 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">搜狗输入法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">dataset</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ipv6</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color4">WSL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2255,7 +2239,7 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">ipv6</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2267,19 +2251,27 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">PowerShell</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">docs</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">window10</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">PowerShell</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">util</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">window10</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2295,6 +2287,10 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网站模板</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -2303,11 +2299,23 @@ JavaRDD&lt;Vector&gt; data = jsc.parallelize(
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网站模板</a>
+                <a href="javascript:void(0)" class="js-tag color5">resources</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">资源</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Security</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
               </li>
              
               <li class="article-tag-list-item">
