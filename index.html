@@ -200,6 +200,782 @@
             
 
   
+    <article id="post-Mybatis中子查询语句查询-Postgresql-jsonb-类型数据中的属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/18/Mybatis中子查询语句查询-Postgresql-jsonb-类型数据中的属性/" target="_blank">Mybatis中子查询语句查询-Postgresql-jsonb-类型数据中的属性</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/18/Mybatis中子查询语句查询-Postgresql-jsonb-类型数据中的属性/" class="archive-article-date">
+        <time datetime="2019-10-18T06:32:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-18</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Postgresql 的 jsonb 类型，官方文档中有很多相关函数和操作符，支持很多对 jsonb 数据类型的查询插入转换等操作。<a href="https://www.postgresql.org/docs/10/functions-json.html" target="_blank" rel="noopener">官网地址</a></p>
+<p>其中 stations 是表 traffic_line 中的 jsonb 属性，格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">	<span class="attr">"labels"</span>: [<span class="string">"label5"</span>, <span class="string">"label2"</span>],</span><br><span class="line">	<span class="attr">"poiUuid"</span>: <span class="string">"967d40330ab74ceeb448327e9f3c1f9d"</span>,</span><br><span class="line">	<span class="attr">"latitude"</span>: <span class="string">"1100"</span>,</span><br><span class="line">	<span class="attr">"longitude"</span>: <span class="string">"2482"</span>,</span><br><span class="line">	<span class="attr">"stationName"</span>: <span class="string">"站点一"</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">	<span class="attr">"labels"</span>: [<span class="string">"label3"</span>, <span class="string">"label4"</span>],</span><br><span class="line">	<span class="attr">"poiUuid"</span>: <span class="string">"7de3dee663bd4bf5810f61a52603beca"</span>,</span><br><span class="line">	<span class="attr">"stationName"</span>: <span class="string">"站点二"</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>下面是自己尝试的一些查询操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> stations::jsonb <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;   <span class="comment">--查询 stations 属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> jsonb_array_length(stations::jsonb) <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;   <span class="comment">--数组长度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">uuid</span>, jsonb_array_elements(stations::jsonb)-&gt;<span class="string">'stationName'</span> <span class="keyword">as</span> station <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;   <span class="comment">--查询 jsonb 数据中的 stationName 属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 子查询，查询 traffic_line 表中所有 stationsName 像 '%站点一%' 的行。</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span></span><br><span class="line"> 	 *, jsonb_array_elements(stations)-&gt;&gt;<span class="string">'stationName'</span> <span class="keyword">like</span> <span class="string">'%站点一%'</span> <span class="keyword">as</span> station</span><br><span class="line">	 <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line) <span class="keyword">as</span> line</span><br><span class="line"><span class="keyword">where</span> station = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">uuid</span>,jsonb_array_elements(stations::jsonb)-&gt;<span class="string">'stationName'</span> <span class="keyword">as</span> station <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;   <span class="comment">--查询站点</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">uuid</span>,jsonb_typeof(jsonb_array_elements(stations::jsonb)-&gt;<span class="string">'stationName'</span>) <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ? 顶层是否包含对应 key</span></span><br><span class="line"><span class="keyword">select</span> stations-&gt;<span class="number">0</span>?<span class="string">'stationName'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"><span class="keyword">select</span> stations-&gt;<span class="number">0</span>?<span class="string">'labels'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"><span class="keyword">select</span> stations-&gt;<span class="number">0</span>?<span class="string">'poiUuid'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 选择数组的第一个元素</span></span><br><span class="line"><span class="keyword">select</span> stations::jsonb-&gt;<span class="number">0</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"><span class="keyword">select</span> stations::jsonb-&gt;<span class="number">1</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> stations::jsonb-&gt;<span class="number">0</span>-&gt;<span class="string">'poiUuid'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"><span class="keyword">select</span> stations::jsonb-&gt;<span class="number">0</span>-&gt;<span class="string">'stationName'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> stations::jsonb-&gt;<span class="number">0</span>-&gt;<span class="string">'labels'</span>-&gt;<span class="number">0</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 判断包含关系</span></span><br><span class="line"><span class="keyword">select</span> stations::jsonb-&gt;<span class="number">0</span>-&gt;<span class="string">'labels'</span>@&gt;<span class="string">'&#123;"label1":1&#125;'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> stations-&gt;<span class="number">0</span>-&gt;<span class="string">'labels'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;            <span class="comment">--["lable1:","label2"]</span></span><br><span class="line"><span class="keyword">select</span> stations-&gt;<span class="number">0</span>-&gt;<span class="string">'labels'</span>?<span class="string">'label1'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;   <span class="comment">--true</span></span><br><span class="line"><span class="keyword">select</span> stations-&gt;<span class="number">0</span>-&gt;<span class="string">'labels'</span>?<span class="string">'label'</span> <span class="keyword">from</span> <span class="string">"tf"</span>.traffic_line;    <span class="comment">--false</span></span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/18/Mybatis中子查询语句查询-Postgresql-jsonb-类型数据中的属性/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Mybatis-Generator-处理-Postgresql-Jsonb-类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/18/Mybatis-Generator-处理-Postgresql-Jsonb-类型/" target="_blank">Mybatis-Generator-处理-Postgresql-Jsonb-类型</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/18/Mybatis-Generator-处理-Postgresql-Jsonb-类型/" class="archive-article-date">
+        <time datetime="2019-10-18T06:16:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-18</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Postgresql 表数据类型可以是 json 和 jsonb，区别是 jsonb 类型会校验数据是否符合 json 格式，并将解析后的数据存储，而 json 是直接存储。所以 jsonb 插入慢，查询快，json 插入快，查询慢。</p>
+<p>当 Postgresql 表中有 jsonb 类型时，通过 Mybatis 来生成 mapper.xml 时，需要自定义 TypeHandler。然后在 Mybatis 的 generater-config.xml 中对应的表配置该 TypeHandler。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"traffic_line"</span> <span class="attr">domainObjectName</span>=<span class="string">"Line"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"runtimeSchema"</span> <span class="attr">value</span>=<span class="string">"&amp;quot;tf&amp;quot;"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">"stations"</span> <span class="attr">jdbcType</span>=<span class="string">"OTHER"</span> <span class="attr">typeHandler</span>=<span class="string">"com.example.handler.JsonTypeHandler"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">"middle_points"</span> <span class="attr">jdbcType</span>=<span class="string">"OTHER"</span> <span class="attr">typeHandler</span>=<span class="string">"com.example.handler.JsonTypeHandler"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面数据表配置中，列 stations 和 middle_points 都为 jsonb 类型，配置 jdbcType 属性为 <code>OTHER</code>, typeHandler 为自定义的 <code>JsonTypeHandler</code> 类。</p>
+<p>JsonTypeHandler 类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.eg.egsc.common.component.utils.JsonUtil;</span><br><span class="line"><span class="keyword">import</span> java.sql.CallableStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.type.BaseTypeHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.type.JdbcType;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.type.MappedTypes;</span><br><span class="line"><span class="keyword">import</span> org.postgresql.util.PGobject;</span><br><span class="line"></span><br><span class="line"><span class="meta">@MappedTypes</span>(&#123;Object.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonTypeHandler</span> <span class="keyword">extends</span> <span class="title">BaseTypeHandler</span>&lt;<span class="title">Object</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> PGobject JSON_OBJECT = <span class="keyword">new</span> PGobject();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JsonTypeHandler</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNonNullParameter</span><span class="params">(PreparedStatement preparedStatement, <span class="keyword">int</span> i, Object o, JdbcType jdbcType)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        JSON_OBJECT.setType(<span class="string">"json"</span>);</span><br><span class="line">        JSON_OBJECT.setValue(JsonUtil.toJsonString(o));</span><br><span class="line">        preparedStatement.setObject(i, JSON_OBJECT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getNullableResult</span><span class="params">(ResultSet resultSet, String s)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> JsonUtil.fromJson(resultSet.getString(s), Object.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getNullableResult</span><span class="params">(ResultSet resultSet, <span class="keyword">int</span> i)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> JsonUtil.fromJson(resultSet.getString(i), Object.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getNullableResult</span><span class="params">(CallableStatement callableStatement, <span class="keyword">int</span> i)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> JsonUtil.fromJson(callableStatement.getString(i), Object.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/18/Mybatis-Generator-处理-Postgresql-Jsonb-类型/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis-安装学习配置使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/15/Redis-安装学习配置使用/" target="_blank">Redis-安装学习配置使用</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/15/Redis-安装学习配置使用/" class="archive-article-date">
+        <time datetime="2019-10-15T07:36:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-15</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/15/Redis-安装学习配置使用/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-使用nexus-oss搭建-maven私有仓库搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/12/使用nexus-oss搭建-maven私有仓库搭建/" target="_blank">使用nexus-oss搭建-maven私有仓库搭建</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/12/使用nexus-oss搭建-maven私有仓库搭建/" class="archive-article-date">
+        <time datetime="2019-10-12T01:51:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-12</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="https://help.sonatype.com/repomanager3/installation/installation-methods" target="_blank" rel="noopener">官方地址</a></p>
+<ul>
+<li><p>下载安装包</p>
+</li>
+<li><p>安装</p>
+</li>
+</ul>
+<p><code>./nexus run</code></p>
+<ul>
+<li>登录</li>
+</ul>
+<p>打开 <a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a>,登录。</p>
+<h2 id="本地项目部署"><a href="#本地项目部署" class="headerlink" title="本地项目部署"></a>本地项目部署</h2><h3 id="maven-setting-xml-设置"><a href="#maven-setting-xml-设置" class="headerlink" title="maven setting.xml 设置"></a>maven setting.xml 设置</h3><ul>
+<li>增加服务器认证</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>local-nexus-release<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>local-nexus-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>增加镜像</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>local-nexus-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/repository/maven-releases/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>local-nexus-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/repository/maven-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>项目部署配置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>local-nexus-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/repository/maven-releases/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>local-nexus-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/repository/maven-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/12/使用nexus-oss搭建-maven私有仓库搭建/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-CL-持续集成" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/10/CL-持续集成/" target="_blank">CL-持续集成</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/10/CL-持续集成/" class="archive-article-date">
+        <time datetime="2019-10-10T03:52:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-10</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>持续集成指的是，频繁地（一天多次）将代码集成到主干。</p>
+<p>常用的构建工具如下。</p>
+<ul>
+<li>Jenkins</li>
+<li>Travis</li>
+<li>Codeship</li>
+<li>Strider</li>
+</ul>
+<p>Jenkins 和 Strider 是开源软件，Travis 和 Codeship 对于开源项目可以免费使用。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/10/CL-持续集成/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-PostgresSQL-数据类型-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/09/PostgresSQL-数据类型-md/" target="_blank">PostgresSQL-数据类型.md</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/09/PostgresSQL-数据类型-md/" class="archive-article-date">
+        <time datetime="2019-10-09T07:51:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/09/PostgresSQL-数据类型-md/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Postgres-使用学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/09/Postgres-使用学习/" target="_blank">Postgres-使用学习</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/09/Postgres-使用学习/" class="archive-article-date">
+        <time datetime="2019-10-09T07:00:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>PostgreSQL 是客户端/服务架构。服务器端的程序叫做 postgres。PostgreSQL 是一个关系型数据库管理系统。每个表是行的集合。表的每一行包含相同的有名列集合，每一列都是一种特定的数据类型。一个数据库包含很多表，多个数据库组成一个数据库簇，由单个 PostgreSQL 服务器实例管理。</p>
+<h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">role</span> <span class="keyword">name</span>;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">role</span> <span class="keyword">name</span>;</span><br><span class="line">createuser name;</span><br><span class="line">dropuser name;</span><br><span class="line"><span class="keyword">select</span> rolname <span class="keyword">from</span> pg_roles;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">role</span> <span class="keyword">name</span> login;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="keyword">name</span>;</span><br><span class="line"><span class="keyword">grant</span> group_role <span class="keyword">to</span> role1, ...;</span><br><span class="line"><span class="keyword">revoke</span> group_role <span class="keyword">from</span> fole1, ...;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">role</span> joe login inherit;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">role</span> <span class="keyword">admin</span> noinherit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> bobs_table owner <span class="keyword">to</span> alice;</span><br></pre></td></tr></table></figure>
+
+<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> blog <span class="keyword">password</span> <span class="string">'blog'</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ul>
+<li>创建数据库</li>
+</ul>
+<p><code>createdb  mydb</code><br><code>create database blog owner blog;</code></p>
+<ul>
+<li>删除数据库</li>
+</ul>
+<p><code>dropdb mydb</code></p>
+<p><code>drop database dbname</code></p>
+<ul>
+<li>数据库列表</li>
+</ul>
+<p><code>select datname from pg_database;</code></p>
+<h3 id="访问数据库"><a href="#访问数据库" class="headerlink" title="访问数据库"></a>访问数据库</h3><p><code>psql mydb</code></p>
+<ul>
+<li>查看数据库版本</li>
+</ul>
+<p><code>select version();</code></p>
+<ul>
+<li>查看当前日期</li>
+</ul>
+<p><code>select current_dagte</code></p>
+<ul>
+<li>查看帮助</li>
+</ul>
+<p><code>\h</code></p>
+<ul>
+<li>退出命令行客户端</li>
+</ul>
+<p><code>\q</code></p>
+<ul>
+<li>从文件执行 SQL 语句</li>
+</ul>
+<p><code>\i basic.sql</code></p>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> weather(</span><br><span class="line">    city <span class="built_in">varchar</span>(<span class="number">80</span>),</span><br><span class="line">    temp_lo <span class="built_in">int</span>,           <span class="comment">-- low temperature</span></span><br><span class="line">    temp_hi <span class="built_in">int</span>,           <span class="comment">-- high temperature</span></span><br><span class="line">    prcp    <span class="built_in">real</span>,          <span class="comment">-- precipitation</span></span><br><span class="line">    <span class="built_in">date</span>    <span class="built_in">date</span>,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除表</li>
+</ul>
+<p><code>drop table tablename;</code></p>
+<p>PostgreSQL 支持标准的 SQL 类型：int, smallint, real, double precision, char(N), varchar(N), date, time, timestamp, interval, 包活其他通用工具类型和丰富的地理类型。PostgreSQL 可以定制任意多的自定义数据类型。因此，类型名语法上不是关键字，除了需要支持 SQL 标准的特别用例。</p>
+<ul>
+<li>插入数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> weather <span class="keyword">values</span>(<span class="string">'San Francisco'</span>, <span class="number">46</span>, <span class="number">50</span>, <span class="number">0.25</span>, <span class="string">'1994-11-27'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>不是简单数字类型的必须用单引号 ‘‘ 包围起来。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/09/Postgres-使用学习/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Macos-查看端口占用-杀死进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/09/Macos-查看端口占用-杀死进程/" target="_blank">Macos-查看端口占用-杀死进程</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/09/Macos-查看端口占用-杀死进程/" class="archive-article-date">
+        <time datetime="2019-10-09T03:37:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:9025</span><br><span class="line"><span class="built_in">kill</span> pid</span><br></pre></td></tr></table></figure>
+
+<p>\</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/09/Macos-查看端口占用-杀死进程/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git-学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/08/Git-学习笔记/" target="_blank">Git-学习笔记</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/08/Git-学习笔记/" class="archive-article-date">
+        <time datetime="2019-10-08T08:58:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <ul>
+<li>Git 同时 push 到多个远程仓库</li>
+</ul>
+<p><code>git remote set-url --add origin git@github.com:warmfrog/warmfrog.github.io.git</code></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/08/Git-学习笔记/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-apache2-服务器学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -295,840 +1071,9 @@
 
 
   
-    <article id="post-Docker学习使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/08/Docker学习使用/" target="_blank">Docker学习使用</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/08/Docker学习使用/" class="archive-article-date">
-        <time datetime="2019-10-08T07:19:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="在-Ubuntu-中创建-docker-用户"><a href="#在-Ubuntu-中创建-docker-用户" class="headerlink" title="在 Ubuntu 中创建 docker 用户"></a>在 Ubuntu 中创建 docker 用户</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser docker</span><br><span class="line">sudo usermod -aG docker docker</span><br><span class="line"><span class="comment"># 将 docker 用户添加到 sudo 组</span></span><br><span class="line">sudo usermod -aG sudo docker</span><br></pre></td></tr></table></figure>
-
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/08/Docker学习使用/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在ubuntu中安装jenkins" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/10/08/在ubuntu中安装jenkins/" target="_blank">在ubuntu中安装jenkins</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/10/08/在ubuntu中安装jenkins/" class="archive-article-date">
-        <time datetime="2019-10-08T07:07:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><a href="https://jenkins.io/zh/doc/book/installing/#debianubuntu" target="_blank" rel="noopener">官方指导安装</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -</span><br><span class="line">sudo sh -c <span class="string">'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install jenkins</span><br></pre></td></tr></table></figure>
-
-<p>日志文件位置： /var/log/jenkins/jenkins.log</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">jenkins</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/10/08/在ubuntu中安装jenkins/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-Security学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/02/08/Spring-Security学习笔记/" target="_blank">Spring-Security学习笔记</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/02/08/Spring-Security学习笔记/" class="archive-article-date">
-        <time datetime="2019-02-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a><a href="https://docs.spring.io/spring-security/site/docs/5.1.3.RELEASE/reference/htmlsingle/" target="_blank" rel="noopener">Spring Security</a></h2><p><a href="c/">Github地址</a></p>
-<p>Spring Security 是一个强大的可定制的验证和入口控制框架.它是防护基于Spring的应用实际上的标准.</p>
-<p>Spring Security 是一个框架专注于Java应用提供验证和授权.如同其他的Spring项目,Spring Security 的真实能力被发现很容易扩展来符合自定义的需求.</p>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
-<li>对于认证和授权的易于理解或可扩展的支持</li>
-<li>保护应用免受攻击如会话定位(session fixation),点击劫持(clickjacking),伪造跨站请求(cross site request forgery)等等.</li>
-<li>结合Servlet API</li>
-<li>可选的集成于Spring MVC</li>
-</ul>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Security</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/02/08/Spring-Security学习笔记/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-优秀的资源站点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/02/08/优秀的资源站点/" target="_blank">优秀的资源站点</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/02/08/优秀的资源站点/" class="archive-article-date">
-        <time datetime="2019-02-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="http-www-allitebooks-com"><a href="#http-www-allitebooks-com" class="headerlink" title="http://www.allitebooks.com/"></a><a href="http://www.allitebooks.com/" target="_blank" rel="noopener">http://www.allitebooks.com/</a></h3><p>高清原版的IT书籍pdf.</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">resources</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">资源</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/02/08/优秀的资源站点/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-好用的开源库收藏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/02/07/好用的开源库收藏/" target="_blank">好用的开源库收藏</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/02/07/好用的开源库收藏/" class="archive-article-date">
-        <time datetime="2019-02-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-07</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="highlightjs"><a href="#highlightjs" class="headerlink" title="highlightjs"></a><a href="https://highlightjs.org/" target="_blank" rel="noopener">highlightjs</a></h2><p>前端语法高亮库</p>
-<p><a href="https://github.com/highlightjs/highlight.js" target="_blank" rel="noopener">github</a></p>
-<p><a href="https://highlightjs.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">文档地址</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/02/07/好用的开源库收藏/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在ubuntu下安装配置mysql数据库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/02/04/在ubuntu下安装配置mysql数据库/" target="_blank">在WSL ubuntu 18.04下安装配置mysql数据库</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/02/04/在ubuntu下安装配置mysql数据库/" class="archive-article-date">
-        <time datetime="2019-02-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="一步安装"><a href="#一步安装" class="headerlink" title="一步安装"></a>一步安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install mysql-server</span><br></pre></td></tr></table></figure>
-
-<h2 id="mysql服务器操作"><a href="#mysql服务器操作" class="headerlink" title="mysql服务器操作"></a>mysql服务器操作</h2><ul>
-<li>查看状态</li>
-</ul>
-<p><code>sudo service mysql status</code></p>
-<ul>
-<li>停止mysql服务器</li>
-</ul>
-<p><code>sudo service mysql stop</code></p>
-<ul>
-<li>启动服务器</li>
-</ul>
-<p><code>sudo service mysql start</code></p>
-<p>切换到root用户,登录mysql控制台</p>
-<p><code>mysql</code></p>
-<ul>
-<li>创建用户</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="string">'username'</span>@<span class="string">'%'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'password'</span>;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'username'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
-
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/02/04/在ubuntu下安装配置mysql数据库/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java数据结构复习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/31/Java数据结构复习/" target="_blank">Java 数据结构复习</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/31/Java数据结构复习/" class="archive-article-date">
-        <time datetime="2019-01-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-31</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="1-引论"><a href="#1-引论" class="headerlink" title="1. 引论"></a>1. 引论</h2><h2 id="2-算法分析"><a href="#2-算法分析" class="headerlink" title="2. 算法分析"></a>2. 算法分析</h2><p>算法(algorithm)是为求解一个问题需要遵循的、被清楚指定的简单指令的集合。对于一个问题，一旦某种算法给定并且被确定是正确的，那么重要的一步就是确定该算法将需要多少诸如时间或者空间等资源量的问题。</p>
-<h2 id="3-表、栈和队列"><a href="#3-表、栈和队列" class="headerlink" title="3. 表、栈和队列"></a>3. 表、栈和队列</h2><h3 id="3-1-抽象数据类型"><a href="#3-1-抽象数据类型" class="headerlink" title="3.1 抽象数据类型"></a>3.1 抽象数据类型</h3><p>抽象数据类型(abstract data type,ADT)是带有一组操作的一些对象的集合。</p>
-<h3 id="3-2-表ADT"><a href="#3-2-表ADT" class="headerlink" title="3.2 表ADT"></a>3.2 表ADT</h3><p>我们将处理形如A0,A1,A2,…,An-1的一般的表，表的大小为N。大小为0的特殊的表称为空表。</p>
-<p>对于除空表外的任何表，我们说Ai后继Ai-1并称Ai-1前驱Ai。表中的第一个元素是A0，而最后一个元素是An-1.</p>
-    
-    <a class="article-more-a" href="/2019/01/31/Java数据结构复习/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/31/Java数据结构复习/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-mysql数据库管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/31/mysql数据库管理/" target="_blank">mysql 数据库管理</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/31/mysql数据库管理/" class="archive-article-date">
-        <time datetime="2019-01-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-31</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'username'</span>@<span class="string">'host'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'password'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'dog'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123456'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'pig'</span>@<span class="string">'192.168.1.101_'</span> IDENDIFIED <span class="keyword">BY</span> <span class="string">'123456'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'pig'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123456'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'pig'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">''</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'pig'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">privileges</span> <span class="keyword">ON</span> databasename.tablename <span class="keyword">TO</span> <span class="string">'username'</span>@<span class="string">'host'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>, <span class="keyword">INSERT</span> <span class="keyword">ON</span> test.user <span class="keyword">TO</span> <span class="string">'pig'</span>@<span class="string">'%'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'pig'</span>@<span class="string">'%'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> maindataplus.* <span class="keyword">TO</span> <span class="string">'pig'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
-
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/31/mysql数据库管理/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-网站模板收集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/31/网站模板收集/" target="_blank">网站模板收集</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/31/网站模板收集/" class="archive-article-date">
-        <time datetime="2019-01-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-31</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h2><ul>
-<li>模板之家 <a href="http://www.cssmoban.com/" target="_blank" rel="noopener">http://www.cssmoban.com/</a></li>
-</ul>
-<h2 id="相册模板"><a href="#相册模板" class="headerlink" title="相册模板"></a>相册模板</h2><ol>
-<li><a href="http://www.cssmoban.com/cssthemes/7631.shtml" target="_blank" rel="noopener">地址</a> <a href="http://demo.cssmoban.com/cssthemes5/tope_18_multi/index.html" target="_blank" rel="noopener">预览</a> <a href="https://pan.baidu.com/s/1I-kNfBcM_T5FfVZF5ZZasQ" target="_blank" rel="noopener">百度云</a></li>
-</ol>
-<p><img src="/img/album2.png" alt="album"></p>
-<ol start="2">
-<li><a href="http://demo.cssmoban.com/cssthemes4/hxc_17_multiverse/index.html" target="_blank" rel="noopener">全屏</a></li>
-</ol>
-<p><img src="/img/album.png" alt="album"></p>
-<ol start="3">
-<li><a href="http://www.templatesy.com/" target="_blank" rel="noopener">模板世界</a><a href="http://www.templatesy.com/" target="_blank" rel="noopener">http://www.templatesy.com/</a></li>
-</ol>
-<p><img src="/img/website_model.png" alt="website-module"></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网站模板</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/31/网站模板收集/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1287,6 +1232,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Virtualbox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">spark</a>
               </li>
              
@@ -1295,15 +1244,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Virtualbox</a>
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">css</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1319,6 +1264,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">javaweb</a>
               </li>
              
@@ -1331,19 +1280,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">pandas</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1355,11 +1296,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vscode</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">windows10</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Vscode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1375,15 +1320,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ssh</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">windows</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1419,10 +1364,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ipv6</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">WSL</a>
               </li>
              
@@ -1451,6 +1392,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ipv6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">website</a>
               </li>
              
@@ -1463,11 +1408,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">util</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">window10</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">util</a>
+                <a href="javascript:void(0)" class="js-tag color1">Emmet</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1479,7 +1428,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Emmet</a>
+                <a href="javascript:void(0)" class="js-tag color5">网站模板</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1488,10 +1437,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网站模板</a>
               </li>
              
               <li class="article-tag-list-item">
